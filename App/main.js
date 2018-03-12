@@ -5,10 +5,11 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
+const ipcMain = electron.ipcMain;
 
 const path = require('path')
 const url = require('url')
-
+app.commandLine.appendSwitch('disable-smooth-scrolling');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -19,6 +20,8 @@ async function createWindow () {
   } catch (error) {
     console.log(error);
   }
+
+
   const mainMenuTemplate = [
     {
       label: 'File'
@@ -26,7 +29,6 @@ async function createWindow () {
       label: 'Edin'
     }
   ];
-
   // Create the browser window.
   mainWindow = new BrowserWindow();
   mainWindow.maximize();
@@ -41,7 +43,6 @@ async function createWindow () {
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 
   Menu.setApplicationMenu(mainMenu);
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
@@ -79,4 +80,9 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-// Create menu template
+//Getting user input
+ipcMain.on("form-submission", function(event, data){
+  console.log(data);
+  //TODO: logic for saving user information in c++ to be implemented.
+  event.sender.send("login-success", data);
+});
