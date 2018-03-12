@@ -9,6 +9,8 @@ const ipcMain = electron.ipcMain;
 
 const path = require('path')
 const url = require('url')
+
+var data_cryption = require('../ClientInterface/javascript/data_cryption')
 app.commandLine.appendSwitch('disable-smooth-scrolling');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -82,7 +84,14 @@ app.on('activate', function () {
 
 //Getting user input
 ipcMain.on("form-submission", function(event, data){
-  console.log(data);
+  create_dir(data);
   //TODO: logic for saving user information in c++ to be implemented.
   event.sender.send("login-success", data);
 });
+
+
+function create_dir(data){
+    data_cryption.pepper(data);
+    console.log("The file was saved!");
+}; 
+
