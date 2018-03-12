@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'RobotoMono';
+    font-style: 'light';
+    font-weight: 200;
+    src: local('RobotoMono Thin'), local('RobotoMono-Thin'), url(../font/RobotoMono-Thin.ttf) format('truetype'); 
+  }
