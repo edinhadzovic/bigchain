@@ -1,4 +1,5 @@
 @import 'fonts.css';
+@import 'login.css';
 
 body {
     font-family: 'Roboto Mono', monospace;
@@ -72,4 +73,8 @@ body {
 
 .hidden {
     display: none;
+}
+
+.display-inline {
+    display: inline-block;
 }

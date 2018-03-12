@@ -23,14 +23,6 @@ async function createWindow () {
     console.log(error);
   }
 
-
-  const mainMenuTemplate = [
-    {
-      label: 'File'
-    }, {
-      label: 'Edin'
-    }
-  ];
   // Create the browser window.
   mainWindow = new BrowserWindow();
   mainWindow.maximize();
@@ -42,9 +34,6 @@ async function createWindow () {
     slashes: true
   }))
 
-  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-
-  Menu.setApplicationMenu(mainMenu);
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 

@@ -1,4 +1,11 @@
+
 (function(){
+    
+   
+
+    console.log(login);
+    console.log(js_loginView_login);
+
     document.querySelector('#login').addEventListener('click', function(e) {
         e.preventDefault();
         let data = {};
@@ -18,4 +25,11 @@
             document.getElementById("login_section").style.display = "none";
         })
     });
+
+    document.querySelector("#js-loginView-form-register").addEventListener("click", function(e) {
+        e.preventDefault();
+        console.log(js_loginView_login);
+        js_loginView_login.className += ' js-loginView-login--hide';
+        js_loginView_register.className = 'js-loginView-register';
+    })
 })();
