@@ -10,8 +10,9 @@ const ipcMain = electron.ipcMain;
 const path = require('path')
 const url = require('url')
 
+var verification = require( path.resolve( __dirname, "./verification.js" ))
 var data_cryption = require('../ClientInterface/javascript/data_cryption')
-app.commandLine.appendSwitch('disable-smooth-scrolling');
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -72,15 +73,46 @@ app.on('activate', function () {
 // code. You can also put them in separate files and require them here.
 
 //Getting user input
-ipcMain.on("form-submission", function(event, data){
-  create_dir(data);
-  //TODO: logic for saving user information in c++ to be implemented.
+ipcMain.on("login-submission", function(event, data) {
   event.sender.send("login-success", data);
 });
 
+ipcMain.on("register-submission", function(event, data) {
 
-function create_dir(data){
-    data_cryption.pepper(data);
-    console.log("The file was saved!");
+  var err = [];
+  var isStored = 0;
+  check_val(data, isStored, err);
+  if (err.length > 0) {
+    console.log(err);
+    console.log('Houston we have a problem');
+  }
+  else {
+    console.log('Everything went well!');
+  }
+  //
+  // TODO: THIS FUNCTION HAS TO WAIT FOR CHECK_VAL TO BE FINISHED!
+  // HAVE NO IDEA WHY ITS NOT WORKING ...
+  // 
+  // If it's stored return success, if not return fail with errors
+  if (isStored) {
+    console.log("status success");
+    event.sender.send("register-success");
+  } 
+  else {
+    console.log("status failed");
+    event.sender.send("register-failed", err);
+  }
+
+
+});
+
+function check_val(data, isStored, err){
+  console.log('Starting the verification of the user ');
+  verification.verify(data, err);
+  //create_dir(data, isStored, err );
+};
+
+function create_dir(data, isStored, err){
+    data_cryption.pepper(data, isStored, err, data_cryption.returnTomain);
+
 }; 
-
