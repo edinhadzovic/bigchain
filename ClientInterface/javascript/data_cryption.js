@@ -16,11 +16,13 @@ var user_count = 0;
 
 module.exports = {
 
-	store: function(data, isStored, err, ret){
+	store: function(data, callback){
 		if(user_count >= 5) {
 			console.log("MAX AMOUNT OF USERS " + user_count);
-			err.push("Max number of users reached, login into existing ones");
-			ret();
+			callback({
+				error: true,
+				error_type: 'Max number of users reached, login into existing ones'
+			});
 		}
 		else {
 		    console.log("Storing data into file /tmp/test");
@@ -32,35 +34,43 @@ module.exports = {
 		        return console.log(error);
 		    }
 
-		    // No error during the whole process, return positive
-		    isStored = 1;
-		    user_count ++;
+		    user_count++;
 			
 			});
-			ret();
+			callback(true);
 		}
 
 	},
-	salt: function(data, peper, isStored, err, ret){
+	salt: function(data, peper, callback){
 		// start with cryption
 		console.log("Salt process...");
 		var password = peper;
         bcryptjs.genSalt(10, (error, salt) => {
             bcryptjs.hash(password, salt, (error, hash) => {
-                data.password = hash;
-                this.store(data, isStored, err, ret);
+				data.password = hash;
+				callback(data);
             });
         });
 	},
 
-	pepper: function(data, isStored, err, ret){
-		// starting process
+	pepper: function(data){
+		return new Promise((resolve, reject) => {
+			// starting process
 		// append data.username to data.password first
 		// doing it automatically  without pepper-mint moodul
 		console.log("Starting with storing!");
 		console.log("Pepper process...");
 		let peper = data.email + data.password;
-		this.salt(data, peper, isStored, err, ret);
+		this.salt(data, peper, (data) => {
+			this.store(data, (result) => {
+				if(isObject(result)) {
+					reject(result);
+				} 
+
+				if(result === true) resolve(result);
+			});
+		});
+		})
 	},
 
 	returnTomain: function(){

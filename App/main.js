@@ -77,11 +77,12 @@ ipcMain.on("login-submission", function(event, data) {
   event.sender.send("login-success", data);
 });
 
-ipcMain.on("register-submission", function(event, data) {
+ipcMain.on("register-submission", async function(event, data) {
 
   var err = [];
   var isStored = 0;
-  check_val(data, isStored, err);
+  let check = await check_val(data);
+  //check_val(data, isStored, err);
   if (err.length > 0) {
     console.log(err);
     console.log('Houston we have a problem');
@@ -102,17 +103,36 @@ ipcMain.on("register-submission", function(event, data) {
     console.log("status failed");
     event.sender.send("register-failed", err);
   }
-
-
 });
 
-function check_val(data, isStored, err){
+
+let check_val = (data) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting the verification of the user ');
+    let success = verification.verify(data).then((result) => {
+      create_dir(result)
+    }).catch(e => console.log(e));
+  });
+}
+
+/*function check_val(data, isStored, err){
   console.log('Starting the verification of the user ');
+  let success = verification.verify(data, (err, isStored) => {
+    if(err) return false;
+    create_dir(data, isStored, (err) => {
+      if(err) return false;
+    })
+  })
   verification.verify(data, err);
+  if (err.length > 0) {
+    return 0;
+  }
+  create_dir(data, isStored, err );
   //create_dir(data, isStored, err );
-};
+};*/
 
-function create_dir(data, isStored, err){
-    data_cryption.pepper(data, isStored, err, data_cryption.returnTomain);
-
+function create_dir(data){
+    data_cryption.pepper(data).then((result) => {
+      console.log(result);
+    }).catch(e => console.log(e));
 }; 
