@@ -63,18 +63,13 @@ module.exports = {
 		let peper = data.email + data.password;
 		this.salt(data, peper, (data) => {
 			this.store(data, (result) => {
-				if(isObject(result)) {
-					reject(result);
-				} 
-
+				console.log(result + " result");
+				if (result != true) reject(result);
 				if(result === true) resolve(result);
 			});
 		});
 		})
 	},
 
-	returnTomain: function(){
-		return;
-	}
 
 };

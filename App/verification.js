@@ -6,8 +6,6 @@ const directory = path.join(__dirname, '../temp/');
 
 module.exports = {
 	verify: function(data) {
-// this.does_exist(data);
-// return;
 
 		return new Promise((resolve, reject) => {
 			if(validator.isEmpty(data.email)) {
@@ -43,18 +41,10 @@ module.exports = {
 			// Extra password check
 			this.extra_check(data.password, data.password_rep).then((result) => {
 				//then ako je pozvan resolve(data)
-				return new Promise((resolve, reject) => {
-					if(result) success = this.does_exist();
-					if(sucess === true) {
-						resolve(result);
-					}
-					reject(result);
-				})
-			}).then((result) => {
-			console.log(success);
-				
-				resolve(success);
+				resolve(data);
 			}).catch((err) => {
+				err => console.log(e);
+				resolve(err);
 				//nesto uradi snjim - ako je pozvano reject(data);
 			})
 
@@ -75,12 +65,13 @@ module.exports = {
 	// Password has to be strong
 	extra_check: function(data, data_rep) {
 		return new Promise((resolve, reject) => {
-			if(data.length < 8)
+
+			if(data.length < 8 || data.length > 16)
 			{
 				reject({
 					error: true,
 					error_type: "password has to be 8-15 digit long"
-				})
+				});
 			}
 	
 			if(data.length == data_rep.length) {
@@ -91,18 +82,23 @@ module.exports = {
 					}
 				}
 				if (difCount != 0) {
-					err.push("passwords do not match");
-					return;
+					console.log("aa ovde?");
+					reject({
+						error: true,
+						error_type: "passwords do not match"
+					});
 				} 
 	
 			}	
 			else {
-				err.push("passwords do not match");
-				return;
+
+				reject ({
+
+					error: true,
+					error_type: "passwords do not match"
+				});
 			}
-	
-			console.log("Passwords match, further checks...");
-	
+
 			
 			var upperCaseCount = 0;
 			var numberCount = 0;
@@ -138,7 +134,10 @@ module.exports = {
 			}
 			else
 			{	
-				err.push("password has to contain 1 number, 1 special sign, 1 upper case letter");
+				reject ({
+					error: true,
+					error_type: "password has to contain 1 number, 1 special sign, 1 upper case letter"
+				});
 			}
 		});
 	},
@@ -147,16 +146,17 @@ module.exports = {
 	// TODO: implement the function
 	// -------------------------
 	does_exist: function (data) {
-
+		return new Promise((resolve, reject) => {
+			resolve(true);
+		});
 		// open directory and check for usernames
 		fs.readdir(directory, (err, files) => {
-			console.log('123');
 		  for (var i = 0; i < files.length; i++)
 		  {
 		  	filePath = path.join(__dirname, '../temp/' + files[i])
-		  	console.log(i);
+		  	//console.log(i);
 			  let content = fs.readFileSync(filePath, 'utf8');
-			  if(content) console.log(content);
+			  //if(content) console.log(content);
 			  return true;
 		  }
 		});

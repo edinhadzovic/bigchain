@@ -79,29 +79,22 @@ ipcMain.on("login-submission", function(event, data) {
 
 ipcMain.on("register-submission", async function(event, data) {
 
-  var err = [];
-  var isStored = 0;
-  let check = await check_val(data);
+
+  let err = await check_val(data);
+  console.log(err);
   //check_val(data, isStored, err);
-  if (err.length > 0) {
-    console.log(err);
-    console.log('Houston we have a problem');
-  }
-  else {
-    console.log('Everything went well!');
-  }
-  //
+
   // TODO: THIS FUNCTION HAS TO WAIT FOR CHECK_VAL TO BE FINISHED!
   // HAVE NO IDEA WHY ITS NOT WORKING ...
   // 
   // If it's stored return success, if not return fail with errors
-  if (isStored) {
+  if (!err) {
     console.log("status success");
     event.sender.send("register-success");
   } 
   else {
     console.log("status failed");
-    event.sender.send("register-failed", err);
+    event.sender.send("register-failed");
   }
 });
 
@@ -110,29 +103,25 @@ let check_val = (data) => {
   return new Promise((resolve, reject) => {
     console.log('Starting the verification of the user ');
     let success = verification.verify(data).then((result) => {
-      create_dir(result)
-    }).catch(e => console.log(e));
+    
+      if(result.error === true){
+         resolve(result);
+      } else {
+        let success = create_dir(result);
+        console.log(success);
+        resolve(null); // Mozda te erroer vrati
+      }
+    }).catch(function(error){
+        error => console.log(e);
+        resolve(error);
+      });
   });
 }
 
-/*function check_val(data, isStored, err){
-  console.log('Starting the verification of the user ');
-  let success = verification.verify(data, (err, isStored) => {
-    if(err) return false;
-    create_dir(data, isStored, (err) => {
-      if(err) return false;
-    })
-  })
-  verification.verify(data, err);
-  if (err.length > 0) {
-    return 0;
-  }
-  create_dir(data, isStored, err );
-  //create_dir(data, isStored, err );
-};*/
-
-function create_dir(data){
+let create_dir = (data) => {
+  return new Promise((resolve, reject) => {
     data_cryption.pepper(data).then((result) => {
-      console.log(result);
+      //console.log(result);
     }).catch(e => console.log(e));
+  });
 }; 
