@@ -24,15 +24,28 @@ async function createWindow () {
   }
 
   // Create the browser window.
-  mainWindow = new BrowserWindow();
+  mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
+  width: 1281,
+  height: 800,
+  minWidth: 1281,
+  minHeight: 800,
+  backgroundColor: '#a3c6ff',
+  show: false
+});
   mainWindow.maximize();
 
-  // and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, '../ClientInterface/views/loginView.html'),
     protocol: 'file:',
     slashes: true
   }))
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+})
+
+  // and load the index.html of the app.
+  
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>window.$ = window.jQuery = require('jquery');</script>
 	<!-- <script>
 		window.nodeRequire = require;
 		delete window.require;
 		delete window.exports;
 		delete window.module;
 	</script> -->
-	<script src="../javascript/lib/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
@@ -36,10 +35,10 @@
 					</div>
 				</form>
 				<div class="login_footer">
-					<p>Don't have an account: <a href="#" class="js-loginView-form-register" id="js-loginView-form-register"> Create one </a></p>
+					<p>Don't have an account: <a href="#" class="js-loginView-new-account" id="js-loginView-form-register"> Create one </a></p>
 				</div>
 			</div>
-			<div class="js-loginView-register js-loginView-register--hide" id="js_loginView_register">
+			<div class="js-loginView-register" id="js_loginView_register">
 				<form>
 					<form>
 						<div class="form_input">
@@ -52,12 +51,15 @@
 						</div>
 						<div class="form_input">
 								<label for="login_password">Password Repeat: </label>
-								<input type="password">
+								<input type="password" class="js-loginView-register-repassword">
 							</div>
 						<div class="form_button js-loginView-register-submit">
 							<button>Register</button>
 						</div>
 					</form>
+					<div class="login_footer">
+						<p>Have an account: <a href="#" class="js-loginView-go-to-login" id="js-loginView-form-register"> Login </a></p>
+					</div>
 				</form>
 			</div>
 		</div>

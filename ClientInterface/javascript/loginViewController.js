@@ -1,35 +1,61 @@
+var loginViewController = function (params) {
+    var $params = $(params);
+    var loginViewController = {
+        reference: $params,
+        loginView: {
+            body: $params.find('.js-loginView-login'),
+            username: $params.find('.js-loginView-login-username'),
+            password: $params.find('.js-loginView-login-password'),
+            submit: $params.find('.js-loginView-login-submit'),
+            toRegister: $params.find('.js-loginView-new-account'),
+            hide: function(view){
+                if($(view).hasClass('js-loginView-login--fadeIn')) $(view).removeClass('js-loginView-login--fadeIn')
+                $(view).addClass(' js-loginView-login--fadeOut');
+            },
+            show: function(view){
+                $(view).removeClass('js-loginView-login--fadeOut').addClass(' js-loginView-login--fadeIn')
+            }
+        },
+        registerView: {
+            body: $params.find('.js-loginView-register'),
+            email: $params.find('.js-loginView-register-mail'),
+            password: $params.find('.js-loginView-register-password'),
+            repassword: $params.find('.js-loginView-register-repassword'),
+            toLogin: $params.find('.js-loginView-go-to-login'),
+            hide: function(view){
+                $(view).removeClass('js-loginView-register--fadeIn').addClass(' js-loginView-register--fadeOut');
+            },
+            show: function(view){
+                if($(view).hasClass('js-loginView-register--fadeOut')) $(view).removeClass('js-loginView-register--fadeOut')
+                $(view).addClass(' js-loginView-register--fadeIn')
+            }
+        },
 
-(function(){
-    
+        
+    }
+
+    console.log(loginViewController.loginView.toRegister);
    
 
-    console.log(login);
-    console.log(js_loginView_login);
-
-    document.querySelector('#login').addEventListener('click', function(e) {
-        e.preventDefault();
-        let data = {};
-        data.username = document.getElementById("username").value;
-        data.password = document.getElementById("password").value;
-    
-        const {ipcRenderer} = require('electron')
-    
-        // send username to main.js 
-        ipcRenderer.send('form-submission', data );
-        
-        ipcRenderer.on("login-success", (event, arg) => {
-            console.log(arg);
-            document.getElementById("show_username").innerHTML = arg.username;
-            document.getElementById("show_password").innerHTML = arg.password;
-            document.getElementById("profile").style.display = "block";
-            document.getElementById("login_section").style.display = "none";
-        })
+    $(loginViewController.loginView.toRegister).click(function (event) {
+        event.preventDefault();
+        setTimeout(() => {
+            loginViewController.registerView.show(loginViewController.registerView.body);
+        }, 250)
+        loginViewController.loginView.hide(loginViewController.loginView.body);
     });
 
-    document.querySelector("#js-loginView-form-register").addEventListener("click", function(e) {
-        e.preventDefault();
-        console.log(js_loginView_login);
-        js_loginView_login.className += ' js-loginView-login--hide';
-        js_loginView_register.className = 'js-loginView-register';
+    $(loginViewController.registerView.toLogin).click(function(event) {
+        event.preventDefault();
+        setTimeout(() => {
+            loginViewController.loginView.show(loginViewController.loginView.body);
+        }, 500)
+        loginViewController.registerView.hide(loginViewController.registerView.body);
+    });
+}
+
+$('document').ready(function(){
+    $('.js-loginView-form').each(function () {
+        new loginViewController(this);
     })
-})();
+});
