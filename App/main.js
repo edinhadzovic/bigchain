@@ -35,7 +35,7 @@ async function createWindow () {
   mainWindow.maximize();
 
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../ClientInterface/views/loginView.html'),
+    pathname: path.join(__dirname, '../ClientInterface/views/mainView.html'),
     protocol: 'file:',
     slashes: true
   }))

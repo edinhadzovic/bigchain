@@ -1,0 +1,41 @@
+.js-homeView-box  {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+}
+
+
+.js-homeView-navigation {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 150px;
+    height: 100%;
+    background-color: brown;
+    color: black;
+    z-index: 2;
+}
+
+.js-homeView-navigation-item {
+    text-decoration: none;
+    position: relative;
+    z-index: 3;
+    display: block;
+    padding: 20px 15px;
+    background-color: brown;
+    color: white;
+    border-bottom: 1px solid black; 
+    transition: background 0.75s ease;
+}
+
+
+.js-homeView-navigation-item:hover {
+    background-color: red;
+}
+
+
+.js-homeView-navigation-item-subitem {
+    position: absolute;
+    z-index: 0;
+    
+}

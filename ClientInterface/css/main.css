@@ -1,5 +1,13 @@
 @import 'fonts.css';
 @import 'login.css';
+@import 'home.css';
+
+body,html{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
 
 body {
     font-family: 'Roboto Mono', monospace;
