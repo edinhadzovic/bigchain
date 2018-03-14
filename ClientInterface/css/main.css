@@ -86,3 +86,8 @@ body {
 .display-inline {
     display: inline-block;
 }
+
+.login-background {
+    background: url('../images/bg_loginView.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
