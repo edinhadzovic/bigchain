@@ -30,12 +30,18 @@
         data.password = document.getElementById("reg_password").value;
         data.password_rep = document.getElementById("password_rep").value;
     
-        const {ipcRenderer} = require('electron')
+        const {ipcRenderer} = require('electron');
+
+        var temp_data = {
+            email: "test@gmail.com",
+            password: "Manchester99!",
+            password_rep: "Manchester99!"
+        }
     
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         
-        ipcRenderer.on("reg-success", (event, arg) => {
+        ipcRenderer.on("register-success", (event, arg) => {
             console.log(arg);
             document.getElementById("show_username").innerHTML = arg.username;
             document.getElementById("profile").style.display = "block";
@@ -50,26 +56,3 @@
         js_loginView_register.className = 'js-loginView-register';
     })
 })();
-
-
- // let data = {};
- //        data.email = document.getElementById("email").value;
- //        data.password = document.getElementById("reg_password").value;
- //        data.password_rep = document.getElementById("password_rep").value;
-    
- //        const {ipcRenderer} = require('electron')
-    
- //        // send registration data to main.js 
- //        ipcRenderer.send('register-submission');
-        
- //        ipcRenderer.on("register-success", (event, arg) => {
- //            console.log(arg);
- //            document.getElementById("show_username").innerHTML = arg.username;
- //            document.getElementById("profile").style.display = "block";
- //            document.getElementById("login_section").style.display = "none";
- //        })
-
- //        ipcRenderer.on("register-failed", (event, err) => {
- //            for (var i = 0; i < err.length; i++) {
- //                console.log(err[i]);
- //            }

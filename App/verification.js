@@ -6,7 +6,7 @@ const directory = path.join(__dirname, '../temp/');
 
 module.exports = {
 	verify: function(data) {
-
+		console.log("New: ", data);
 		return new Promise((resolve, reject) => {
 			if(validator.isEmpty(data.email)) {
 				reject({
@@ -41,7 +41,7 @@ module.exports = {
 			// Extra password check
 			this.extra_check(data.password, data.password_rep).then((result) => {
 				//then ako je pozvan resolve(data)
-				resolve(data);
+				resolve(true);
 			}).catch((err) => {
 				err => console.log(e);
 				resolve(err);
@@ -125,7 +125,9 @@ module.exports = {
 				}
 	
 			}
-	
+			
+			console.log("HAAAAAAAAAAAAAAAAALOOOOOOOOOOOOOOO", data);
+
 			// No white spaces for the password and atleast one number, special sign and uppercase letter
 			if (whitespaceCount == 0 && numberCount >= 1 && specialSignCount >= 1 && upperCaseCount >=1)
 			{

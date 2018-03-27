@@ -27,7 +27,7 @@ module.exports = {
 		else {
 		    console.log("Storing data into file /tmp/test");
 		    
-		    path_dir = path.join(__dirname, '../../temp/test'+ user_count);
+		    path_dir = path.join(__dirname, '../temp/test'+ user_count);
 		    fs.writeFile(path_dir, util.inspect([data.email, data.password]), function(error) {
 		    
 		    if(error) {

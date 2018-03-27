@@ -1,4 +1,6 @@
 const electron = require('electron');
+const path = require('path');
+const url = require('url');
 
 // Module to control application life.
 const app = electron.app;
@@ -7,15 +9,14 @@ const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const ipcMain = electron.ipcMain;
 
-const path = require('path')
-const url = require('url')
 
-var verification = require( path.resolve( __dirname, "./verification.js" ))
-var data_cryption = require('../ClientInterface/javascript/data_cryption')
 
+var verification = require( path.resolve( __dirname, "./verification.js" ));
+//var data_cryption = require('../ClientInterface/javascript/data_cryption');
+var User = require('./lib/User');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
 async function createWindow () {
   try {
@@ -43,14 +44,14 @@ async function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
+    mainWindow = null;
   })
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -65,7 +66,7 @@ app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow()
+    createWindow();
   }
 })
 
@@ -78,17 +79,15 @@ ipcMain.on("login-submission", function(event, data) {
 });
 
 ipcMain.on("register-submission", async function(event, data) {
-
-
-  let err = await check_val(data);
-  console.log(err);
-  //check_val(data, isStored, err);
+  let new_user = new User();
+  let result = await new_user.generateUser(data);
+  //check_val(data, isStored, result.success);
 
   // TODO: THIS FUNCTION HAS TO WAIT FOR CHECK_VAL TO BE FINISHED!
   // HAVE NO IDEA WHY ITS NOT WORKING ...
   // 
   // If it's stored return success, if not return fail with errors
-  if (!err) {
+  if (result.success) {
     console.log("status success");
     event.sender.send("register-success");
   } 
@@ -97,31 +96,3 @@ ipcMain.on("register-submission", async function(event, data) {
     event.sender.send("register-failed");
   }
 });
-
-
-let check_val = (data) => {
-  return new Promise((resolve, reject) => {
-    console.log('Starting the verification of the user ');
-    let success = verification.verify(data).then((result) => {
-    
-      if(result.error === true){
-         resolve(result);
-      } else {
-        let success = create_dir(result);
-        console.log(success);
-        resolve(null); // Mozda te erroer vrati
-      }
-    }).catch(function(error){
-        error => console.log(e);
-        resolve(error);
-      });
-  });
-}
-
-let create_dir = (data) => {
-  return new Promise((resolve, reject) => {
-    data_cryption.pepper(data).then((result) => {
-      //console.log(result);
-    }).catch(e => console.log(e));
-  });
-}; 
