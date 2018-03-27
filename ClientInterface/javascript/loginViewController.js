@@ -54,7 +54,7 @@ var loginViewController = function (params) {
     });
 }
 
-$('document').ready(function(){
+$(document).ready(function(){
     $('.js-loginView-form').each(function () {
         new loginViewController(this);
     })

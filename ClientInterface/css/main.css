@@ -14,6 +14,7 @@ body {
     font-weight: 200;
     background-color: #a3c6ff;
     color: black;
+    position: relative;
 }
 
 .login_header {

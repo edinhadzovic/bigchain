@@ -1,4 +1,5 @@
 const electron = require('electron');
+const bigchain = require('./wallets/dgb/bigchain');
 
 // Module to control application life.
 const app = electron.app;
@@ -10,11 +11,11 @@ const ipcMain = electron.ipcMain;
 const path = require('path')
 const url = require('url')
 
-var data_cryption = require('../ClientInterface/javascript/data_cryption')
+var data_cryption = require('../ClientInterface/javascript/data_cryption');
 app.commandLine.appendSwitch('disable-smooth-scrolling');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
 async function createWindow () {
   try {
