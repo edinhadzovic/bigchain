@@ -39,7 +39,7 @@
         }
     
         // send username to main.js 
-        ipcRenderer.send('register-submission', data );
+        ipcRenderer.send('register-submission', temp_data );
         
         ipcRenderer.on("register-success", (event, arg) => {
             console.log(arg);

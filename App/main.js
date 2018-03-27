@@ -14,6 +14,7 @@ const ipcMain = electron.ipcMain;
 var verification = require( path.resolve( __dirname, "./verification.js" ));
 //var data_cryption = require('../ClientInterface/javascript/data_cryption');
 var User = require('./lib/User');
+var message = require('./lib/message');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -79,20 +80,18 @@ ipcMain.on("login-submission", function(event, data) {
 });
 
 ipcMain.on("register-submission", async function(event, data) {
+  console.log(message.main, 'Request for creation of new user.');
   let new_user = new User();
   let result = await new_user.generateUser(data);
-  //check_val(data, isStored, result.success);
 
-  // TODO: THIS FUNCTION HAS TO WAIT FOR CHECK_VAL TO BE FINISHED!
-  // HAVE NO IDEA WHY ITS NOT WORKING ...
-  // 
-  // If it's stored return success, if not return fail with errors
   if (result.success) {
-    console.log("status success");
+    console.log(message.main, "Status success!");
     event.sender.send("register-success");
+    console.log(' ');
   } 
   else {
-    console.log("status failed");
+    console.log(message.main, "Status failed!");
     event.sender.send("register-failed");
+    console.log(' '); 
   }
 });

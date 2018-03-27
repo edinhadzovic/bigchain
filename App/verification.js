@@ -4,65 +4,53 @@ const path = require('path');
 
 const directory = path.join(__dirname, '../temp/');
 
+var message = require('./lib/message');
+
 module.exports = {
 	verify: function(data) {
-		console.log("New: ", data);
+		console.log(message.verify, 'Starting the process of data validation.');
 		return new Promise((resolve, reject) => {
 			if(validator.isEmpty(data.email)) {
 				reject({
 					error: true,
-					error_type: "email field empty"
+					error_type: "Email field empty."
 				});
-				//err.push("email field empty");
 			}
 			if(validator.isEmpty(data.password)) {
 				reject({
 					error: true,
-					error_type: "password field is empty"
+					error_type: "Password field is empty."
 				});
-				err.push("password field is empty");
 			}
 			if(validator.isEmpty(data.password_rep)) {
 				reject({
 					error: true,
-					error_type: "password field is empty"
+					error_type: "Confirm the password."
 				});
 			}
-			
-			// Verify Email address 
 			if(!validator.isEmail(data.email)) {
 				reject({
 					error: true,
-					error_type: "Email is not an email"
+					error_type: "Email is not an email."
 				});
 			}
-			
-			let success;
-			// Extra password check
+
 			this.extra_check(data.password, data.password_rep).then((result) => {
-				//then ako je pozvan resolve(data)
-				resolve(true);
 			}).catch((err) => {
-				err => console.log(e);
-				resolve(err);
-				//nesto uradi snjim - ako je pozvano reject(data);
+				reject(err);
 			})
 
+			this.does_exist(data).then((result)=>{
+				resolve(true);
+			}).catch((err) => {
+				reject(err);
+			});
 			
 		});
-		
-
-
-		// ---------------------
-		// TODO: Check does user already exist
-		// ---------------------
-
-		//this.does_exist(data);
 
 	},
 
-	// Special checks for the passwords
-	// Password has to be strong
+
 	extra_check: function(data, data_rep) {
 		return new Promise((resolve, reject) => {
 
@@ -70,7 +58,7 @@ module.exports = {
 			{
 				reject({
 					error: true,
-					error_type: "password has to be 8-15 digit long"
+					error_type: "Password has to be 8-15 digit long."
 				});
 			}
 	
@@ -82,10 +70,9 @@ module.exports = {
 					}
 				}
 				if (difCount != 0) {
-					console.log("aa ovde?");
 					reject({
 						error: true,
-						error_type: "passwords do not match"
+						error_type: "Passwords do not match."
 					});
 				} 
 	
@@ -95,7 +82,7 @@ module.exports = {
 				reject ({
 
 					error: true,
-					error_type: "passwords do not match"
+					error_type: "Passwords do not match."
 				});
 			}
 
@@ -125,20 +112,18 @@ module.exports = {
 				}
 	
 			}
-			
-			console.log("HAAAAAAAAAAAAAAAAALOOOOOOOOOOOOOOO", data);
 
 			// No white spaces for the password and atleast one number, special sign and uppercase letter
 			if (whitespaceCount == 0 && numberCount >= 1 && specialSignCount >= 1 && upperCaseCount >=1)
 			{
-				console.log('Everything went well, prepare for storing...');
+				console.log(message.verify, 'Everything went well, prepare for storing...');
 				resolve(true);
 			}
 			else
 			{	
 				reject ({
 					error: true,
-					error_type: "password has to contain 1 number, 1 special sign, 1 upper case letter"
+					error_type: "Password has to contain 1 number, 1 special sign, 1 upper case letter."
 				});
 			}
 		});
@@ -146,22 +131,46 @@ module.exports = {
 
     // -------------------------
 	// TODO: implement the function
+	/*
+		OVAKO:
+		ZNACI KAD NE STAVIM RESOLVE(TRUE NA KRAJ) LOGICNO NIKADA SE NE VRATI
+		AKO STAVIM RESOLVE TRUE UVIJEK JE TRE I NIKADA OVAJ KURCEV REJECT U OTVARANJU FAJL NE PREPOZNA
+
+		ISTO SRANJE MIS E DESAVA ZNACI NA LINIJI 44 I 51 KAD POZIVAM OVE DVE FUNKCIJE NIKADA NECE DA PREKINE OVA
+		KURCINA REJECT, KADA BI TREBALA, EVO NPR KAD POGRIJESIM PASSWORD A UNESEM GA NA TRENUTNOM STANJU ON CE PRODUZITI DALJE
+		NECE PRESTATI A TREBAO BI REJECT SA LINIJE 133 ILI BILO KOJI REJECT IZ FUNKCIJE EXTRA_CHECKS DA RADI JEBEM LI MU MAJKU U PICKU
+		ETO TOLIKO OD MENE NISAM MOGAO VISE ENGLESKOG
+
+
+	*/
 	// -------------------------
 	does_exist: function (data) {
 		return new Promise((resolve, reject) => {
-			resolve(true);
-		});
 		// open directory and check for usernames
-		fs.readdir(directory, (err, files) => {
-		  for (var i = 0; i < files.length; i++)
-		  {
-		  	filePath = path.join(__dirname, '../temp/' + files[i])
-		  	//console.log(i);
-			  let content = fs.readFileSync(filePath, 'utf8');
-			  //if(content) console.log(content);
-			  return true;
-		  }
-		});
+			fs.readdir(directory, (err, files) => {
+				if (err) throw err;
+			  	for (var i = 0; i < files.length; i++)
+			  	{
+			  		filePath = path.join(__dirname, '../temp/' + files[i])
+			  	
+				  	let result = fs.readFileSync(filePath, 'utf8');
+				  	var val = "'";
+				  	var cut = result.split(val);
 
+				  	if (data.email == cut[1])
+				  	{
+	  					console.log(message.verify, "Emails match, registration failed.");
+				  		reject ({
+							error: true,
+							error_type: "There is already a user with this email."
+						});
+						break;
+				  	}
+			  	}  	
+			});
+			console.log(message.verify, "Currently no user with this email.");
+			resolve(true);
+
+		});
 	}
 };

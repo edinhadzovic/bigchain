@@ -1,5 +1,6 @@
 let verification = require('../verification');
-let data_encryption = require('../data_cryption');
+let data_encryption = require('../store');
+var message = require('./message');
 
 //_constructor
 let User = function(){};
@@ -7,7 +8,7 @@ let User = function(){};
 
 User.prototype.save = async function(user){
   let result = await data_encryption.pepper(user);
-  if(!result) throw({success: false, message: "Something want wrong with storing the data"});
+  if(!result) throw({success: false, message: "Something want wrong with storing the data."});
   return result;
 };
 
@@ -25,7 +26,6 @@ User.prototype.checkArguments = async function(user){
 User.prototype.generateUser = async function(user){
   try{
     let validation = await this.checkArguments(user);
-    console.log("validation ok? ", validation);
     if(validation === true) {
       let new_user = {};
       new_user.success = true;
@@ -34,7 +34,7 @@ User.prototype.generateUser = async function(user){
       return new_user;
     }
   } catch(err) {
-    console.log("Our error handling", err);
+    console.log(message.user, "Error event: ", err.error_type);
     return err;
   }
 };
