@@ -13,5 +13,13 @@ User.prototype.getEmail = function() {
   return this._email;
 };
 
+User.prototype.setState = function(state) {
+  this._state = state;
+};
+
+User.prototype.getEmail = function() {
+  return this._email;
+}
+
 
 module.exports = User;

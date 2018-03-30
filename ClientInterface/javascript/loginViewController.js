@@ -65,12 +65,16 @@ var loginViewController = function (params) {
         ipcRenderer.send('login-submission', data );
         
         ipcRenderer.on("login-success", (event, arg) => {
-            console.log(arg); 
             let user = new client(arg);
             user.status();
-            document.getElementById("show_username").innerHTML = arg.email;
-            document.getElementById("profile").style.display = "block";
-            document.getElementById("js_loginView_login").style.display = "none";
+            loginViewController.reference.fadeOut(500, function(){
+                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                    user.setState(1);
+                    user.status();
+                    console.log(user);
+                    new homeViewController($('.js-homeView-box'), user); 
+                });
+            });
         });
 
         ipcRenderer.on('login-fail', (event, arg) => {
@@ -108,20 +112,28 @@ var loginViewController = function (params) {
     });
 };
 
+
 $('document').ready(function(){
     $('.js-loginView-form').each(function () {
         new loginViewController(this);
     });
 });
 
-
-
-var homeViewController = function (params) {
-    
+var homeViewController = function (params, user) {
+    console.log(user);
+    var $params = params;
+    var homeViewController = {
+        active: function(user) {
+            $('.js-homeView-profile-name').text(user.getEmail());
+        }
+    };
+    homeViewController.active(user);
 };
 
+/*
 $('document').ready(function(){
     $('.js-homeView-box').each(function () {
         new homeViewController(this);
     })
 });
+*/
