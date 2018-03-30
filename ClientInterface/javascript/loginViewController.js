@@ -77,15 +77,15 @@ var loginViewController = function (params) {
             });
         });
 
-        ipcRenderer.on('login-fail', (event, arg) => {
+        ipcRenderer.on('login-failed', (event, arg) => {
             if(arg.type === 'ERR_PASSWORD_WRONG') {
 				document.getElementById('username').style.border = "2px solid #d1d1d1";
 				document.getElementById('password').style.border = "2px solid red";
             }
 
             if(arg.type === 'ERR_NOT_VALID_EMAIL') {
-				document.getElementById('password').style.border = '2px solid #d1d1d1';
-                document.getElementById('username').style.border = '2px solid red';  
+				document.getElementById('password').style.border = "2px solid #d1d1d1";
+                document.getElementById('username').style.border = "2px solid red";  
             }
         });
     });
@@ -103,12 +103,41 @@ var loginViewController = function (params) {
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         
-        ipcRenderer.on("register-success", (event, arg) => {
-            console.log(arg);
+/*        ipcRenderer.on("register-success", (event, arg) => {
             document.getElementById("show_username").innerHTML = arg.username;
             document.getElementById("profile").style.display = "block";
             document.getElementById("login_section").style.display = "none";
         });
+*/
+        ipcRenderer.on('register-success', (event, user) => {
+            document.getElementById('email').style.border = "2px solid green";
+            document.getElementById('password_rep').style.border = "2px solid green";
+            document.getElementById('reg_password').style.border = "2px solid green";
+            
+
+        });
+
+        ipcRenderer.on('register-failed', (event, err) => {
+
+            if(err.type === 'ERR_PASSWORD_WRONG' || err.type === 'ERR_PASSWORD_FIELD_EMPTY' || 
+                err.type === 'ERR_PASSWORD_TO_SHORT' || err.type === 'ERR_PASSWORD_TO_SIMPLE') {
+                document.getElementById('email').style.border = "2px solid #d1d1d1";
+                document.getElementById('password_rep').style.border = "2px solid #d1d1d1";
+                document.getElementById('reg_password').style.border = "2px solid red";
+            }
+
+            if(err.type === 'ERR_NOT_VALID_EMAIL' || err.type === 'ERR_EMAIL_FIELD_EMPTY' ||
+                err.type === 'ERR_EMAIL_TAKEN') {
+                document.getElementById('reg_password').style.border = '2px solid #d1d1d1';
+                document.getElementById('password_rep').style.border = '2px solid #d1d1d1';
+                document.getElementById('email').style.border = '2px solid red';  
+            }
+            if(err.type === 'ERR_PASSWORD_REP_FIELD_EMPTY' || err.type === 'ERR_PASSWORD_DO_NOT_MATCH') {
+                document.getElementById('reg_password').style.border = '2px solid #d1d1d1';
+                document.getElementById('password_rep').style.border = '2px solid red';
+                document.getElementById('email').style.border = '2px solid #d1d1d1';  
+            }
+        })
     });
 };
 

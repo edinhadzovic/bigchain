@@ -95,10 +95,12 @@ ipcMain.on("login-submission", async function(event, data) {
   let user = await new User().login(data);
 
   if(user.success) {
+    console.log(message.main, "User connected successfully!");
     event.sender.send("login-success", user.user);
   } else {
-    console.log(message.main , user);
-    event.sender.send("login-fail", user);
+    console.log(message.main, user);
+    console.log(message.main, 'Login failed');
+    event.sender.send("login-failed", user);
   }
   
 });
@@ -110,12 +112,12 @@ ipcMain.on("register-submission", async function(event, data) {
 
   if (result.success) {
     console.log(message.main, "Status success!");
-    event.sender.send("register-success");
+    event.sender.send("register-success", result);
     console.log(' ');
   } 
   else {
     console.log(message.main, "Status failed!");
-    event.sender.send("register-failed");
+    event.sender.send("register-failed", result);
     console.log(' '); 
   }
 });

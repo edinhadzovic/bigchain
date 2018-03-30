@@ -36,8 +36,8 @@ User.prototype.generateUser = async function(user){
       return new_user;
     }
   } catch(err) {
-    console.log(err);
-    console.log(message.user, "Error event: ", err.error_type);
+    console.log(message.user, err);
+    console.log(message.user, "Error event: ", err.type);
     return err;
   }
 };
@@ -45,6 +45,7 @@ User.prototype.generateUser = async function(user){
 User.prototype.login = async function(data) {
   try { 
     let user = await data_encryption.read(data);
+    console.log(message.user, 'Checking is password a correct...');
     let password_check = await bcryptjs.compare(data.password, user.user.password);
     if(!password_check) {
       return (error.ERR_PASSWORD_WRONG);

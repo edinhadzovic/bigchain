@@ -5,34 +5,23 @@ const path = require('path');
 const directory = path.join(__dirname, '../temp/');
 
 var message = require('./lib/Message');
+const error = require('./error/error');
 
 module.exports = {
 	verify: function(data) {
 		console.log(message.verify, 'Starting the process of data validation.');
 		return new Promise((resolve, reject) => {
 			if(validator.isEmpty(data.email)) {
-				reject({
-					error: true,
-					error_type: "Email field empty."
-				});
+				reject(error.ERR_EMAIL_FIELD_EMPTY);
 			}
 			if(validator.isEmpty(data.password)) {
-				reject({
-					error: true,
-					error_type: "Password field is empty."
-				});
+				reject(error.ERR_PASSWORD_FIELD_EMPTY);
 			}
 			if(validator.isEmpty(data.password_rep)) {
-				reject({
-					error: true,
-					error_type: "Confirm the password."
-				});
+				reject(error.ERR_PASSWORD_REP_FIELD_EMPTY);
 			}
 			if(!validator.isEmail(data.email)) {
-				reject({
-					error: true,
-					error_type: "Email is not an email."
-				});
+				reject(error.ERR_NOT_VALID_EMAIL);
 			}
 
 			this.extra_check(data.password, data.password_rep).then((result) => {
@@ -56,10 +45,7 @@ module.exports = {
 
 			if(data.length < 8 || data.length > 16)
 			{
-				reject({
-					error: true,
-					error_type: "Password has to be 8-15 digit long."
-				});
+				reject(error.ERR_PASSWORD_TO_SHORT);
 			}
 	
 			if(data.length == data_rep.length) {
@@ -70,20 +56,12 @@ module.exports = {
 					}
 				}
 				if (difCount != 0) {
-					reject({
-						error: true,
-						error_type: "Passwords do not match."
-					});
+					reject(error.ERR_PASSWORD_DO_NOT_MATCH);
 				} 
 	
 			}	
 			else {
-
-				reject ({
-
-					error: true,
-					error_type: "Passwords do not match."
-				});
+				reject (error.ERR_PASSWORD_DO_NOT_MATCH);
 			}
 
 			
@@ -121,10 +99,7 @@ module.exports = {
 			}
 			else
 			{	
-				reject ({
-					error: true,
-					error_type: "Password has to contain 1 number, 1 special sign, 1 upper case letter."
-				});
+				reject (error.ERR_PASSWORD_TO_SIMPLE);
 			}
 		});
 	},
@@ -161,16 +136,12 @@ module.exports = {
 				  	if (data.email === cut[1])
 				  	{
 							store = false;
-	  					console.log(message.verify, "Emails match, registration failed.");
-				  		reject ({
-							error: true,
-							error_type: "There is already a user with this email."
-						});
+	  					console.log(message.verify, "Email taken, registration failed.");
+				  		reject (error.ERR_EMAIL_TAKEN);
 						break;
 				  	}
 					}
 					if(store) {
-						console.log(message.verify, "Currently no user with this email.");
 						resolve(true); 
 					}
 			});

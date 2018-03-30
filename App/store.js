@@ -22,6 +22,7 @@ module.exports = {
 
 	read: function(user) {
 		return new Promise((resolve, reject) => {
+			console.log(message.store, 'Checking is user registered...')
 			let found = false;
 			fs.readdir(directory, (err, files) => {
 				if(err) reject(error.ERR_DB_READING);
