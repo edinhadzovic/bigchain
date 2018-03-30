@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
-var message = require('./lib/message');
+var message = require('./lib/Message');
 const directory = path.join(__dirname, '../temp/');
 
 // -------------------------------------

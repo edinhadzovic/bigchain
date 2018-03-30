@@ -4,7 +4,7 @@ const path = require('path');
 
 const directory = path.join(__dirname, '../temp/');
 
-var message = require('./lib/message');
+var message = require('./lib/Message');
 
 module.exports = {
 	verify: function(data) {

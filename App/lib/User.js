@@ -1,6 +1,6 @@
 let verification = require('../verification');
 let data_encryption = require('../store');
-var message = require('./message');
+var message = require('./Message');
 
 //_constructor
 let User = function(){};

@@ -14,7 +14,7 @@ const ipcMain = electron.ipcMain;
 var verification = require( path.resolve( __dirname, "./verification.js" ));
 //var data_cryption = require('../ClientInterface/javascript/data_cryption');
 var User = require('./lib/User');
-var message = require('./lib/message');
+var message = require('./lib/Message');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
