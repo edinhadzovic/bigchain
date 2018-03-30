@@ -9,11 +9,11 @@ var loginViewController = function (params) {
             submit: $params.find('.js-loginView-login-submit'),
             toRegister: $params.find('.js-loginView-new-account'),
             hide: function(view){
-                if($(view).hasClass('js-loginView-login--fadeIn')) $(view).removeClass('js-loginView-login--fadeIn')
+                if($(view).hasClass('js-loginView-login--fadeIn')) $(view).removeClass('js-loginView-login--fadeIn');
                 $(view).addClass(' js-loginView-login--fadeOut');
             },
             show: function(view){
-                $(view).removeClass('js-loginView-login--fadeOut').addClass(' js-loginView-login--fadeIn')
+                $(view).removeClass('js-loginView-login--fadeOut').addClass(' js-loginView-login--fadeIn');
             }
         },
         registerView: {
@@ -21,27 +21,25 @@ var loginViewController = function (params) {
             email: $params.find('.js-loginView-register-mail'),
             password: $params.find('.js-loginView-register-password'),
             repassword: $params.find('.js-loginView-register-repassword'),
+            submit: $params.find('.js-loginView-js-loginView-register-submit'),
             toLogin: $params.find('.js-loginView-go-to-login'),
             hide: function(view){
                 $(view).removeClass('js-loginView-register--fadeIn').addClass(' js-loginView-register--fadeOut');
             },
             show: function(view){
-                if($(view).hasClass('js-loginView-register--fadeOut')) $(view).removeClass('js-loginView-register--fadeOut')
-                $(view).addClass(' js-loginView-register--fadeIn')
+                if($(view).hasClass('js-loginView-register--fadeOut')) $(view).removeClass('js-loginView-register--fadeOut');
+                $(view).addClass(' js-loginView-register--fadeIn');
             }
-        },
-
-        
-    }
-
-    console.log(loginViewController.loginView.toRegister);
+        },  
+    };
    
 
     $(loginViewController.loginView.toRegister).click(function (event) {
         event.preventDefault();
+        console.log("hoolllaaa");
         setTimeout(() => {
             loginViewController.registerView.show(loginViewController.registerView.body);
-        }, 250)
+        }, 250);
         loginViewController.loginView.hide(loginViewController.loginView.body);
     });
 
@@ -49,13 +47,66 @@ var loginViewController = function (params) {
         event.preventDefault();
         setTimeout(() => {
             loginViewController.loginView.show(loginViewController.loginView.body);
-        }, 500)
+        }, 500);
         loginViewController.registerView.hide(loginViewController.registerView.body);
     });
-}
+
+    $(loginViewController.loginView.submit).click(function(event) {
+        event.preventDefault();
+        let data = {};
+        data.email = $(loginViewController.loginView.username).val();
+        data.password = $(loginViewController.loginView.password).val();
+        
+
+        const {ipcRenderer} = require('electron');
+
+        // send username to main.js 
+        ipcRenderer.send('login-submission', data );
+        
+        ipcRenderer.on("login-success", (event, arg) => {
+            console.log(arg); 
+            document.getElementById("show_username").innerHTML = arg.email;
+            document.getElementById("profile").style.display = "block";
+            document.getElementById("js_loginView_login").style.display = "none";
+        });
+
+        ipcRenderer.on('login-fail', (event, arg) => {
+			console.log("check", arg.type);
+            if(arg.type === 'ERR_PASSWORD_WRONG') {
+				document.getElementById('username').style.border = "2px solid #d1d1d1";
+				document.getElementById('password').style.border = "2px solid red";
+            }
+
+            if(arg.type === 'ERR_NOT_VALID_EMAIL') {
+				document.getElementById('password').style.border = '2px solid #d1d1d1';
+                document.getElementById('username').style.border = '2px solid red';  
+            }
+        });
+    });
+
+    $(loginViewController.registerView.submit).click(function(event){
+        event.preventDefault();
+        let data = {};
+        data.email = $(loginViewController.registerView.email).val();
+        data.password = $(loginViewController.registerView.password).val();
+        data.password_rep = $(loginViewController.registerView.password_rep).val();
+    
+        const {ipcRenderer} = require('electron');
+    
+        // send username to main.js 
+        ipcRenderer.send('register-submission', data );
+        
+        ipcRenderer.on("register-success", (event, arg) => {
+            console.log(arg);
+            document.getElementById("show_username").innerHTML = arg.username;
+            document.getElementById("profile").style.display = "block";
+            document.getElementById("login_section").style.display = "none";
+        });
+    });
+};
 
 $('document').ready(function(){
     $('.js-loginView-form').each(function () {
         new loginViewController(this);
-    })
+    });
 });
