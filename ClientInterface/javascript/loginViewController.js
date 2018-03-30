@@ -6,7 +6,7 @@
     document.querySelector('#login').addEventListener('click', function(e) {
         e.preventDefault();
         let data = {};
-        data.username = document.getElementById("username").value;
+        data.email = document.getElementById("username").value;
         data.password = document.getElementById("password").value;
     
 
@@ -18,14 +18,27 @@
         };
 
         // send username to main.js 
-        ipcRenderer.send('login-submission', temp_data );
+        ipcRenderer.send('login-submission', data );
         
         ipcRenderer.on("login-success", (event, arg) => {
-            console.log(arg);
+            console.log(arg); 
             document.getElementById("show_username").innerHTML = arg.email;
             document.getElementById("profile").style.display = "block";
             document.getElementById("js_loginView_login").style.display = "none";
-        })
+        });
+
+        ipcRenderer.on('login-fail', (event, arg) => {
+			console.log("check", arg.type);
+            if(arg.type === 'ERR_PASSWORD_WRONG') {
+				document.getElementById('username').style.border = "2px solid #d1d1d1";
+				document.getElementById('password').style.border = "2px solid red";
+            }
+
+            if(arg.type === 'ERR_NOT_VALID_EMAIL') {
+				document.getElementById('password').style.border = '2px solid #d1d1d1';
+                document.getElementById('username').style.border = '2px solid red';  
+            }
+        });
     });
 
     document.querySelector('#register').addEventListener('click', function(e) {
@@ -44,7 +57,7 @@
         };
     
         // send username to main.js 
-        ipcRenderer.send('register-submission', temp_data );
+        ipcRenderer.send('register-submission', data );
         
         ipcRenderer.on("register-success", (event, arg) => {
             console.log(arg);

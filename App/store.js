@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
+const error = require('./error/error');
 var message = require('./lib/Message');
 const directory = path.join(__dirname, '../temp');
 
@@ -23,10 +24,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			let found = false;
 			fs.readdir(directory, (err, files) => {
-				if(err) reject({
-					success: false,
-					message: "There was an error reading DB"
-				});
+				if(err) reject(error.ERR_DB_READING);
 
 				files.forEach(element => {
 					let file = fs.readFileSync(directory + '/' + element, 'utf8');
@@ -36,15 +34,13 @@ module.exports = {
 						let data = {};
 						data.success = found;
 						data.user = {
-							email: result[1]
+							email: result[1],
+							password: result[3]
 						};
 						resolve(data);
 					}
 				});
-				if(!found) reject({
-					success: false,
-					message: `Email: ${user.email}, is not in the DB`
-				});
+				if(!found) reject(error.ERR_NOT_VALID_EMAIL);
 			});
 		});
 	},
@@ -94,8 +90,8 @@ module.exports = {
 		var password = peper;
         bcryptjs.genSalt(10, (error, salt) => {
             bcryptjs.hash(password, salt, (error, hash) => {
-				data.password = hash;
-				callback(data);
+						data.password = hash;
+						callback(data);
             });
         });
 	},
@@ -106,7 +102,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 		console.log(message.store, "Starting with storing!");
 		console.log(message.store, "Pepper process...");
-		let peper = data.email + data.password;
+		let peper = data.password;
 		this.salt(data, peper, (data) => {
 			this.store(data, (result) => {
 

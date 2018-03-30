@@ -84,6 +84,7 @@ ipcMain.on("login-submission", async function(event, data) {
   if(user.success) {
     event.sender.send("login-success", user.user);
   } else {
+    console.log(message.main , user);
     event.sender.send("login-fail", user);
   }
   

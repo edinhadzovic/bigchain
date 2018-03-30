@@ -1,3 +1,5 @@
+const bcryptjs = require('bcryptjs');
+const error = require('./../error/error');
 let verification = require('../verification');
 let data_encryption = require('../store');
 var message = require('./Message');
@@ -40,11 +42,15 @@ User.prototype.generateUser = async function(user){
 };
 
 User.prototype.login = async function(data) {
-  try {
+  try { 
     let user = await data_encryption.read(data);
+    let password_check = await bcryptjs.compare(data.password, user.user.password);
+    if(!password_check) {
+      return (error.ERR_PASSWORD_WRONG);
+    } 
     return user;
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 
