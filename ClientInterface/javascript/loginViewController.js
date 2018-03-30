@@ -65,9 +65,6 @@ var loginViewController = function (params) {
         
         ipcRenderer.on("login-success", (event, arg) => {
             console.log(arg); 
-            document.getElementById("show_username").innerHTML = arg.email;
-            document.getElementById("profile").style.display = "block";
-            document.getElementById("js_loginView_login").style.display = "none";
         });
 
         ipcRenderer.on('login-fail', (event, arg) => {
@@ -111,4 +108,16 @@ $('document').ready(function(){
     $('.js-loginView-form').each(function () {
         new loginViewController(this);
     });
+});
+
+
+
+var homeViewController = function (params) {
+    
+};
+
+$('document').ready(function(){
+    $('.js-homeView-box').each(function () {
+        new homeViewController(this);
+    })
 });
