@@ -4,7 +4,7 @@ const path = require('path');
 const util = require('util');
 
 var message = require('./lib/Message');
-const directory = path.join(__dirname, '../temp/');
+const directory = path.join(__dirname, '../temp');
 
 // -------------------------------------
 // TODO: Not sure is this going to work when we make executable
@@ -23,10 +23,16 @@ module.exports = {
 	store: function(data, callback){
 		// ?? Should check how many users are already registered
 		// if more then 5 leave with error
-		fs.readdir(directory, (err, files) => {
-			if (err) throw err;
-			user_count = files.length;
-		});
+		let files = fs.readdirSync(directory);
+
+		if(files.constructor !== Array) {
+			throw({
+				success: false,
+				error: 'Wrong directory'
+			});
+		}
+
+		user_count = files.length;
 
 		if(user_count >= 5) {
 			console.log(message.store, "MAX AMOUNT OF USERS " + user_count + " REACHED!");
@@ -34,7 +40,7 @@ module.exports = {
 				error: true,
 				error_type: 'Registration failed, login into existing accounts.'
 			});
-		}
+		}	
 		else {
 		    console.log(message.store, "Storing data into file /tmp/test");
 		    

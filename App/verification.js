@@ -146,6 +146,7 @@ module.exports = {
 	// -------------------------
 	does_exist: function (data) {
 		return new Promise((resolve, reject) => {
+			let store = true;
 		// open directory and check for usernames
 			fs.readdir(directory, (err, files) => {
 				if (err) throw err;
@@ -155,10 +156,11 @@ module.exports = {
 			  	
 				  	let result = fs.readFileSync(filePath, 'utf8');
 				  	var val = "'";
-				  	var cut = result.split(val);
+						var cut = result.split(val);
 
-				  	if (data.email == cut[1])
+				  	if (data.email === cut[1])
 				  	{
+							store = false;
 	  					console.log(message.verify, "Emails match, registration failed.");
 				  		reject ({
 							error: true,
@@ -166,11 +168,12 @@ module.exports = {
 						});
 						break;
 				  	}
-			  	}  	
+					}
+					if(store) {
+						console.log(message.verify, "Currently no user with this email.");
+						resolve(true); 
+					}
 			});
-			console.log(message.verify, "Currently no user with this email.");
-			resolve(true);
-
 		});
 	}
 };
