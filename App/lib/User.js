@@ -36,6 +36,7 @@ User.prototype.generateUser = async function(user){
       return new_user;
     }
   } catch(err) {
+    console.log(err);
     console.log(message.user, "Error event: ", err.error_type);
     return err;
   }

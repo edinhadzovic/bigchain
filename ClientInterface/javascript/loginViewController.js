@@ -1,3 +1,5 @@
+const client = require('./../../App/client/User');
+
 var loginViewController = function (params) {
     var $params = $(params);
     var loginViewController = {
@@ -21,7 +23,7 @@ var loginViewController = function (params) {
             email: $params.find('.js-loginView-register-mail'),
             password: $params.find('.js-loginView-register-password'),
             repassword: $params.find('.js-loginView-register-repassword'),
-            submit: $params.find('.js-loginView-js-loginView-register-submit'),
+            submit: $params.find('.js-loginView-register-submit'),
             toLogin: $params.find('.js-loginView-go-to-login'),
             hide: function(view){
                 $(view).removeClass('js-loginView-register--fadeIn').addClass(' js-loginView-register--fadeOut');
@@ -36,7 +38,6 @@ var loginViewController = function (params) {
 
     $(loginViewController.loginView.toRegister).click(function (event) {
         event.preventDefault();
-        console.log("hoolllaaa");
         setTimeout(() => {
             loginViewController.registerView.show(loginViewController.registerView.body);
         }, 250);
@@ -65,13 +66,14 @@ var loginViewController = function (params) {
         
         ipcRenderer.on("login-success", (event, arg) => {
             console.log(arg); 
+            let user = new client(arg);
+            user.status();
             document.getElementById("show_username").innerHTML = arg.email;
             document.getElementById("profile").style.display = "block";
             document.getElementById("js_loginView_login").style.display = "none";
         });
 
         ipcRenderer.on('login-fail', (event, arg) => {
-			console.log("check", arg.type);
             if(arg.type === 'ERR_PASSWORD_WRONG') {
 				document.getElementById('username').style.border = "2px solid #d1d1d1";
 				document.getElementById('password').style.border = "2px solid red";
@@ -89,10 +91,11 @@ var loginViewController = function (params) {
         let data = {};
         data.email = $(loginViewController.registerView.email).val();
         data.password = $(loginViewController.registerView.password).val();
-        data.password_rep = $(loginViewController.registerView.password_rep).val();
+        data.password_rep = $(loginViewController.registerView.repassword).val();
     
         const {ipcRenderer} = require('electron');
     
+        console.log(data);
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         
