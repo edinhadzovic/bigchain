@@ -103,7 +103,8 @@ var loginViewController = function (params) {
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         
-/*        ipcRenderer.on("register-success", (event, arg) => {
+/*
+        ipcRenderer.on("register-success", (event, arg) => {
             document.getElementById("show_username").innerHTML = arg.username;
             document.getElementById("profile").style.display = "block";
             document.getElementById("login_section").style.display = "none";

@@ -10,6 +10,9 @@
   opacity: 1;
 }
 
+.js-homeView-mainContent{
+  display: flex;
+}
 
 .js-homeView-navigation {
   display: flex;
