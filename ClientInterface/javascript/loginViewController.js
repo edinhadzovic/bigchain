@@ -21,7 +21,7 @@ var loginViewController = function (params) {
             email: $params.find('.js-loginView-register-mail'),
             password: $params.find('.js-loginView-register-password'),
             repassword: $params.find('.js-loginView-register-repassword'),
-            submit: $params.find('.js-loginView-js-loginView-register-submit'),
+            submit: $params.find('.js-loginView-register-submit'),
             toLogin: $params.find('.js-loginView-go-to-login'),
             hide: function(view){
                 $(view).removeClass('js-loginView-register--fadeIn').addClass(' js-loginView-register--fadeOut');
@@ -89,7 +89,9 @@ var loginViewController = function (params) {
         let data = {};
         data.email = $(loginViewController.registerView.email).val();
         data.password = $(loginViewController.registerView.password).val();
-        data.password_rep = $(loginViewController.registerView.password_rep).val();
+        data.password_rep = $(loginViewController.registerView.repassword).val();
+
+        console.log(data);
     
         const {ipcRenderer} = require('electron');
     
