@@ -39,5 +39,13 @@ User.prototype.generateUser = async function(user){
   }
 };
 
+User.prototype.login = async function(data) {
+  try {
+    let user = await data_encryption.read(data);
+    return user;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 module.exports = User;

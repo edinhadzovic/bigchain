@@ -19,6 +19,35 @@ var user_count;
 
 module.exports = {
 
+	read: function(user) {
+		return new Promise((resolve, reject) => {
+			let found = false;
+			fs.readdir(directory, (err, files) => {
+				if(err) reject({
+					success: false,
+					message: "There was an error reading DB"
+				});
+
+				files.forEach(element => {
+					let file = fs.readFileSync(directory + '/' + element, 'utf8');
+					var result = file.split("'");
+					if(user.email === result[1]){
+						found = true;
+						let data = {};
+						data.success = found;
+						data.user = {
+							email: result[1]
+						};
+						resolve(data);
+					}
+				});
+				if(!found) reject({
+					success: false,
+					message: `Email: ${user.email}, is not in the DB`
+				});
+			});
+		});
+	},
 	// Store function stors data in file
 	store: function(data, callback){
 		// ?? Should check how many users are already registered

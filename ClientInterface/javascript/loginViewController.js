@@ -9,17 +9,22 @@
         data.username = document.getElementById("username").value;
         data.password = document.getElementById("password").value;
     
-        const {ipcRenderer} = require('electron')
-    
+
+        const {ipcRenderer} = require('electron');
+        
+        var temp_data = {
+            email: "test@gmail.com",
+            password: "Manchester99!"
+        };
+
         // send username to main.js 
-        ipcRenderer.send('form-submission', data );
+        ipcRenderer.send('login-submission', temp_data );
         
         ipcRenderer.on("login-success", (event, arg) => {
             console.log(arg);
-            document.getElementById("show_username").innerHTML = arg.username;
-            document.getElementById("show_password").innerHTML = arg.password;
+            document.getElementById("show_username").innerHTML = arg.email;
             document.getElementById("profile").style.display = "block";
-            document.getElementById("login_section").style.display = "none";
+            document.getElementById("js_loginView_login").style.display = "none";
         })
     });
 
@@ -36,7 +41,7 @@
             email: "test@gmail.com",
             password: "Manchester99!",
             password_rep: "Manchester99!"
-        }
+        };
     
         // send username to main.js 
         ipcRenderer.send('register-submission', temp_data );

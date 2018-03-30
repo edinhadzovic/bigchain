@@ -75,8 +75,18 @@ app.on('activate', function () {
 // code. You can also put them in separate files and require them here.
 
 //Getting user input
-ipcMain.on("login-submission", function(event, data) {
-  event.sender.send("login-success", data);
+ipcMain.on("login-submission", async function(event, data) {
+  
+  console.log(message.main, 'Request to login of a user');
+
+  let user = await new User().login(data);
+
+  if(user.success) {
+    event.sender.send("login-success", user.user);
+  } else {
+    event.sender.send("login-fail", user);
+  }
+  
 });
 
 ipcMain.on("register-submission", async function(event, data) {
