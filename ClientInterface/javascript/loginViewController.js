@@ -58,13 +58,10 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
         
-        let data_temp = {};
-        data_temp.email = 'jelena.radisa@yahoo.com';
-        data_temp.password = 'Profi?danac321';
         const {ipcRenderer} = require('electron');
 
         // send username to main.js 
-        ipcRenderer.send('login-submission', data_temp );
+        ipcRenderer.send('login-submission', data );
         
         ipcRenderer.on("login-success", (event, arg) => {
             let user = new client(arg);
@@ -150,13 +147,13 @@ var homeViewController = function (params, user) {
     var homeViewController = {
         reference: $params,
         personalInformation: {
-            body: $params.find('js-homeView-setting-row'),
-            first_name: $params.find('js-homeView-settings-input-first_name'),
-            last_name: $params.find('js-homeView-settings-input-last_name'),
-            gender: $params.find('js-homeView-setting-input-gender'),
-            birthday: $params.find('js-homeView-setting-input-birthday'),
-            phone: $params.find('js-homeView-setting-input-phone'),
-            personal_submit: $params.find('js-homeView-settings-input-pi-save'),
+            body: $params.find('.js-homeView-setting-row'),
+            first_name: $params.find('.js-homeView-settings-input-first_name'),
+            last_name: $params.find('.js-homeView-settings-input-last_name'),
+            gender: $params.find('.js-homeView-setting-input-gender'),
+            birthday: $params.find('.js-homeView-setting-input-birthday'),
+            phone: $params.find('.js-homeView-setting-input-phone'),
+            personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
         },
         active: function(user) {
             $('.js-homeView-profile-name').text(user.getEmail());
