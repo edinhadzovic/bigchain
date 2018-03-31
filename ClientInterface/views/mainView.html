@@ -67,14 +67,6 @@
 				</div>
 				<div>
 					<a href="#" class="js-homeView-navigation-item" type="request_wallet_plus">Wallet<span>+</span></a>
-					<div class="js-homeView-navigation-item-subitem">
-						<div>
-							<a href="#" class="js-homeView-navigation-btcWallet" type="request_wallet_bitcoin">Bitcoin</a>
-						</div>
-						<div>
-							<a href="#" class="js-homeView-navigation-dgbWallet" type="request_wallet_digibyte">Digibyte</a>
-						</div>
-					</div>
 				</div>
 				<div><a href="#" class="js-homeView-navigation-item" type="request_startup_plus">Startup<span>+</span></a></div>
 				<div><a href="#" class="js-homeView-navigation-item" type="request_manager_plus">Manager<span>+</span></a></div>
@@ -83,7 +75,7 @@
 			</div>
 			<div class="js-homeView-mainContent">
 				<!-- SETTINGS -->
-				<div class="js-homeView-settings">
+				<div class="js-homeView-settings hidden">
 					<h1>Settings</h1>
 					<nav class="js-homeView-setting-nav">
 						<a href="#" class="js-homeView-settings-nav-item" nav-data="personal">Personal Information</a>
@@ -164,9 +156,25 @@
 						
 					</div>
 				</div>
+				<!-- Wallet -->
+				<div class="js-homeView-wallet hidden">
+					<h1>Wallet+</h1>
+				</div>
+				<!-- Startup -->
+				<div class="js-homeView-startup hidden">
+					<h1>Startup+</h1>
+				</div>
+				<!-- Manager -->
+				<div class="js-homeView-manager hidden">
+					<h1>Manager++</h1>
+				</div>
+				<!-- File -->
+				<div class="js-homeView-file hidden">
+					<h1>File+</h1>
+				</div>
 			</div>
 		</div>
 
-		<script src='../javascript/loginViewController.js'></script>
+		<script src='../javascript/mainViewController.js'></script>
 	</body>
 </html>
