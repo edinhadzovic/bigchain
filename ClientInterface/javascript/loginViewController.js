@@ -103,13 +103,6 @@ var loginViewController = function (params) {
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         
-/*
-        ipcRenderer.on("register-success", (event, arg) => {
-            document.getElementById("show_username").innerHTML = arg.username;
-            document.getElementById("profile").style.display = "block";
-            document.getElementById("login_section").style.display = "none";
-        });
-*/
         ipcRenderer.on('register-success', (event, user) => {
             document.getElementById('email').style.border = "2px solid green";
             document.getElementById('password_rep').style.border = "2px solid green";
