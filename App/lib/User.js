@@ -1,7 +1,7 @@
 const bcryptjs = require('bcryptjs');
 const error = require('./../error/error');
 let verification = require('../verification');
-let data_encryption = require('../store');
+let store = require('../store');
 var message = require('./Message');
 
 //_constructor
@@ -9,7 +9,7 @@ let User = function(){};
 
 
 User.prototype.save = async function(user){
-  let result = await data_encryption.pepper(user);
+  let result = await store.pepper(user);
   if(!result) throw({success: false, message: "Something want wrong with storing the data."});
   return result;
 };
@@ -44,7 +44,7 @@ User.prototype.generateUser = async function(user){
 
 User.prototype.login = async function(data) {
   try { 
-    let user = await data_encryption.read(data);
+    let user = await store.read(data);
     console.log(message.user, 'Checking is password a correct...');
     let password_check = await bcryptjs.compare(data.password, user.user.password);
     if(!password_check) {
@@ -55,5 +55,23 @@ User.prototype.login = async function(data) {
     return err;
   }
 };
+
+User.prototype.restore = async function(current_user, data) {
+  try {
+    let result = await verification.personal_data(data);
+    if (result.error === true) {
+      return (result);
+    }
+    let res = await store.restore(current_user, data);
+    if (res === true) {
+      return (true);
+    } else {
+      return (res);
+    }
+
+  } catch (err) {
+    return err;
+  }
+}
 
 module.exports = User;

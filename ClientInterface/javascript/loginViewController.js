@@ -60,8 +60,12 @@ var loginViewController = function (params) {
         
         const {ipcRenderer} = require('electron');
 
+        let data_temp = {};
+        data_temp.email = 'jelena.radisa@yahoo.com';
+        data_temp.password = 'Profi?danac321';
+
         // send username to main.js 
-        ipcRenderer.send('login-submission', data );
+        ipcRenderer.send('login-submission', data_temp );
         
         ipcRenderer.on("login-success", (event, arg) => {
             let user = new client(arg);
@@ -173,9 +177,34 @@ var homeViewController = function (params, user) {
         const {ipcRenderer} = require('electron');
         console.log(data);
     
-        ipcRenderer.send('personal-submission', data );
+        ipcRenderer.send('personal-submission', data);
 
-        ipcRenderer.on('success');
+        ipcRenderer.on('store-failed', (event, err) => {
+            if(err.type === 'ERR_FIRST_NAME_MISSING') {
+                document.getElementById('first_name').style.border = '2px solid red';
+                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_LAST_NAME_MISSING') {
+                document.getElementById('last_name').style.border = '2px solid red';
+                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_PHONE_MISSING') {
+                document.getElementById('phone').style.border = '2px solid red';
+                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_BIRTHDAY_MISSING') {
+                document.getElementById('birthday').style.border = '2px solid red';
+                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone').style.border = '2px solid #d1d1d1';
+                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
+            }
+        });
     });
 
 

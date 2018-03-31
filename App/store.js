@@ -106,7 +106,6 @@ module.exports = {
 		let peper = data.password;
 		this.salt(data, peper, (data) => {
 			this.store(data, (result) => {
-
 				if (result != true) reject(result);
 				if(result === true) resolve(result);
 			});
@@ -114,5 +113,37 @@ module.exports = {
 		})
 	},
 
+	restore: function(current_user, data) {
+		return new Promise((resolve, reject) => {
+			console.log(message.store, 'Restoring process starting.');
+
+			let replaced = false;
+			fs.readdir(directory, (err, files) => {
+				if(err) reject(error.ERR_DB_READING);
+
+				files.forEach(element => {
+					let file = fs.readFileSync(directory + '/' + element, 'utf8');
+					var result = file.split("'");
+
+					if(current_user.email === result[1]){
+						var new_data = {
+							email: current_user.email,
+							password: current_user.password,
+							gender: data.gender,
+							first_name: data.first_name,
+							last_name: data.last_name,
+							birthday: data.birthday,
+							phone: data.phone,
+						}
+						fs.writeFileSync(directory + '/' + element, util.inspect([new_data.email, new_data.password, new_data.first_name,
+						 	new_data.last_name, new_data.gender, new_data.birthday, new_data.phone]));
+						if(err) reject(error.ERR_DB_READING);
+						replaced = true;
+						resolve(replaced);
+					}
+				});
+			});
+		})
+	},
 
 };

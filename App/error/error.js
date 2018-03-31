@@ -48,5 +48,25 @@ module.exports = {
     success: false,
     message: 'There is already a user with this email.',
     type: 'ERR_EMAIL_TAKEN'
-  }
+  },
+  ERR_FIRST_NAME_MISSING: {
+    success: false,
+    message: 'First name field is empty.',
+    type: 'ERR_FIRST_NAME_MISSING'
+  },
+  ERR_LAST_NAME_MISSING: {
+    success: false,
+    message: 'Last name field is empty.',
+    type: 'ERR_LAST_NAME_MISSING'
+  },
+  ERR_PHONE_MISSING: {
+    success: false,
+    message: 'Phone field is empty.',
+    type: 'ERR_PHONE_MISSING'
+  },
+  ERR_BIRTHDAY_MISSING: {
+    success: false,
+    message: 'Birthday field is empty.',
+    type: 'ERR_BIRTHDAY_MISSING'
+  },
 };

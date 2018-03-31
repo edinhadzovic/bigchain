@@ -10,11 +10,14 @@ const Menu = electron.Menu;
 const ipcMain = electron.ipcMain;
 
 
-
 var verification = require( path.resolve( __dirname, "./verification.js" ));
-//var data_cryption = require('../ClientInterface/javascript/data_cryption');
 var User = require('./lib/User');
 var message = require('./lib/Message');
+
+
+// Global current user
+var current_user = new User;
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -97,6 +100,8 @@ ipcMain.on("login-submission", async function(event, data) {
   if(user.success) {
     console.log(message.main, "User connected successfully!");
     console.log(' ');
+    current_user.email = user.user.email;
+    current_user.password = user.user.password;
     event.sender.send("login-success", user.user);
   } else {
     console.log(message.main, user);
@@ -125,7 +130,19 @@ ipcMain.on("register-submission", async function(event, data) {
 });
 
 ipcMain.on("personal-submission", async function(event, data) {
-  console.log(message.main, 'I am here after personal-submission ');
+  console.log(message.main, 'New user data provided!');
+  console.log(message.main, 'Name: ', data.first_name);
+  console.log(message.main, 'Last name: ', data.last_name);
+  console.log(message.main, 'Birthday: ', data.birthday);
+  console.log(message.main, 'Gender: ', data.gender);
+  console.log(message.main, 'Phone: ', data.phone);
 
-  event.sender.send('success');
+  let result = await current_user.restore(current_user, data);
+  if (result === true) {
+    console.log(message.main, 'Restoring successfully done.');
+    event.sender.send('store-success', result , current_user);
+  } else {
+    console.log(message.main, 'Restoring failed.');
+    event.sender.send('store-failed', result);
+  }
 })
