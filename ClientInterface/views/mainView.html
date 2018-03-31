@@ -4,68 +4,67 @@
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script>window.$ = window.jQuery = require('jquery');</script>
+
 	<!-- <script>
 		window.nodeRequire = require;
 		delete window.require;
 		delete window.exports;
 		delete window.module;
 	</script> -->
+		<script src="../javascript/lib/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body class="login-background">
-		<div class="login_header hidden">
-			<h1>Wallet<span>+</span></h1>
-		</div>
-		
-		<div class="js-loginView-form form_section hidden">
+<body>		
+		<div class="js-loginView-form form_section">
 			<div class="js-loginView-login" id="js_loginView_login">
 				<form>
 					<div class="form_input">
-						<label for="login_mail">Username: </label>
-						<input type="text" id="username" class="js-loginView-login-username">
+						<input type="text" id="username" class="js-loginView-login-username" placeholder="Username">
 					</div>
 					<div class="form_input">
-						<label for="login_password">Password: </label>
-						<input type="password" id="password" class="js-loginView-login-password">
+						<input type="password" id="password" class="js-loginView-login-password" placeholder="Password">
 					</div>
 					<div class="form_button js-loginView-login-submit">
 						<button id="login">Login</button>
 					</div>
 				</form>
 				<div class="login_footer">
-					<p>Don't have an account: <a href="#" class="js-loginView-new-account" id="js-loginView-form-register"> Create one </a></p>
+					<p>Don't have an account: <a href="#" class="js-loginView-form-register js-loginView-new-account	" id="js-loginView-form-register"> Create one </a></p>
 				</div>
 			</div>
-			<div class="js-loginView-register" id="js_loginView_register">
-				<form>
+			<div class="js-loginView-register js-loginView-register--hide" id="js_loginView_register">
 					<form>
 						<div class="form_input">
-							<label for="login_mail">Mail: </label>
-							<input type="text" class="js-loginView-register-mail">
+							<input type="text" id="email" class="js-loginView-register-mail" placeholder="Email">
 						</div>
 						<div class="form_input">
-							<label for="login_password">Password: </label>
-							<input type="password" class="js-loginView-register-password">
+							<input type="password" id="reg_password" class="js-loginView-register-password" placeholder="Password">
 						</div>
 						<div class="form_input">
-								<label for="login_password">Password Repeat: </label>
-								<input type="password" class="js-loginView-register-repassword">
-							</div>
+							<input type="password" id="password_rep" class="js-loginView-register-repassword" placeholder="Repeat Password">
+						</div>
 						<div class="form_button js-loginView-register-submit">
-							<button>Register</button>
+							<button id="register">Register</button>
 						</div>
 					</form>
 					<div class="login_footer">
 						<p>Have an account: <a href="#" class="js-loginView-go-to-login" id="js-loginView-form-register"> Login </a></p>
 					</div>
-				</form>
 			</div>
 		</div>
 
-		<div class="js-homeView-box">
+		<div class="js-homeView-box hidden">
 			<div class="js-homeView-navigation">
+				<div class="js-homeView-profile">
+					<div class="js-homeView-profile-image">
+						<img src="../images/profile/user_profile.jpg" alt="user profile image">
+					</div>
+					<div class="js-homeView-profile-name" style="color: black; margin-top: 10px">
+					</div>
+				</div>
 				<div>
 					<a href="#" class="js-homeView-navigation-item" type="request_wallet_plus">Wallet<span>+</span></a>
 					<div class="js-homeView-navigation-item-subitem">
@@ -80,13 +79,94 @@
 				<div><a href="#" class="js-homeView-navigation-item" type="request_startup_plus">Startup<span>+</span></a></div>
 				<div><a href="#" class="js-homeView-navigation-item" type="request_manager_plus">Manager<span>+</span></a></div>
 				<div><a href="#" class="js-homeView-navigation-item last-item" type="request_file_plus">File<span>+</span></a></div>
+				<div><a href="#" class="js-homeView-navigation-item last-item" type="request_settings">Settings</a></div>
 			</div>
 			<div class="js-homeView-mainContent">
-				
+				<!-- SETTINGS -->
+				<div class="js-homeView-settings">
+					<h1>Settings</h1>
+					<nav class="js-homeView-setting-nav">
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="personal">Personal Information</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="address">Address</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="documents">Documents</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="share">Share Option</a>
+					</nav>
+					<div class="js-homeView-settings-tab" tab-data="personal">
+						<h3>Personal Information</h3>
+						<div >
+								<form>
+									<div class="js-homeView-setting-row">
+										<div class="js-homeView-setting-field">
+											<label for="first_name">First Name</label>
+											<input type="text" id="first_name" class="js-homeView-setting-input" input-type="first_name">
+										</div>
+										<div class="js-homeView-setting-field">
+											<label for="last_name">Last Name</label>
+											<input type="text" id="last_name" class="js-homeView-setting-input" input-type="last_name">
+										</div>
+									</div>						
+									<div class="js-homeView-setting-row">
+										<div class="js-homeView-setting-field">
+											<label for="gender">Gender</label>
+											<input type="text" id="gender" class="js-homeView-setting-input" input-type="gender">
+										</div>
+										<div class="js-homeView-setting-field">
+											<label for="Birthday">Birthday</label>
+											<input type="text" id="Birthday" class="js-homeView-setting-input" input-type="Birthday">
+										</div>
+									</div>
+									<div class="js-homeView-setting-row">
+										<div class="js-homeView-setting-field">
+											<label for="phone">Phone Number</label>
+											<input type="text" id="phone" class="js-homeView-setting-input" input-type="phone">
+										</div>
+									</div>
+									<div class="js-homeView-setting-row">
+										<button type="submit" class="js-homeView-settings-pi-save">Save</button>
+									</div>
+								</form>							
+					</div>
+					</div>
+					<div class="js-homeView-settings-tab hidden" tab-data="address">
+						<h3>Address Information</h3>
+						<div class="js-homeView-setting-row">
+								<div class="js-homeView-setting-field">
+									<label for="street">Street</label>
+									<input type="text" id="street" class="js-homeView-setting-input" input-type="street">
+								</div>
+								<div class="js-homeView-setting-field">
+									<label for="city">City</label>
+									<input type="text" id="city" class="js-homeView-setting-input" input-type="city">
+								</div>
+							</div>
+							<div class="js-homeView-setting-row">
+								<div class="js-homeView-setting-field">
+									<label for="state">State</label>
+									<input type="text" id="state" class="js-homeView-setting-input" input-type="state">
+								</div>
+								<div class="js-homeView-setting-field">
+									<label for="postal_code">Postal Code</label>
+									<input type="text" id="postal_code" class="js-homeView-setting-input" input-type="postal_code">
+								</div>
+							</div>
+							<div class="js-homeView-setting-row">		
+								<div class="js-homeView-setting-field">
+									<label for="country">Country</label>
+									<input type="text" id="country" class="js-homeView-setting-input" input-type="country">
+								</div>
+							</div>
+							<div class="js-homeView-setting-row">
+								<button type="submit" class="js-homeView-settings-address-save">Save</button>
+							</div>
+					</div>
+					<div class="js-homeView-settings-tab hidden" tab-data="documents">
+						<h3>Document Information</h3>
+						
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<script src='../javascript/loginViewController.js'></script>
-		<script src='../javascript/homeViewController.js'></script>
 	</body>
 </html>
