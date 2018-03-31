@@ -96,10 +96,12 @@ ipcMain.on("login-submission", async function(event, data) {
 
   if(user.success) {
     console.log(message.main, "User connected successfully!");
+    console.log(' ');
     event.sender.send("login-success", user.user);
   } else {
     console.log(message.main, user);
     console.log(message.main, 'Login failed');
+    console.log(' ');
     event.sender.send("login-failed", user);
   }
   
@@ -121,3 +123,9 @@ ipcMain.on("register-submission", async function(event, data) {
     console.log(' '); 
   }
 });
+
+ipcMain.on("personal-submission", async function(event, data) {
+  console.log(message.main, 'I am here after personal-submission ');
+
+  event.sender.send('success');
+})

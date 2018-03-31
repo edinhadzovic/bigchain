@@ -145,7 +145,7 @@ $('document').ready(function(){
 });
 
 var homeViewController = function (params, user) {
-    /*console.log(user);
+    console.log(user);
     var $params = params;
     var homeViewController = {
         reference: $params,
@@ -175,9 +175,15 @@ var homeViewController = function (params, user) {
         
         const {ipcRenderer} = require('electron');
         console.log(data);
+    
+        ipcRenderer.send('personal-submission', data );
+
+        ipcRenderer.on('success');
     });
 
-    homeViewController.active(user);*/
+
+
+    homeViewController.active(user);
 };
 
 /*
