@@ -9,17 +9,17 @@ User.prototype.status = function(){
   console.log(this._state);
 };
 
-User.prototype.getEmail = function() {
-  return this._email;
-};
-
 User.prototype.setState = function(state) {
   this._state = state;
 };
 
+User.prototype.getState = function() {
+  return this._state;
+};
+
 User.prototype.getEmail = function() {
   return this._email;
-}
+};
 
 
 module.exports = User;

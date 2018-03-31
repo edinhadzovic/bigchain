@@ -82,7 +82,88 @@
 				<div><a href="#" class="js-homeView-navigation-item last-item" type="request_settings">Settings</a></div>
 			</div>
 			<div class="js-homeView-mainContent">
-				<p> Creating some kind of small form bla bla bla </p>
+				<!-- SETTINGS -->
+				<div class="js-homeView-settings">
+					<h1>Settings</h1>
+					<nav class="js-homeView-setting-nav">
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="personal">Personal Information</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="address">Address</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="documents">Documents</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="share">Share Option</a>
+					</nav>
+					<div class="js-homeView-settings-tab" tab-data="personal">
+						<h3>Personal Information</h3>
+						<div >
+								<form>
+									<div class="js-homeView-setting-row">
+										<div class="js-homeView-setting-field">
+											<label for="first_name">First Name</label>
+											<input type="text" id="first_name" class="js-homeView-setting-input" input-type="first_name">
+										</div>
+										<div class="js-homeView-setting-field">
+											<label for="last_name">Last Name</label>
+											<input type="text" id="last_name" class="js-homeView-setting-input" input-type="last_name">
+										</div>
+									</div>						
+									<div class="js-homeView-setting-row">
+										<div class="js-homeView-setting-field">
+											<label for="gender">Gender</label>
+											<input type="text" id="gender" class="js-homeView-setting-input" input-type="gender">
+										</div>
+										<div class="js-homeView-setting-field">
+											<label for="Birthday">Birthday</label>
+											<input type="text" id="Birthday" class="js-homeView-setting-input" input-type="Birthday">
+										</div>
+									</div>
+									<div class="js-homeView-setting-row">
+										<div class="js-homeView-setting-field">
+											<label for="phone">Phone Number</label>
+											<input type="text" id="phone" class="js-homeView-setting-input" input-type="phone">
+										</div>
+									</div>
+									<div class="js-homeView-setting-row">
+										<button type="submit" class="js-homeView-settings-pi-save">Save</button>
+									</div>
+								</form>							
+					</div>
+					</div>
+					<div class="js-homeView-settings-tab hidden" tab-data="address">
+						<h3>Address Information</h3>
+						<div class="js-homeView-setting-row">
+								<div class="js-homeView-setting-field">
+									<label for="street">Street</label>
+									<input type="text" id="street" class="js-homeView-setting-input" input-type="street">
+								</div>
+								<div class="js-homeView-setting-field">
+									<label for="city">City</label>
+									<input type="text" id="city" class="js-homeView-setting-input" input-type="city">
+								</div>
+							</div>
+							<div class="js-homeView-setting-row">
+								<div class="js-homeView-setting-field">
+									<label for="state">State</label>
+									<input type="text" id="state" class="js-homeView-setting-input" input-type="state">
+								</div>
+								<div class="js-homeView-setting-field">
+									<label for="postal_code">Postal Code</label>
+									<input type="text" id="postal_code" class="js-homeView-setting-input" input-type="postal_code">
+								</div>
+							</div>
+							<div class="js-homeView-setting-row">		
+								<div class="js-homeView-setting-field">
+									<label for="country">Country</label>
+									<input type="text" id="country" class="js-homeView-setting-input" input-type="country">
+								</div>
+							</div>
+							<div class="js-homeView-setting-row">
+								<button type="submit" class="js-homeView-settings-address-save">Save</button>
+							</div>
+					</div>
+					<div class="js-homeView-settings-tab hidden" tab-data="documents">
+						<h3>Document Information</h3>
+						
+					</div>
+				</div>
 			</div>
 		</div>
 

@@ -4,6 +4,8 @@
   height: 100%;
   opacity: 0;
   transition: opacity 1s ease-in;
+  display: flex;
+  flex-direction: row;
 }
 
 .js-homeView-box--fadeIn {
@@ -12,10 +14,13 @@
 
 .js-homeView-mainContent{
   display: flex;
+  flex-grow: 10;
+  margin: 20px;
 }
 
 .js-homeView-navigation {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   text-align: center;
   width: 150px;

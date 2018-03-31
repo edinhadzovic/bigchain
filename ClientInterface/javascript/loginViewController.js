@@ -138,7 +138,7 @@ var loginViewController = function (params) {
                 document.getElementById('password_rep').style.border = '2px solid red';
                 document.getElementById('email').style.border = '2px solid #d1d1d1';  
             }
-        })
+        });
     });
 };
 
