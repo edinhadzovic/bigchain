@@ -10,11 +10,14 @@ const Menu = electron.Menu;
 const ipcMain = electron.ipcMain;
 
 
-
 var verification = require( path.resolve( __dirname, "./verification.js" ));
-//var data_cryption = require('../ClientInterface/javascript/data_cryption');
 var User = require('./lib/User');
 var message = require('./lib/Message');
+
+
+// Global current user
+var current_user = new User();
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -92,32 +95,52 @@ ipcMain.on("login-submission", async function(event, data) {
   
   console.log(message.main, 'Request to login of a user');
 
-  let user = await new User().login(data);
+  let result = await current_user.login(data);
 
-  if(user.success) {
+  if(result === true) {
     console.log(message.main, "User connected successfully!");
-    event.sender.send("login-success", user.user);
+    console.log(' ');
+    event.sender.send("login-success", current_user);
   } else {
-    console.log(message.main, user);
+    console.log(message.main, result);
     console.log(message.main, 'Login failed');
-    event.sender.send("login-failed", user);
+    console.log(' ');
+    event.sender.send("login-failed", result);
   }
   
 });
 
 ipcMain.on("register-submission", async function(event, data) {
   console.log(message.main, 'Request for creation of new user.');
-  let new_user = new User();
-  let result = await new_user.generateUser(data);
+  let result = await current_user.generateUser(data);
 
   if (result.success) {
     console.log(message.main, "Status success!");
-    event.sender.send("register-success", result);
     console.log(' ');
+    event.sender.send("register-success", current_user);
   } 
   else {
     console.log(message.main, "Status failed!");
-    event.sender.send("register-failed", result);
     console.log(' '); 
+    event.sender.send("register-failed", result);
   }
 });
+
+ipcMain.on("personal-info-submission", async function(event, data) {
+  console.log(message.main, 'New user data provided!');
+  console.log(message.main, 'Name: ', data.first_name);
+  console.log(message.main, 'Last name: ', data.last_name);
+  console.log(message.main, 'Birthday: ', data.birthday);
+  console.log(message.main, 'Gender: ', data.gender);
+  console.log(message.main, 'Phone: ', data.phone);
+
+  let result = await current_user.personal_info_restore(current_user, data);
+  console.log(message.main, result);
+  if (result === true) {
+    console.log(message.main, 'Restoring successfully done.');
+    event.sender.send('store-success', current_user);
+  } else {
+    console.log(message.main, 'Restoring failed.');
+    event.sender.send('store-failed', result);
+  }
+})

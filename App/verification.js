@@ -39,7 +39,6 @@ module.exports = {
 
 	},
 
-
 	extra_check: function(data, data_rep) {
 		return new Promise((resolve, reject) => {
 
@@ -64,7 +63,6 @@ module.exports = {
 				reject (error.ERR_PASSWORD_DO_NOT_MATCH);
 			}
 
-			
 			var upperCaseCount = 0;
 			var numberCount = 0;
 			var specialSignCount = 0;
@@ -104,21 +102,6 @@ module.exports = {
 		});
 	},
 
-    // -------------------------
-	// TODO: implement the function
-	/*
-		OVAKO:
-		ZNACI KAD NE STAVIM RESOLVE(TRUE NA KRAJ) LOGICNO NIKADA SE NE VRATI
-		AKO STAVIM RESOLVE TRUE UVIJEK JE TRE I NIKADA OVAJ KURCEV REJECT U OTVARANJU FAJL NE PREPOZNA
-
-		ISTO SRANJE MIS E DESAVA ZNACI NA LINIJI 44 I 51 KAD POZIVAM OVE DVE FUNKCIJE NIKADA NECE DA PREKINE OVA
-		KURCINA REJECT, KADA BI TREBALA, EVO NPR KAD POGRIJESIM PASSWORD A UNESEM GA NA TRENUTNOM STANJU ON CE PRODUZITI DALJE
-		NECE PRESTATI A TREBAO BI REJECT SA LINIJE 133 ILI BILO KOJI REJECT IZ FUNKCIJE EXTRA_CHECKS DA RADI JEBEM LI MU MAJKU U PICKU
-		ETO TOLIKO OD MENE NISAM MOGAO VISE ENGLESKOG
-
-
-	*/
-	// -------------------------
 	does_exist: function (data) {
 		return new Promise((resolve, reject) => {
 			let store = true;
@@ -146,5 +129,33 @@ module.exports = {
 					}
 			});
 		});
-	}
+	},
+
+
+	personal_data: function(data) {
+		return new Promise((resolve, reject) => {
+			console.log(message.verify, 'Personal data verifying.');
+			let count = 0;
+			if(validator.isEmpty(data.first_name)) {
+				count++;
+				reject(error.ERR_FIRST_NAME_MISSING);
+			}
+			if(validator.isEmpty(data.last_name)) {
+				count++;
+				reject(error.ERR_LAST_NAME_MISSING);
+			}
+			if(validator.isEmpty(data.phone)) {
+				count++;
+				reject(error.ERR_PHONE_MISSING);
+			}
+			if (validator.isEmpty(data.birthday)) {
+				count++;
+				reject(error.ERR_BIRTHDAY_MISSING);
+			}
+			if (count == 0) {
+				resolve(true);
+			}
+		});
+	},
+
 };

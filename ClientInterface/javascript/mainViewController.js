@@ -58,21 +58,19 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
         
-
         const {ipcRenderer} = require('electron');
-
+        /*
+        let data_temp = {};
+        data_temp.email = 'jelena.radisa@yahoo.com';
+        data_temp.password = 'Profi?danac321';
+        */
         // send username to main.js 
         ipcRenderer.send('login-submission', data );
         
         ipcRenderer.on("login-success", (event, arg) => {
-            let user = new client(arg);
-            user.status();
             loginViewController.reference.fadeOut(500, function(){
                 $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    user.setState(1);
-                    user.status();
-                    console.log(user);
-                    new homeViewController($('.js-homeView-box'), user); 
+                    new homeViewController($('.js-homeView-box'), arg); 
                 });
             });
         });
@@ -103,13 +101,6 @@ var loginViewController = function (params) {
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         
-/*
-        ipcRenderer.on("register-success", (event, arg) => {
-            document.getElementById("show_username").innerHTML = arg.username;
-            document.getElementById("profile").style.display = "block";
-            document.getElementById("login_section").style.display = "none";
-        });
-*/
         ipcRenderer.on('register-success', (event, user) => {
             document.getElementById('email').style.border = "2px solid green";
             document.getElementById('password_rep').style.border = "2px solid green";
@@ -161,6 +152,15 @@ var homeViewController = function (params, user) {
             manager_plus: $params.find('.js-homeView-navigation-item[type="request_manager_plus"]'),
             file_plus: $params.find('.js-homeView-navigation-item[type="request_file_plus"]'),
         },
+        personalInformation: {
+            body: $params.find('.js-homeView-setting-row'),
+            first_name: $params.find('.js-homeView-settings-input[input-type="first_name"]'),
+            last_name: $params.find('.js-homeView-settings-input[input-type="last_name"]'),
+            gender: $params.find('.js-homeView-setting-input[input-type="gender"]'),
+            birthday: $params.find('.js-homeView-setting-input[input-type="birthday"]'),
+            phone: $params.find('.js-homeView-setting-input[input-type="phone"]'),
+            personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
+        },
         views: [
             {
                 type: "Wallet",
@@ -184,7 +184,7 @@ var homeViewController = function (params, user) {
             }
         ],
         active: function(user) {
-            $('.js-homeView-profile-name').text(user.getEmail());
+            $('.js-homeView-profile-name').text(user._email);
         },
         setPage: function(page_type) {
             homeViewController.views.forEach(page => {
@@ -198,6 +198,56 @@ var homeViewController = function (params, user) {
             });
         }
     };
+
+
+    $(homeViewController.personalInformation.personal_submit).click(function(event){
+        event.preventDefault();
+        let data = {};
+        data.first_name = $(homeViewController.personalInformation.first_name).val();
+        data.last_name = $(homeViewController.personalInformation.last_name).val();
+        data.gender = $(homeViewController.personalInformation.gender).val();
+        data.birthday = $(homeViewController.personalInformation.birthday).val();
+        data.phone = $(homeViewController.personalInformation.phone).val();
+        
+        const {ipcRenderer} = require('electron');
+        console.log(data);
+    
+        ipcRenderer.send('personal-info-submission', data);
+
+        ipcRenderer.on('store-failed', (event, err) => {
+            if(err.type === 'ERR_FIRST_NAME_MISSING') {
+                document.getElementById('first_name').style.border = '2px solid red';
+                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_LAST_NAME_MISSING') {
+                document.getElementById('last_name').style.border = '2px solid red';
+                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_PHONE_MISSING') {
+                document.getElementById('phone').style.border = '2px solid red';
+                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_BIRTHDAY_MISSING') {
+                document.getElementById('birthday').style.border = '2px solid red';
+                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone').style.border = '2px solid #d1d1d1';
+                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
+            }
+        });
+
+        ipcRenderer.on('store-success', (event, current_user) => {
+            console.log(current_user, "CURRENT USER");
+        })
+    });
+
+
+
     homeViewController.active(user);
     $(homeViewController.navigaiton.settings).click(function(){
         homeViewController.setPage("Settings");

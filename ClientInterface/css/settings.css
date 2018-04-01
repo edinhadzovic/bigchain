@@ -27,9 +27,17 @@
 }
 
 .js-homeView-setting-field input {
- padding: 10px 5px 10px 10px;
- max-width: 310px;
+  padding: 10px 5px 10px 10px;
+  max-width: 310px;
+  border: 2px solid #d1d1d1;
 }
+
+.js-homeView-setting-field select {
+  padding: 10px 5px 10px 10px;
+  max-width: 310px;
+  border: 2px solid #d1d1d1;
+}
+
 
 .js-homeView-setting-nav {
   padding: 20px 10px;
