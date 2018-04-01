@@ -5,34 +5,23 @@ const path = require('path');
 const directory = path.join(__dirname, '../temp/');
 
 var message = require('./lib/Message');
+const error = require('./error/error');
 
 module.exports = {
 	verify: function(data) {
 		console.log(message.verify, 'Starting the process of data validation.');
 		return new Promise((resolve, reject) => {
 			if(validator.isEmpty(data.email)) {
-				reject({
-					error: true,
-					error_type: "Email field empty."
-				});
+				reject(error.ERR_EMAIL_FIELD_EMPTY);
 			}
 			if(validator.isEmpty(data.password)) {
-				reject({
-					error: true,
-					error_type: "Password field is empty."
-				});
+				reject(error.ERR_PASSWORD_FIELD_EMPTY);
 			}
 			if(validator.isEmpty(data.password_rep)) {
-				reject({
-					error: true,
-					error_type: "Confirm the password."
-				});
+				reject(error.ERR_PASSWORD_REP_FIELD_EMPTY);
 			}
 			if(!validator.isEmail(data.email)) {
-				reject({
-					error: true,
-					error_type: "Email is not an email."
-				});
+				reject(error.ERR_NOT_VALID_EMAIL);
 			}
 
 			this.extra_check(data.password, data.password_rep).then((result) => {
@@ -50,16 +39,12 @@ module.exports = {
 
 	},
 
-
 	extra_check: function(data, data_rep) {
 		return new Promise((resolve, reject) => {
 
 			if(data.length < 8 || data.length > 16)
 			{
-				reject({
-					error: true,
-					error_type: "Password has to be 8-15 digit long."
-				});
+				reject(error.ERR_PASSWORD_TO_SHORT);
 			}
 	
 			if(data.length == data_rep.length) {
@@ -70,23 +55,14 @@ module.exports = {
 					}
 				}
 				if (difCount != 0) {
-					reject({
-						error: true,
-						error_type: "Passwords do not match."
-					});
+					reject(error.ERR_PASSWORD_DO_NOT_MATCH);
 				} 
 	
 			}	
 			else {
-
-				reject ({
-
-					error: true,
-					error_type: "Passwords do not match."
-				});
+				reject (error.ERR_PASSWORD_DO_NOT_MATCH);
 			}
 
-			
 			var upperCaseCount = 0;
 			var numberCount = 0;
 			var specialSignCount = 0;
@@ -121,29 +97,11 @@ module.exports = {
 			}
 			else
 			{	
-				reject ({
-					error: true,
-					error_type: "Password has to contain 1 number, 1 special sign, 1 upper case letter."
-				});
+				reject (error.ERR_PASSWORD_TO_SIMPLE);
 			}
 		});
 	},
 
-    // -------------------------
-	// TODO: implement the function
-	/*
-		OVAKO:
-		ZNACI KAD NE STAVIM RESOLVE(TRUE NA KRAJ) LOGICNO NIKADA SE NE VRATI
-		AKO STAVIM RESOLVE TRUE UVIJEK JE TRE I NIKADA OVAJ KURCEV REJECT U OTVARANJU FAJL NE PREPOZNA
-
-		ISTO SRANJE MIS E DESAVA ZNACI NA LINIJI 44 I 51 KAD POZIVAM OVE DVE FUNKCIJE NIKADA NECE DA PREKINE OVA
-		KURCINA REJECT, KADA BI TREBALA, EVO NPR KAD POGRIJESIM PASSWORD A UNESEM GA NA TRENUTNOM STANJU ON CE PRODUZITI DALJE
-		NECE PRESTATI A TREBAO BI REJECT SA LINIJE 133 ILI BILO KOJI REJECT IZ FUNKCIJE EXTRA_CHECKS DA RADI JEBEM LI MU MAJKU U PICKU
-		ETO TOLIKO OD MENE NISAM MOGAO VISE ENGLESKOG
-
-
-	*/
-	// -------------------------
 	does_exist: function (data) {
 		return new Promise((resolve, reject) => {
 			let store = true;
@@ -161,19 +119,43 @@ module.exports = {
 				  	if (data.email === cut[1])
 				  	{
 							store = false;
-	  					console.log(message.verify, "Emails match, registration failed.");
-				  		reject ({
-							error: true,
-							error_type: "There is already a user with this email."
-						});
+	  					console.log(message.verify, "Email taken, registration failed.");
+				  		reject (error.ERR_EMAIL_TAKEN);
 						break;
 				  	}
 					}
 					if(store) {
-						console.log(message.verify, "Currently no user with this email.");
 						resolve(true); 
 					}
 			});
 		});
-	}
+	},
+
+
+	personal_data: function(data) {
+		return new Promise((resolve, reject) => {
+			console.log(message.verify, 'Personal data verifying.');
+			let count = 0;
+			if(validator.isEmpty(data.first_name)) {
+				count++;
+				reject(error.ERR_FIRST_NAME_MISSING);
+			}
+			if(validator.isEmpty(data.last_name)) {
+				count++;
+				reject(error.ERR_LAST_NAME_MISSING);
+			}
+			if(validator.isEmpty(data.phone)) {
+				count++;
+				reject(error.ERR_PHONE_MISSING);
+			}
+			if (validator.isEmpty(data.birthday)) {
+				count++;
+				reject(error.ERR_BIRTHDAY_MISSING);
+			}
+			if (count == 0) {
+				resolve(true);
+			}
+		});
+	},
+
 };

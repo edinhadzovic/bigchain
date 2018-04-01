@@ -1,9 +1,12 @@
 @import 'fonts.css';
 @import 'login.css';
 @import 'home.css';
+@import 'settings.css';
 
 body,html {
-    height: 90%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 body {
