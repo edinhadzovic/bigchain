@@ -85,7 +85,6 @@ User.prototype.personal_info_restore = async function(current_user, data) {
     }
     let res = await store.store_personal_info(current_user, data);
     if (res === true) {
-      console.log(message.user, " ", data);
       this.setPersonalInfo(data);
       return true;
     } 
