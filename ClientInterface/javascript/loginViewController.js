@@ -65,7 +65,7 @@ var loginViewController = function (params) {
         data_temp.password = 'Profi?danac321';
 
         // send username to main.js 
-        ipcRenderer.send('login-submission', data_temp );
+        ipcRenderer.send('login-submission', data );
         
         ipcRenderer.on("login-success", (event, arg) => {
             let user = new client(arg);
@@ -152,11 +152,11 @@ var homeViewController = function (params, user) {
         reference: $params,
         personalInformation: {
             body: $params.find('.js-homeView-setting-row'),
-            first_name: $params.find('.js-homeView-settings-input-first_name'),
-            last_name: $params.find('.js-homeView-settings-input-last_name'),
-            gender: $params.find('.js-homeView-setting-input-gender'),
-            birthday: $params.find('.js-homeView-setting-input-birthday'),
-            phone: $params.find('.js-homeView-setting-input-phone'),
+            first_name: $params.find('.js-homeView-settings-input[input-type="first_name"]'),
+            last_name: $params.find('.js-homeView-settings-input[input-type="last_name"]'),
+            gender: $params.find('.js-homeView-setting-input[input-type="gender"]'),
+            birthday: $params.find('.js-homeView-setting-input[input-type="birthday"]'),
+            phone: $params.find('.js-homeView-setting-input[input-type="phone"]'),
             personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
         },
         active: function(user) {
