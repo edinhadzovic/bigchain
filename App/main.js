@@ -16,7 +16,7 @@ var message = require('./lib/Message');
 
 
 // Global current user
-var current_user = new User;
+var current_user = new User();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -95,7 +95,7 @@ ipcMain.on("login-submission", async function(event, data) {
   
   console.log(message.main, 'Request to login of a user');
 
-  let user = await new User().login(data);
+  let user = await current_user.login(data);
 
   if(user.success) {
     console.log(message.main, "User connected successfully!");
@@ -114,8 +114,7 @@ ipcMain.on("login-submission", async function(event, data) {
 
 ipcMain.on("register-submission", async function(event, data) {
   console.log(message.main, 'Request for creation of new user.');
-  let new_user = new User();
-  let result = await new_user.generateUser(data);
+  let result = await current_user.generateUser(data);
 
   if (result.success) {
     console.log(message.main, "Status success!");
