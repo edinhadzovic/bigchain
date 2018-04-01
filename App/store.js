@@ -17,7 +17,6 @@ const directory = path.join(__dirname, '../temp');
 // Max number of users
 var user_count;
 
-
 module.exports = {
 
 	read: function(user) {
@@ -31,10 +30,13 @@ module.exports = {
 					let file = fs.readFileSync(directory + '/' + element, 'utf8');
 					var result = file.split("'");
 
-/*					for (var x = 0; x < result.length; x++ )
-					{
-						console.log(result[x], " ", x);
-					}*/
+					/*
+						for (var x = 0; x < result.length; x++ )
+						{
+							console.log(result[x], " ", x);
+						}
+					*/
+
 					if(user.email === result[1]){
 						found = true;
 						let data = {};
