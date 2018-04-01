@@ -21,6 +21,7 @@
 .js-homeView-navigation {
   display: flex;
   flex-grow: 1;
+  max-width: 160px;
   flex-direction: column;
   text-align: center;
   width: 150px;

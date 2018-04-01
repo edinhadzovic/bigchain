@@ -142,9 +142,16 @@ $('document').ready(function(){
 
 var homeViewController = function (params, user) {
     console.log(user);
-    var $params = params;
+    var $params = $(params);
     var homeViewController = {
-        reference: $params,
+        navigaiton: {
+            $body: $params.find('.js-homeView-navigation'),
+            wallet: $params.find('.js-homeView-navigation-item[type="request_wallet_plus"]'),
+            settings: $params.find('.js-homeView-navigation-item[type="request_settings"]'),
+            startup_plus: $params.find('.js-homeView-navigation-item[type="request_startup_plus"]'),
+            manager_plus: $params.find('.js-homeView-navigation-item[type="request_manager_plus"]'),
+            file_plus: $params.find('.js-homeView-navigation-item[type="request_file_plus"]'),
+        },
         personalInformation: {
             body: $params.find('.js-homeView-setting-row'),
             first_name: $params.find('.js-homeView-settings-input[input-type="first_name"]'),
@@ -154,8 +161,41 @@ var homeViewController = function (params, user) {
             phone: $params.find('.js-homeView-setting-input[input-type="phone"]'),
             personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
         },
+        views: [
+            {
+                type: "Wallet",
+                body: $(params).find('.js-homeView-wallet')
+            },
+            {
+                type: "Startup",
+                body: $(params).find('.js-homeView-startup')
+            },
+            {
+                type: 'File',
+                body: $(params).find('.js-homeView-file')
+            },
+            {
+                type: 'Manager',
+                body: $(params).find('.js-homeView-manager')            
+            },
+            {
+                type: 'Settings',
+                body: $(params).find('.js-homeView-settings')
+            }
+        ],
         active: function(user) {
-            $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
+            $('.js-homeView-profile-name').text(user._email);
+        },
+        setPage: function(page_type) {
+            homeViewController.views.forEach(page => {
+                if(page.type === page_type) {
+                    page.body.removeClass('hidden');
+                } else {
+                    if(!page.body.hasClass('hidden')) {
+                        page.body.addClass('hidden');
+                    }
+                }
+            });
         }
     };
 
@@ -209,6 +249,21 @@ var homeViewController = function (params, user) {
 
 
     homeViewController.active(user);
+    $(homeViewController.navigaiton.settings).click(function(){
+        homeViewController.setPage("Settings");
+    });
+    $(homeViewController.navigaiton.wallet).click(function(){
+        homeViewController.setPage("Wallet");
+    });
+    $(homeViewController.navigaiton.startup_plus).click(function(){
+        homeViewController.setPage("Startup");
+    });
+    $(homeViewController.navigaiton.file_plus).click(function(){
+        homeViewController.setPage("File");
+    });
+    $(homeViewController.navigaiton.manager_plus).click(function(){
+        homeViewController.setPage("Manager");
+    });
 };
 
 /*

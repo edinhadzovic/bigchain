@@ -79,7 +79,7 @@
 }
 
 .form_input input:focus {
-    border: 2px solid #130a66;
+    border: 2px solid aqua;
     outline: none;
 }
 
@@ -103,18 +103,18 @@
 }
 
 .form_button button {
-    background-color: #130a66;
-    border: none;
+    background-color: #5b5b5b;
+    border: 2px solid aqua;
     color: white;
     padding: 10px 30px;
     text-transform: uppercase;
-    border-radius: 5%;
-    transition: background 0.5s ease;
+    border-radius: 15px;
+    transition: all 0.5s ease;
 }
 
 .form_button button:hover {
     cursor: pointer;
-    background-color: #a3c6ff;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5)
 }
 
 .login_header {
