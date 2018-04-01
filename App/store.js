@@ -30,13 +30,27 @@ module.exports = {
 				files.forEach(element => {
 					let file = fs.readFileSync(directory + '/' + element, 'utf8');
 					var result = file.split("'");
+
+/*					for (var x = 0; x < result.length; x++ )
+					{
+						console.log(result[x], " ", x);
+					}*/
 					if(user.email === result[1]){
 						found = true;
 						let data = {};
 						data.success = found;
 						data.user = {
 							email: result[1],
-							password: result[3]
+							password: result[3],
+							first_name: result[5],
+							last_name: result[7],
+							gander: result[9],
+							birthday: result[11],
+							phone	: result[13],
+
+							// TODO: ADDRESS AND PROFILE IMAGE ADDITION
+							address: null,
+							profile_image: null,
 						};
 						resolve(data);
 					}
@@ -113,7 +127,7 @@ module.exports = {
 		})
 	},
 
-	restore: function(current_user, data) {
+	store_personal_info: function(current_user, data) {
 		return new Promise((resolve, reject) => {
 			console.log(message.store, 'Restoring process starting.');
 
@@ -124,11 +138,10 @@ module.exports = {
 				files.forEach(element => {
 					let file = fs.readFileSync(directory + '/' + element, 'utf8');
 					var result = file.split("'");
-
-					if(current_user.email === result[1]){
+					if(current_user._email === result[1]){
 						var new_data = {
-							email: current_user.email,
-							password: current_user.password,
+							email: current_user._email,
+							password: current_user._password,
 							gender: data.gender,
 							first_name: data.first_name,
 							last_name: data.last_name,
@@ -139,9 +152,12 @@ module.exports = {
 						 	new_data.last_name, new_data.gender, new_data.birthday, new_data.phone]));
 						if(err) reject(error.ERR_DB_READING);
 						replaced = true;
-						resolve(replaced);
+						resolve(true);
 					}
 				});
+				if(!replaced) {
+					reject(error.ERR_NOT_VALID_EMAIL);
+				} 
 			});
 		})
 	},

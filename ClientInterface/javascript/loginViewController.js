@@ -65,17 +65,12 @@ var loginViewController = function (params) {
         data_temp.password = 'Profi?danac321';
 
         // send username to main.js 
-        ipcRenderer.send('login-submission', data );
+        ipcRenderer.send('login-submission', data_temp );
         
         ipcRenderer.on("login-success", (event, arg) => {
-            let user = new client(arg);
-            user.status();
             loginViewController.reference.fadeOut(500, function(){
                 $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    user.setState(1);
-                    user.status();
-                    console.log(user);
-                    new homeViewController($('.js-homeView-box'), user); 
+                    new homeViewController($('.js-homeView-box'), arg); 
                 });
             });
         });
@@ -160,7 +155,7 @@ var homeViewController = function (params, user) {
             personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
         },
         active: function(user) {
-            $('.js-homeView-profile-name').text(user.getEmail());
+            $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
         }
     };
 
@@ -177,7 +172,7 @@ var homeViewController = function (params, user) {
         const {ipcRenderer} = require('electron');
         console.log(data);
     
-        ipcRenderer.send('personal-submission', data);
+        ipcRenderer.send('personal-info-submission', data);
 
         ipcRenderer.on('store-failed', (event, err) => {
             if(err.type === 'ERR_FIRST_NAME_MISSING') {
@@ -205,6 +200,10 @@ var homeViewController = function (params, user) {
                 document.getElementById('first_name').style.border = '2px solid #d1d1d1';
             }
         });
+
+        ipcRenderer.on('store-success', (event, current_user) => {
+            console.log(current_user, "CURRENT USER");
+        })
     });
 
 

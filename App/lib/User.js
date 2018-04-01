@@ -26,7 +26,6 @@ let User = function(){
   this._profile_image = null;
 };
 
-
 User.prototype.save = async function(user){
   let result = await store.pepper(user);
   if(!result) throw({success: false, message: "Something want wrong with storing the data."});
@@ -50,8 +49,8 @@ User.prototype.generateUser = async function(user){
     if(validation === true) {
       let new_user = {};
       new_user.success = true;
-      new_user.data = await this.save(user);
-   
+      new_user.data = await this.save(user);      
+
       return new_user;
     }
   } catch(err) {
@@ -69,28 +68,86 @@ User.prototype.login = async function(data) {
     if(!password_check) {
       return (error.ERR_PASSWORD_WRONG);
     } 
-    return user;
+    this.setUser(user.user);
+    this.setPersonalInfo(user.user);
+    // TODO set address and profile image
+    return true;
   } catch (err) {
     return err;
   }
 };
 
-User.prototype.restore = async function(current_user, data) {
+User.prototype.personal_info_restore = async function(current_user, data) {
   try {
     let result = await verification.personal_data(data);
     if (result.error === true) {
       return (result);
     }
-    let res = await store.restore(current_user, data);
+    let res = await store.store_personal_info(current_user, data);
     if (res === true) {
-      return (true);
-    } else {
-      return (res);
-    }
+      console.log(message.user, " ", data);
+      this.setPersonalInfo(data);
+      return true;
+    } 
 
   } catch (err) {
     return err;
   }
-}
+};
+
+// TODO: craete function address_restore
+
+// TODO: craete function photo_restore
+
+User.prototype.setUser = function(data) {
+    if (data.email !== null) {
+      this._email = data.email;
+    }
+    if (data.password !== null) {
+      this._password = data.password;
+    }
+};
+
+User.prototype.setPersonalInfo = function(data) {
+    if (data.first_name !== null) {
+      this._personal_information.first_name = data.first_name;
+    }
+    if (data.last_name !== null) {
+      this._personal_information.last_name = data.last_name;
+    }
+    if (data.gender !== null) {
+      this._personal_information.gender = data.gender;
+    }
+    if (data.birthday !== null) {
+      this._personal_information.birthday = data.birthday;
+    }
+    if (data.phone !== null) {
+      this._personal_information.phone = data.phone;
+    }
+};
+
+User.prototype.setAdress = function(data) {
+    if (data.street !== null) {
+        this._address.street = data.street;
+      }
+      if (data.city !== null) {
+        this._address.city = data.city;
+      }
+      if (data.state !== null) {
+        this._address.state = data.state;
+      }
+      if (data.postal_code !== null) {
+        this._address.postal_code = data.postal_code;
+      }
+      if (data.country !== null) {
+        this._address.country = data.country;
+      }
+};
+
+User.prototype.setPhoto = function(data) {
+      if (data.profile_image !== null) {
+      this._profile_image = data.profile_image;
+    }
+};
 
 module.exports = User;
