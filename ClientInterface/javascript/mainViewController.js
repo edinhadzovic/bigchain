@@ -184,7 +184,7 @@ var homeViewController = function (params, user) {
             }
         ],
         active: function(user) {
-            $('.js-homeView-profile-name').text(user._email);
+            $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
         },
         setPage: function(page_type) {
             homeViewController.views.forEach(page => {
