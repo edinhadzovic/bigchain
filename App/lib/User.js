@@ -5,7 +5,26 @@ let store = require('../store');
 var message = require('./Message');
 
 //_constructor
-let User = function(){};
+let User = function(){
+  this._unique_id = null;
+  this._email = null;
+  this._password = null;
+  this._personal_information = {
+    first_name: null,
+    last_name: null,
+    gender: null,
+    birthday: null,
+    phone: null,
+  };
+  this._address = {
+    street: null,
+    city: null,
+    state: null,
+    postal_code: null,
+    country: null,
+  };
+  this._profile_image = null;
+};
 
 
 User.prototype.save = async function(user){
