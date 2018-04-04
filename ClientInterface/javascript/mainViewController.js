@@ -33,6 +33,28 @@ var loginViewController = function (params) {
                 $(view).addClass(' js-loginView-register--fadeIn');
             }
         },  
+        
+        personalInfoView: {
+            body: $params.find('.js-loginView-personal-information'),
+            first_name: $params.find('.js-loginView-personal-information-first_name'),
+            last_name: $params.find('.js-loginView-personal-information-last_name'),
+            birthday: $params.find('.js-loginView-personal-information-birthday'),
+            gender: $params.find('.js-loginView-personal-information-gender'),
+            phone: $params.find('.js-loginView-personal-information-phone'),
+            toSubmit: $params.find('.js-loginView-personal-information-submit'),
+            toSkip: $params.find('.js-loginView-personal-information-skip'),
+
+            hide: function(view){
+                $(view).removeClass('js-loginView-personal-information--fadeIn').addClass(' js-loginView-personal-information--fadeOut');
+            },
+            show: function(view){
+                if($(view).hasClass('js-loginView-personal-information--fadeOut')) $(view).removeClass('js-loginView-personal-information--fadeOut');
+                $(view).addClass(' js-loginView-personal-information--fadeIn');
+            }
+            // TODO: show and hide???
+        }
+
+        
     };
    
 
@@ -42,8 +64,10 @@ var loginViewController = function (params) {
             loginViewController.registerView.show(loginViewController.registerView.body);
         }, 250);
         loginViewController.loginView.hide(loginViewController.loginView.body);
+
     });
 
+    
     $(loginViewController.registerView.toLogin).click(function(event) {
         event.preventDefault();
         setTimeout(() => {
@@ -73,6 +97,10 @@ var loginViewController = function (params) {
                     new homeViewController($('.js-homeView-box'), arg); 
                 });
             });
+
+
+
+
         });
 
         ipcRenderer.on('login-failed', (event, arg) => {
@@ -105,8 +133,20 @@ var loginViewController = function (params) {
             document.getElementById('email').style.border = "2px solid green";
             document.getElementById('password_rep').style.border = "2px solid green";
             document.getElementById('reg_password').style.border = "2px solid green";
+
+    
             
 
+
+
+                setTimeout(() => {
+                    loginViewController.personalInfoView.show(loginViewController.personalInfoView.body);
+                }, 250);
+                loginViewController.registerView.hide(loginViewController.registerView.body);
+
+            
+
+        
         });
 
         ipcRenderer.on('register-failed', (event, err) => {
