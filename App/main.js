@@ -127,11 +127,11 @@ ipcMain.on("register-submission", async function(event, data) {
 
 ipcMain.on("personal-info-submission", async function(event, data) {
   console.log(message.main, 'Personal information provided!');
-  console.log(message.main, 'Name: ', data.first_name);
+/*  console.log(message.main, 'Name: ', data.first_name);
   console.log(message.main, 'Last name: ', data.last_name);
   console.log(message.main, 'Birthday: ', data.birthday);
   console.log(message.main, 'Gender: ', data.gender);
-  console.log(message.main, 'Phone: ', data.phone);
+  console.log(message.main, 'Phone: ', data.phone);*/
 
   let result = await current_user.personal_info_save(current_user, data);
   if (result === true) {
@@ -147,12 +147,12 @@ ipcMain.on("personal-info-submission", async function(event, data) {
 
 
 ipcMain.on("personal-info-change", async function(event, data) {
-  console.log(message.main, 'Personal information request changes!');
-  console.log(message.main, 'Name: ', data.first_name);
+  console.log(message.main, 'Personal information changing!');
+/*  console.log(message.main, 'Name: ', data.first_name);
   console.log(message.main, 'Last name: ', data.last_name);
   console.log(message.main, 'Birthday: ', data.birthday);
   console.log(message.main, 'Gender: ', data.gender);
-  console.log(message.main, 'Phone: ', data.phone);
+  console.log(message.main, 'Phone: ', data.phone);*/
 
   let result = await current_user.personal_info_change(current_user, data);
   if (result === true) {

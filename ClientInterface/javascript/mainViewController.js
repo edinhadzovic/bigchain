@@ -342,30 +342,11 @@ var homeViewController = function (params, user) {
         ipcRenderer.send('personal-info-change', data);
 
         ipcRenderer.on('store-failed', (event, err) => {
-            if(err.type === 'ERR_FIRST_NAME_MISSING') {
-                document.getElementById('first_name').style.border = '2px solid red';
-                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('phone').style.border = '2px solid #d1d1d1';
-                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
-            }
-            if(err.type === 'ERR_LAST_NAME_MISSING') {
-                document.getElementById('last_name').style.border = '2px solid red';
-                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('phone').style.border = '2px solid #d1d1d1';
-                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
-            }
-            if(err.type === 'ERR_PHONE_MISSING') {
-                document.getElementById('phone').style.border = '2px solid red';
-                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
-            }
-            if(err.type === 'ERR_BIRTHDAY_MISSING') {
-                document.getElementById('birthday').style.border = '2px solid red';
-                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('phone').style.border = '2px solid #d1d1d1';
-                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
-            }
+            // Cant fail
+            // It will never reach here
+            // GOod to know this 
+            // Can be changed if all entries are equal 0 just return some error bla bla]
+
         });
 
         ipcRenderer.on('store-success', (event, current_user) => {
