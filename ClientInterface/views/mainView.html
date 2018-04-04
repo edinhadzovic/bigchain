@@ -90,19 +90,19 @@
 			<div class="js-loginView-address js-loginView-address--hide" id="js_loginView_address">
 					<form>
 						<div class="form_input">
-							<input type="text" id="street" class="js-loginView-address-street" placeholder="Street">
+							<input type="text" id="street_intro" class="js-loginView-address-street" placeholder="Street">
 						</div>
 						<div class="form_input">
-							<input type="text" id="city" class="js-loginView-address-city" placeholder="City">
+							<input type="text" id="city_intro" class="js-loginView-address-city" placeholder="City">
 						</div>
 						<div class="form_input">
-							<input type="data" id="state" class="js-loginView-address-state" placeholder="State">
+							<input type="data" id="state_intro" class="js-loginView-address-state" placeholder="State">
 						</div>
 						<div class="form_input">
-							<input type="text" id="postal_code" class="js-loginView-address-postal_code" placeholder="Postal code">
+							<input type="text" id="postal_code_intro" class="js-loginView-address-postal_code" placeholder="Postal code">
 						</div>
 						<div class="form_input">
-							<input type="text" id="country" class="js-loginView-address-country" placeholder="Country">
+							<input type="text" id="country_intro" class="js-loginView-address-country" placeholder="Country">
 						</div>
 						<div class="form_button js-loginView-address-submit">
 							<button id="submit">Submit</button>
@@ -113,6 +113,23 @@
 
 					</form>
 			</div> 
+
+			<!-- Image upload -->
+
+			<div class="js-loginView-image js-loginView-image--hide" id="js_loginView_image">
+				<form>
+					<div class="form_input">
+						<input type="file" id="image_intro" class="js-loginView-image-image" placeholder="Image" accept="image/*">
+					</div>
+					<div class="form_button js-loginView-image-submit">
+						<button id="submit">Submit</button>
+					</div>
+					<div class="form_button js-loginView-image-skip">
+						<button id="skip">Skip</button>
+					</div>
+				</form>
+			</div>
+
 		</div>
 
 		<div class="js-homeView-box hidden">

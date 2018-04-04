@@ -69,4 +69,29 @@ module.exports = {
     message: 'Birthday field is empty.',
     type: 'ERR_BIRTHDAY_MISSING'
   },
+  ERR_STREET_MISSING: {
+    success: false,
+    message: 'Street field is empty.',
+    type: 'ERR_STREET_MISSING'
+  },
+  ERR_CITY_MISSING: {
+    success: false,
+    message: 'City field is empty.',
+    type: 'ERR_CITY_MISSING'
+  },
+  ERR_STATE_MISSING: {
+    success: false,
+    message: 'State field is empty.',
+    type: 'ERR_STATE_MISSING'
+  },
+  ERR_POSTAL_CODE_MISSING: {
+    success: false,
+    message: 'Postal code field is empty.',
+    type: 'ERR_POSTAL_CODE_MISSING'
+  },
+  ERR_COUNTRY_MISSING: {
+    success: false,
+    message: 'Country field is empty.',
+    type: 'ERR_COUNTRY_MISSING'
+  },
 };

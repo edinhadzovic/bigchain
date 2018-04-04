@@ -98,13 +98,8 @@ User.prototype.personal_info_save = async function(current_user, data) {
 
 User.prototype.personal_info_change = async function(current_user, data) {
   try {
-    /* TODO: MB check is everyhitng valid before chaning just in case, but i'm not sure is that needed
-
-    let result = await verification.personal_data(data);
-    if (result.error === true) {
-      return (result);
-
-    }*/
+    // TODO: MB check is everyhitng valid before chaning just in case, but i'm not sure is that needed
+    
     let res = await store.change_personal_info(current_user, data);
     if (res === true) {
       this.setPersonalInfo(data);
@@ -117,9 +112,39 @@ User.prototype.personal_info_change = async function(current_user, data) {
 };
 
 
-
-
 // TODO: craete function address_restore
+
+User.prototype.address_info_save = async function(current_user, data) {
+  try {
+    let result = await verification.address_data(data);
+    if (result.error === true) {
+      return (result);
+    } 
+
+    let res =  await store.store_address_data(current_user, data);
+      if (res === true) {
+      this.setAdress(data);
+      return true;
+    } 
+
+  } catch (err) {
+    return err;
+  }
+};
+
+User.prototype.address_info_change = async function(current_user, data) {
+  try {
+    // TODO: Check mb?
+    let res =  await store.change_address_data(current_user, data);
+      if (res === true) {
+      this.setAdress(data);
+      return true;
+    } 
+
+  } catch (err) {
+    return err;
+  }
+};
 
 // TODO: craete function photo_restore
 

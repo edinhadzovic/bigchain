@@ -33,7 +33,6 @@ var loginViewController = function (params) {
                 $(view).addClass(' js-loginView-register--fadeIn');
             }
         },  
-        
         personalInfoView: {
             body: $params.find('.js-loginView-personal-information'),
             first_name: $params.find('.js-loginView-personal-information-first_name'),
@@ -52,7 +51,6 @@ var loginViewController = function (params) {
                 $(view).addClass(' js-loginView-personal-information--fadeIn');
             }
         },
-
         addressView: {
             body: $params.find('.js-loginView-address '),
             street: $params.find('.js-loginView-address-street '),
@@ -70,11 +68,22 @@ var loginViewController = function (params) {
                 if($(view).hasClass('js-loginView-address--fadeOut')) $(view).removeClass('js-loginView-address--fadeOut');
                 $(view).addClass(' js-loginView-address--fadeIn');
             }
-        }
+        },
+        imageView: {
+            body: $params.find('.js-loginView-image'),
+            image: $params.find('.js-loginView-image-image'),
+            toSubmit: $params.find('.js-loginView-image-submit'),
+            toSkip: $params.find('.js-loginView-image-skip'),
 
-        
+            hide: function(view) {
+                $(view).removeClass('js-loginView-image--fadeIn').addClass(' js-loginView-image--fadeOut');
+            },
+            show: function(view) {
+                if($(view).hasClass('js-loginView-image--fadeOut')) $(view).removeClass('js-loginView-image--fadeOut');
+                $(view).addClass(' js-loginView-image--fadeIn');
+            }
+        }  
     };
-   
 
     $(loginViewController.loginView.toRegister).click(function (event) {
         event.preventDefault();
@@ -82,9 +91,7 @@ var loginViewController = function (params) {
             loginViewController.registerView.show(loginViewController.registerView.body);
         }, 250);
         loginViewController.loginView.hide(loginViewController.loginView.body);
-
     });
-
     
     $(loginViewController.registerView.toLogin).click(function(event) {
         event.preventDefault();
@@ -102,12 +109,21 @@ var loginViewController = function (params) {
         loginViewController.personalInfoView.hide(loginViewController.personalInfoView.body);
     });
 
-     $(loginViewController.addressView.toSkip).click(function(event){
+    $(loginViewController.addressView.toSkip).click(function(event){
         event.preventDefault();
         setTimeout(() => {
-            loginViewController.loginView.show(loginViewController.loginView.body);
+            loginViewController.imageView.show(loginViewController.imageView.body);
         }, 500);
         loginViewController.addressView.hide(loginViewController.addressView.body);
+    });
+
+    $(loginViewController.imageView.toSkip).click(function(event){
+        event.preventDefault();
+        loginViewController.reference.fadeOut(500, function(){
+            $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                new homeViewController($('.js-homeView-box')); 
+            });
+        });
     });
 
     $(loginViewController.loginView.submit).click(function(event) {
@@ -199,7 +215,6 @@ var loginViewController = function (params) {
         });
     });
 
-    // TODO: 
     $(loginViewController.personalInfoView.toSubmit).click(function(event){
         event.preventDefault();
 
@@ -214,8 +229,7 @@ var loginViewController = function (params) {
 
         ipcRenderer.send('personal-info-submission', data);
 
-        ipcRenderer.on('store-failed', (event, err) => {
-            console.log(err.type);
+        ipcRenderer.on('store-personal-info-failed', (event, err) => {
             if(err.type === 'ERR_FIRST_NAME_MISSING') {
                 document.getElementById('first_name_intro').style.border = '2px solid red';
                 document.getElementById('last_name_intro').style.border = '2px solid #d1d1d1';
@@ -242,7 +256,7 @@ var loginViewController = function (params) {
             }
         });
 
-        ipcRenderer.on('store-success', (event, current_user) => {
+        ipcRenderer.on('store-personal-info-success', (event, current_user) => {
             console.log(current_user, "CURRENT USER");
             setTimeout(() => {
                 loginViewController.addressView.show(loginViewController.addressView.body);
@@ -250,14 +264,81 @@ var loginViewController = function (params) {
             loginViewController.personalInfoView.hide(loginViewController.personalInfoView.body);
 
         });
-
     });
 
-     $(loginViewController.addressView.toSubmit).click(function(event){
+    $(loginViewController.addressView.toSubmit).click(function(event){
 
+        event.preventDefault();
+
+        const {ipcRenderer} = require('electron');
+
+        let data = {};
+        data.street = $(loginViewController.addressView.street).val();
+        data.city = $(loginViewController.addressView.city).val();
+        data.state = $(loginViewController.addressView.state).val();
+        data.postal_code = $(loginViewController.addressView.postal_code).val();
+        data.country = $(loginViewController.addressView.country).val();
+        
+        ipcRenderer.send('address-info-submission', data);
+
+        ipcRenderer.on('store-address-info-failed', (event, err) => {
+
+            if(err.type === 'ERR_STREET_MISSING') {
+                document.getElementById('street_intro').style.border = '2px solid red';
+                document.getElementById('city_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('state_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('postal_code_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('country_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_CITY_MISSING') {
+                document.getElementById('city_intro').style.border = '2px solid red';
+                document.getElementById('street_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('state_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('postal_code_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('country_intro').style.border = '2px solid #d1d1d1';
+            }
+             if(err.type === 'ERR_STATE_MISSING') {
+                document.getElementById('state_intro').style.border = '2px solid red';
+                document.getElementById('street_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('city_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('postal_code_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('country_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_POSTAL_CODE_MISSING') {
+                document.getElementById('postal_code_intro').style.border = '2px solid red';
+                document.getElementById('street_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('city_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('state_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('country_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_COUNTRY_MISSING') {
+                document.getElementById('country_intro').style.border = '2px solid red';
+                document.getElementById('street_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('city_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('state_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('postal_code_intro').style.border = '2px solid #d1d1d1';
+            }
+        });
+
+        ipcRenderer.on('store-address-info-success', (event, current_user) => {
+            console.log(current_user, "CURRENT USER");
+            setTimeout(() => {
+                loginViewController.imageView.show(loginViewController.imageView.body);
+            }, 500);
+            loginViewController.addressView.hide(loginViewController.addressView.body);
+
+        });
     });
 
+ /*   $(loginViewController.imageView.toSubmit).click(function(event){
+        event.preventDefault();
 
+        const {ipcRenderer} = require('electron');
+
+        let data = {};
+        data.image = $(loginViewController.imageView.image).val();
+
+    });*/
 };
 
 

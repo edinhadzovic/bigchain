@@ -87,10 +87,6 @@ app.on('activate', function () {
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-
-//Getting user input
 ipcMain.on("login-submission", async function(event, data) {
   
   console.log(message.main, 'Request to login of a user');
@@ -112,7 +108,6 @@ ipcMain.on("login-submission", async function(event, data) {
 ipcMain.on("register-submission", async function(event, data) {
   console.log(message.main, 'Request for creation of new user.');
   let result = await current_user.generateUser(data);
-
   if (result.success) {
     console.log(message.main, "Status success!");
     console.log(' ');
@@ -127,41 +122,62 @@ ipcMain.on("register-submission", async function(event, data) {
 
 ipcMain.on("personal-info-submission", async function(event, data) {
   console.log(message.main, 'Personal information provided!');
-/*  console.log(message.main, 'Name: ', data.first_name);
-  console.log(message.main, 'Last name: ', data.last_name);
-  console.log(message.main, 'Birthday: ', data.birthday);
-  console.log(message.main, 'Gender: ', data.gender);
-  console.log(message.main, 'Phone: ', data.phone);*/
-
   let result = await current_user.personal_info_save(current_user, data);
   if (result === true) {
-    console.log(message.main, 'Storing successfully done.');
+    console.log(message.main, 'Storing of personal information successfully done.');
     console.log(' ');
-    event.sender.send('store-success', current_user);
+    event.sender.send('store-personal-info-success', current_user);
   } else {
-    console.log(message.main, 'Storing failed.');
+    console.log(message.main, 'Storing of personal information failed.');
     console.log(' ');
-    event.sender.send('store-failed', result);
+    event.sender.send('store-personal-info-failed', result);
   }
 });
 
 
 ipcMain.on("personal-info-change", async function(event, data) {
   console.log(message.main, 'Personal information changing!');
-/*  console.log(message.main, 'Name: ', data.first_name);
-  console.log(message.main, 'Last name: ', data.last_name);
-  console.log(message.main, 'Birthday: ', data.birthday);
-  console.log(message.main, 'Gender: ', data.gender);
-  console.log(message.main, 'Phone: ', data.phone);*/
-
   let result = await current_user.personal_info_change(current_user, data);
   if (result === true) {
-    console.log(message.main, 'Changing successfully done.');
+    console.log(message.main, 'Changing of personal information successfully done.');
     console.log(' ');
     event.sender.send('store-success', current_user);
   } else {
-    console.log(message.main, 'Changing failed.');
+    console.log(message.main, 'Changing of personal information failed.');
     console.log(' ');
     event.sender.send('store-failed', result);
   }
 });
+
+
+ipcMain.on("address-info-submission", async function(event, data) {
+  console.log(message.main, 'Personal information provided!');
+  let result = await current_user.address_info_save(current_user, data);
+  if (result === true) {
+    console.log(message.main, 'Storing of address information successfully done.');
+    console.log(' ');
+    event.sender.send('store-address-info-success', current_user);
+  } else {
+    console.log(message.main, 'Storing of address information failed.');
+    console.log(' ');
+    event.sender.send('store-address-info-failed', result);
+  }
+});
+
+
+// USE IT WHEN CHANGE IS CREATED IN SETTINGS
+
+ipcMain.on("address-info-change", async function(event, data) {
+  console.log(message.main, 'Personal information provided!');
+  let result = await current_user.address_info_change(current_user, data);
+  if (result === true) {
+    console.log(message.main, 'Storing of address information successfully done.');
+    console.log(' ');
+    event.sender.send('change-address-info-success', current_user);
+  } else {
+    console.log(message.main, 'Storing of address information failed.');
+    console.log(' ');
+    event.sender.send('change-address-info-failed', result);
+  }
+});
+
