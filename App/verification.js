@@ -144,13 +144,13 @@ module.exports = {
 				count++;
 				reject(error.ERR_LAST_NAME_MISSING);
 			}
-			if(validator.isEmpty(data.phone)) {
-				count++;
-				reject(error.ERR_PHONE_MISSING);
-			}
 			if (validator.isEmpty(data.birthday)) {
 				count++;
 				reject(error.ERR_BIRTHDAY_MISSING);
+			}
+			if(validator.isEmpty(data.phone)) {
+				count++;
+				reject(error.ERR_PHONE_MISSING);
 			}
 			if (count == 0) {
 				resolve(true);

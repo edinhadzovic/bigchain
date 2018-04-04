@@ -50,7 +50,8 @@ User.prototype.generateUser = async function(user){
       let new_user = {};
       new_user.success = true;
       new_user.data = await this.save(user);      
-
+      console.log(message.user, user);
+      this.setUser(user);
       return new_user;
     }
   } catch(err) {
@@ -77,7 +78,7 @@ User.prototype.login = async function(data) {
   }
 };
 
-User.prototype.personal_info_restore = async function(current_user, data) {
+User.prototype.personal_info_save = async function(current_user, data) {
   try {
     let result = await verification.personal_data(data);
     if (result.error === true) {
@@ -94,57 +95,81 @@ User.prototype.personal_info_restore = async function(current_user, data) {
   }
 };
 
+
+User.prototype.personal_info_change = async function(current_user, data) {
+  try {
+    /* TODO: MB check is everyhitng valid before chaning just in case, but i'm not sure is that needed
+
+    let result = await verification.personal_data(data);
+    if (result.error === true) {
+      return (result);
+
+    }*/
+    let res = await store.change_personal_info(current_user, data);
+    if (res === true) {
+      this.setPersonalInfo(data);
+      return true;
+    } 
+
+  } catch (err) {
+    return err;
+  }
+};
+
+
+
+
 // TODO: craete function address_restore
 
 // TODO: craete function photo_restore
 
 User.prototype.setUser = function(data) {
-    if (data.email !== null) {
+    if (data.email) {
       this._email = data.email;
     }
-    if (data.password !== null) {
+    if (data.password) {
       this._password = data.password;
     }
 };
 
 User.prototype.setPersonalInfo = function(data) {
-    if (data.first_name !== null) {
+    if (data.first_name) {
       this._personal_information.first_name = data.first_name;
     }
-    if (data.last_name !== null) {
+    if (data.last_name) {
       this._personal_information.last_name = data.last_name;
     }
-    if (data.gender !== null) {
+    if (data.gender) {
       this._personal_information.gender = data.gender;
     }
-    if (data.birthday !== null) {
+    if (data.birthday) {
       this._personal_information.birthday = data.birthday;
     }
-    if (data.phone !== null) {
+    if (data.phone) {
       this._personal_information.phone = data.phone;
     }
 };
 
 User.prototype.setAdress = function(data) {
-    if (data.street !== null) {
+    if (data.street) {
         this._address.street = data.street;
       }
-      if (data.city !== null) {
+      if (data.city) {
         this._address.city = data.city;
       }
-      if (data.state !== null) {
+      if (data.state) {
         this._address.state = data.state;
       }
-      if (data.postal_code !== null) {
+      if (data.postal_code) {
         this._address.postal_code = data.postal_code;
       }
-      if (data.country !== null) {
+      if (data.country) {
         this._address.country = data.country;
       }
 };
 
 User.prototype.setPhoto = function(data) {
-      if (data.profile_image !== null) {
+      if (data.profile_image) {
       this._profile_image = data.profile_image;
     }
 };

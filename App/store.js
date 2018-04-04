@@ -131,7 +131,7 @@ module.exports = {
 
 	store_personal_info: function(current_user, data) {
 		return new Promise((resolve, reject) => {
-			console.log(message.store, 'Restoring process starting.');
+			console.log(message.store, 'Storing personal infomation process starting.');
 
 			let replaced = false;
 			fs.readdir(directory, (err, files) => {
@@ -163,5 +163,55 @@ module.exports = {
 			});
 		})
 	},
+
+	change_personal_info: function(current_user, data) {
+		return new Promise((resolve, reject) => {
+			console.log(message.store, 'Changing personal information process starting.');
+
+			let replaced = false;
+			fs.readdir(directory, (err, files) => {
+				if(err) reject(error.ERR_DB_READING);
+
+				files.forEach(element => {
+					let file = fs.readFileSync(directory + '/' + element, 'utf8');
+					var result = file.split("'");
+					if(current_user._email === result[1]){
+						var new_data = {
+							email: result[1],
+							password: result[3],
+							first_name: result[5],
+							last_name: result[7],
+							gender: result[9],
+							birthday: result[11],
+							phone: result[13],
+						}
+
+						if(data.phone) {
+							new_data.phone = data.phone;
+						}
+						if(data.birthday) {
+							new_data.birthday = data.birthday;
+						}
+						if(data.first_name) {
+							new_data.first_name = data.first_name;
+						} 
+						if(data.last_name) {
+							new_data.last_name = data.last_name;
+						}
+						fs.writeFileSync(directory + '/' + element, util.inspect([new_data.email, new_data.password, new_data.first_name,
+						 	new_data.last_name, new_data.gender, new_data.birthday, new_data.phone]));
+						if(err) reject(error.ERR_DB_READING);
+						replaced = true;
+						resolve(true);
+					}
+				});
+				if(!replaced) {
+					reject(error.ERR_NOT_VALID_EMAIL);
+				} 
+			});
+		})
+
+	},
+
 
 };

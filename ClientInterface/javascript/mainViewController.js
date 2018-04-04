@@ -51,7 +51,25 @@ var loginViewController = function (params) {
                 if($(view).hasClass('js-loginView-personal-information--fadeOut')) $(view).removeClass('js-loginView-personal-information--fadeOut');
                 $(view).addClass(' js-loginView-personal-information--fadeIn');
             }
-            // TODO: show and hide???
+        },
+
+        addressView: {
+            body: $params.find('.js-loginView-address '),
+            street: $params.find('.js-loginView-address-street '),
+            city: $params.find('.js-loginView-address-city '),
+            state: $params.find('.js-loginView-address-state '),
+            postal_code: $params.find('.js-loginView-address-postal_code '),
+            country: $params.find('.js-loginView-address-country '),
+            toSubmit: $params.find('.js-loginView-address-submit '),
+            toSkip: $params.find('.js-loginView-address-skip '),
+
+            hide: function(view) {
+                $(view).removeClass('js-loginView-address--fadeIn').addClass(' js-loginView-address--fadeOut');
+            },
+            show: function(view) {
+                if($(view).hasClass('js-loginView-address--fadeOut')) $(view).removeClass('js-loginView-address--fadeOut');
+                $(view).addClass(' js-loginView-address--fadeIn');
+            }
         }
 
         
@@ -74,6 +92,22 @@ var loginViewController = function (params) {
             loginViewController.loginView.show(loginViewController.loginView.body);
         }, 500);
         loginViewController.registerView.hide(loginViewController.registerView.body);
+    });
+
+    $(loginViewController.personalInfoView.toSkip).click(function(event){
+        event.preventDefault();
+        setTimeout(() => {
+            loginViewController.addressView.show(loginViewController.addressView.body);
+        }, 500);
+        loginViewController.personalInfoView.hide(loginViewController.personalInfoView.body);
+    });
+
+     $(loginViewController.addressView.toSkip).click(function(event){
+        event.preventDefault();
+        setTimeout(() => {
+            loginViewController.loginView.show(loginViewController.loginView.body);
+        }, 500);
+        loginViewController.addressView.hide(loginViewController.addressView.body);
     });
 
     $(loginViewController.loginView.submit).click(function(event) {
@@ -124,29 +158,22 @@ var loginViewController = function (params) {
         data.password_rep = $(loginViewController.registerView.repassword).val();
     
         const {ipcRenderer} = require('electron');
-    
-        console.log(data);
+
+
+        let data_temp = {};
+        data_temp.email = 'dane.banane@yahoo.com';
+        data_temp.password = 'Profi?danac321';
+        data_temp.password_rep = 'Profi?danac321';
+        
         // send username to main.js 
-        ipcRenderer.send('register-submission', data );
+        ipcRenderer.send('register-submission', data_temp );
         
         ipcRenderer.on('register-success', (event, user) => {
-            document.getElementById('email').style.border = "2px solid green";
-            document.getElementById('password_rep').style.border = "2px solid green";
-            document.getElementById('reg_password').style.border = "2px solid green";
+            setTimeout(() => {
+                loginViewController.personalInfoView.show(loginViewController.personalInfoView.body);
+            }, 250);
+            loginViewController.registerView.hide(loginViewController.registerView.body);
 
-    
-            
-
-
-
-                setTimeout(() => {
-                    loginViewController.personalInfoView.show(loginViewController.personalInfoView.body);
-                }, 250);
-                loginViewController.registerView.hide(loginViewController.registerView.body);
-
-            
-
-        
         });
 
         ipcRenderer.on('register-failed', (event, err) => {
@@ -171,6 +198,66 @@ var loginViewController = function (params) {
             }
         });
     });
+
+    // TODO: 
+    $(loginViewController.personalInfoView.toSubmit).click(function(event){
+        event.preventDefault();
+
+        const {ipcRenderer} = require('electron');
+
+        let data = {};
+        data.first_name = $(loginViewController.personalInfoView.first_name).val();
+        data.last_name = $(loginViewController.personalInfoView.last_name).val();
+        data.gender = $(loginViewController.personalInfoView.gender).val();
+        data.birthday = $(loginViewController.personalInfoView.birthday).val();
+        data.phone = $(loginViewController.personalInfoView.phone).val();
+
+        ipcRenderer.send('personal-info-submission', data);
+
+        ipcRenderer.on('store-failed', (event, err) => {
+            console.log(err.type);
+            if(err.type === 'ERR_FIRST_NAME_MISSING') {
+                document.getElementById('first_name_intro').style.border = '2px solid red';
+                document.getElementById('last_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_LAST_NAME_MISSING') {
+                document.getElementById('last_name_intro').style.border = '2px solid red';
+                document.getElementById('first_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday_intro').style.border = '2px solid #d1d1d1';
+            }
+             if(err.type === 'ERR_BIRTHDAY_MISSING') {
+                document.getElementById('birthday_intro').style.border = '2px solid red';
+                document.getElementById('last_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('first_name_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_PHONE_MISSING') {
+                document.getElementById('phone_intro').style.border = '2px solid red';
+                document.getElementById('last_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('first_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday_intro').style.border = '2px solid #d1d1d1';
+            }
+        });
+
+        ipcRenderer.on('store-success', (event, current_user) => {
+            console.log(current_user, "CURRENT USER");
+            setTimeout(() => {
+                loginViewController.addressView.show(loginViewController.addressView.body);
+            }, 500);
+            loginViewController.personalInfoView.hide(loginViewController.personalInfoView.body);
+
+        });
+
+    });
+
+     $(loginViewController.addressView.toSubmit).click(function(event){
+
+    });
+
+
 };
 
 
@@ -252,7 +339,7 @@ var homeViewController = function (params, user) {
         const {ipcRenderer} = require('electron');
         console.log(data);
     
-        ipcRenderer.send('personal-info-submission', data);
+        ipcRenderer.send('personal-info-change', data);
 
         ipcRenderer.on('store-failed', (event, err) => {
             if(err.type === 'ERR_FIRST_NAME_MISSING') {
@@ -283,6 +370,7 @@ var homeViewController = function (params, user) {
 
         ipcRenderer.on('store-success', (event, current_user) => {
             console.log(current_user, "CURRENT USER");
+            $('.js-homeView-profile-name').text(current_user._personal_information.first_name + " " + current_user._personal_information.last_name);
         })
     });
 
