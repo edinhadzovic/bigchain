@@ -181,3 +181,14 @@ ipcMain.on("address-info-change", async function(event, data) {
   }
 });
 
+ipcMain.on('form-submission-image', async function(event, data){
+  console.log(message.main, data);
+  let result = await current_user.save_image(current_user, data);
+  if(result === true) {
+    console.log(message.main, 'Storing');
+    event.sender.send('image-submission-success', current_user);
+  } else {
+    console.log("false");
+  }
+});
+

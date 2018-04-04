@@ -316,5 +316,46 @@ module.exports = {
 		})
 	},
 
+	save_image: function(current_user, data) {
+		return new Promise((resolve, reject) => {
+			console.log(message.store, 'Storing address information process starting.');
 
+			let replaced = false;
+			fs.readdir(directory, (err, files) => {
+				if(err) reject(error.ERR_DB_READING);
+
+				files.forEach(element => {
+					let file = fs.readFileSync(directory + '/' + element, 'utf8');
+					var result = file.split("'");
+					if(current_user._email === result[1]){
+						var new_data = {
+							email: result[1],
+							password: result[3],
+							first_name: result[5],
+							last_name: result[7],
+							gender: result[9],
+							birthday: result[11],
+							phone: result[13],
+							street: result[15],
+							city: result[17],
+							state: result[19],
+							postal_code: result[21],
+							country: result[23],
+							profile_image: data.image
+						};
+
+						fs.writeFileSync(directory + '/' + element, util.inspect([new_data.email, new_data.password, new_data.first_name,
+						 	new_data.last_name, new_data.gender, new_data.birthday, new_data.phone, new_data.street, new_data.city,
+						 	new_data.state, new_data.postal_code, new_data.country, new_data.profile_image]));
+						if(err) reject(error.ERR_DB_READING);
+						replaced = true;
+						resolve(true);
+					}
+				});
+				if(!replaced) {
+					reject(error.ERR_NOT_VALID_EMAIL);
+				} 
+			});
+		});
+	}
 };

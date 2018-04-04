@@ -146,6 +146,18 @@ User.prototype.address_info_change = async function(current_user, data) {
   }
 };
 
+User.prototype.save_image = async function(current_user, data) {
+  try {
+    let res = await store.save_image(current_user, data);
+    if(res === true) {
+      this.setImage(data);
+      return true;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
 // TODO: craete function photo_restore
 
 User.prototype.setUser = function(data) {
@@ -193,9 +205,9 @@ User.prototype.setAdress = function(data) {
       }
 };
 
-User.prototype.setPhoto = function(data) {
-      if (data.profile_image) {
-      this._profile_image = data.profile_image;
+User.prototype.setImage = function(data) {
+      if (data.image) {
+      this._profile_image = data.image;
     }
 };
 

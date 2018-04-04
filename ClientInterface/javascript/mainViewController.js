@@ -1,5 +1,6 @@
 const client = require('./../../App/client/User');
 
+
 var loginViewController = function (params) {
     var $params = $(params);
     var loginViewController = {
@@ -147,10 +148,6 @@ var loginViewController = function (params) {
                     new homeViewController($('.js-homeView-box'), arg); 
                 });
             });
-
-
-
-
         });
 
         ipcRenderer.on('login-failed', (event, arg) => {
@@ -330,15 +327,39 @@ var loginViewController = function (params) {
         });
     });
 
- /*   $(loginViewController.imageView.toSubmit).click(function(event){
+    $(loginViewController.imageView.toSubmit).click(function(event){
         event.preventDefault();
-
+        let image;
+        const {dialog} = require('electron').remote;
+        console.log(dialog);
         const {ipcRenderer} = require('electron');
+        dialog.showOpenDialog({properties: ['openFile']},  (file_names) => {
+            if(file_names === undefined) return;
 
-        let data = {};
-        data.image = $(loginViewController.imageView.image).val();
+            image = file_names[0];
+            
+            let data = {};
+            data.image = image;
+            ipcRenderer.send('form-submission-image', data);
+        });
 
-    });*/
+        
+        ipcRenderer.on('image-submission-success', (event, current_user) => {
+            loginViewController.reference.fadeOut(500, function(){
+                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                    new homeViewController($('.js-homeView-box'), current_user); 
+                });
+            });
+        });
+        ipcRenderer.on('image-submission-fail', (event, current_user) => {
+            
+        });
+        //let data = {};
+        //data.image = reader.readAsDataURL($(loginViewController.imageView.image).val());
+        //console.log(data.image);
+        console.log(image);
+
+    });
 };
 
 
@@ -392,6 +413,7 @@ var homeViewController = function (params, user) {
             }
         ],
         active: function(user) {
+            $('.js-home-profile-image-tag').attr('src', user._profile_image);
             $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
         },
         setPage: function(page_type) {
