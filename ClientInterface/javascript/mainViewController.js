@@ -243,6 +243,7 @@ var homeViewController = function (params, user) {
 
         ipcRenderer.on('store-success', (event, current_user) => {
             console.log(current_user, "CURRENT USER");
+            $('.js-homeView-profile-name').text(current_user._personal_information.first_name + " " + current_user._personal_information.last_name);
         })
     });
 

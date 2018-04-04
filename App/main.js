@@ -135,12 +135,13 @@ ipcMain.on("personal-info-submission", async function(event, data) {
   console.log(message.main, 'Phone: ', data.phone);
 
   let result = await current_user.personal_info_restore(current_user, data);
-  console.log(message.main, result);
   if (result === true) {
     console.log(message.main, 'Restoring successfully done.');
+    console.log(' ');
     event.sender.send('store-success', current_user);
   } else {
     console.log(message.main, 'Restoring failed.');
+    console.log(' ');
     event.sender.send('store-failed', result);
   }
 })
