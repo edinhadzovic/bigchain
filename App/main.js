@@ -192,3 +192,6 @@ ipcMain.on('form-submission-image', async function(event, data){
   }
 });
 
+ipcMain.on('get_current_user', async function(event){
+  event.sender.send('current_user-placed', current_user);
+})

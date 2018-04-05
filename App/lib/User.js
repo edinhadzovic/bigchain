@@ -71,6 +71,7 @@ User.prototype.login = async function(data) {
     } 
     this.setUser(user.user);
     this.setPersonalInfo(user.user);
+    this.setAdress(user.user);
     // TODO set address and profile image
     return true;
   } catch (err) {

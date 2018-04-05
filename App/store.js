@@ -39,7 +39,7 @@ module.exports = {
 							password: result[3],
 							first_name: result[5],
 							last_name: result[7],
-							gander: result[9],
+							gender: result[9],
 							birthday: result[11],
 							phone	: result[13],
 							street: result[15],

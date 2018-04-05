@@ -120,10 +120,19 @@ var loginViewController = function (params) {
 
     $(loginViewController.imageView.toSkip).click(function(event){
         event.preventDefault();
-        loginViewController.reference.fadeOut(500, function(){
-            $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                new homeViewController($('.js-homeView-box')); 
+
+        const {ipcRenderer} = require('electron');
+        ipcRenderer.send('get_current_user');
+
+        ipcRenderer.on('current_user-placed', (event, current_user) => {
+
+            console.log(current_user);
+            loginViewController.reference.fadeOut(500, function(){
+                $('.js-welcome-box').removeClass('hidden').addClass('js-welcome-box--fadeIn').fadeIn(500, function(){
+                    new welcomeView($('.js-welcome-box'), current_user); 
+                });
             });
+
         });
     });
 
@@ -134,18 +143,18 @@ var loginViewController = function (params) {
         data.password = $(loginViewController.loginView.password).val();
         
         const {ipcRenderer} = require('electron');
-        /*
+
         let data_temp = {};
-        data_temp.email = 'jelena.radisa@yahoo.com';
+        data_temp.email = 'dane.banane@yahoo.com';
         data_temp.password = 'Profi?danac321';
-        */
+
         // send username to main.js 
-        ipcRenderer.send('login-submission', data );
+        ipcRenderer.send('login-submission', data_temp );
         
         ipcRenderer.on("login-success", (event, arg) => {
             loginViewController.reference.fadeOut(500, function(){
-                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    new homeViewController($('.js-homeView-box'), arg); 
+                $('.js-welcome-box').removeClass('hidden').addClass('js-welcome-box--fadeIn').fadeIn(500, function(){
+                    new welcomeView($('.js-welcome-box'), arg); 
                 });
             });
         });
@@ -346,8 +355,8 @@ var loginViewController = function (params) {
         
         ipcRenderer.on('image-submission-success', (event, current_user) => {
             loginViewController.reference.fadeOut(500, function(){
-                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    new homeViewController($('.js-homeView-box'), current_user); 
+                $('.js-welcome-box').removeClass('hidden').addClass('js-welcome-box--fadeIn').fadeIn(500, function(){
+                    new welcomeView($('.js-welcome-box'), current_user); 
                 });
             });
         });
@@ -358,7 +367,6 @@ var loginViewController = function (params) {
         //data.image = reader.readAsDataURL($(loginViewController.imageView.image).val());
         //console.log(data.image);
         console.log(image);
-
     });
 };
 
@@ -373,7 +381,7 @@ var homeViewController = function (params, user) {
     console.log(user);
     var $params = $(params);
     var homeViewController = {
-        navigaiton: {
+        navigation: {
             $body: $params.find('.js-homeView-navigation'),
             wallet: $params.find('.js-homeView-navigation-item[type="request_wallet_plus"]'),
             settings: $params.find('.js-homeView-navigation-item[type="request_settings"]'),
@@ -461,27 +469,48 @@ var homeViewController = function (params, user) {
 
 
     homeViewController.active(user);
-    $(homeViewController.navigaiton.settings).click(function(){
+    $(homeViewController.navigation.settings).click(function(){
         homeViewController.setPage("Settings");
     });
-    $(homeViewController.navigaiton.wallet).click(function(){
+    $(homeViewController.navigation.wallet).click(function(){
         homeViewController.setPage("Wallet");
     });
-    $(homeViewController.navigaiton.startup_plus).click(function(){
+    $(homeViewController.navigation.startup_plus).click(function(){
         homeViewController.setPage("Startup");
     });
-    $(homeViewController.navigaiton.file_plus).click(function(){
+    $(homeViewController.navigation.file_plus).click(function(){
         homeViewController.setPage("File");
     });
-    $(homeViewController.navigaiton.manager_plus).click(function(){
+    $(homeViewController.navigation.manager_plus).click(function(){
         homeViewController.setPage("Manager");
     });
 };
 
-/*
-$('document').ready(function(){
-    $('.js-homeView-box').each(function () {
-        new homeViewController(this);
-    })
-});
-*/
+
+
+var welcomeView = function (params, user) {
+    console.log(user);
+    var $params = $(params);
+    var welcomeView = {
+        reference: $params,
+        active: function(user) {
+            setTimeout(() => {
+                welcomeView.reference.fadeOut(500, function(){
+                    $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                        new homeViewController($('.js-homeView-box'), user); 
+                    });
+                });
+            }, 5000);
+            if(user._personal_information.gender === 'Male')
+            { 
+                $('.js-welcome-box-massage').text(" Welcome Mrs." + user._personal_information.last_name);
+            } else {
+                $('.js-welcome-box-massage').text(" Welcome Ms." + user._personal_information.last_name);
+            }
+
+            // TODO: ANIMACIJA JE KURCINA ZA SADA, BRAVO DANILO
+        }
+    };
+
+    welcomeView.active(user);
+}
