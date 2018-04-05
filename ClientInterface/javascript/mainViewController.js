@@ -1,4 +1,9 @@
 const client = require('./../../App/client/User');
+const croppie = require('croppie');
+const fs = require('fs');
+const path = require('path');
+
+const directory = path.join(__dirname, '../images/profile');
 
 
 var loginViewController = function (params) {
@@ -73,8 +78,10 @@ var loginViewController = function (params) {
         imageView: {
             body: $params.find('.js-loginView-image'),
             image: $params.find('.js-loginView-image-image'),
+            crop: $params.find('.js-loginView-image-crop'),
             toSubmit: $params.find('.js-loginView-image-submit'),
             toSkip: $params.find('.js-loginView-image-skip'),
+            saveImage: $params.find('.js-loginView-image-crop-save'),
 
             hide: function(view) {
                 $(view).removeClass('js-loginView-image--fadeIn').addClass(' js-loginView-image--fadeOut');
@@ -122,7 +129,7 @@ var loginViewController = function (params) {
         event.preventDefault();
         loginViewController.reference.fadeOut(500, function(){
             $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                new homeViewController($('.js-homeView-box')); 
+                new homeViewController($('.js-homeView-box',)); 
             });
         });
     });
@@ -340,9 +347,47 @@ var loginViewController = function (params) {
             
             let data = {};
             data.image = image;
-            ipcRenderer.send('form-submission-image', data);
-        });
+            loginViewController.imageView.crop.removeClass('hidden').fadeIn(500, () => {
+                data.imageController = $('.js-loginView-image-crop').croppie({
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'circle'
+                    },
+                    boundary: { width: 300, height: 300 },
+                });
 
+                data.imageController.croppie('bind', {
+                    url: data.image
+                });
+            });
+
+            $('.js-loginView-image-crop-save').click(function(event){
+                var reader = new FileReader();
+                event.preventDefault();
+                console.log(data.imageController);
+                data.imageController.croppie('result', {type: 'blob'}).then(function(resp){
+                    console.log(window.URL.createObjectURL(resp));
+                    data.image = window.URL.createObjectURL(resp);
+                    reader.addEventListener('load', function(){
+                        fs.writeFileSync(directory + '/user_profile.png', reader.result, 'binary', function(err){
+                            if(err) console.log("down");
+                            console.log("test");
+
+                        });
+
+                        data.image = directory + '/user_profile.png';
+                        ipcRenderer.send('form-submission-image', data);
+
+                    });
+                    reader.readAsBinaryString(resp);
+                    
+                
+                });
+            });
+            //
+        });
+    
         
         ipcRenderer.on('image-submission-success', (event, current_user) => {
             loginViewController.reference.fadeOut(500, function(){
