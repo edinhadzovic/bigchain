@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>window.$ = window.jQuery = require('jquery');</script>
+
+	<!-- <script>
+		window.nodeRequire = require;
+		delete window.require;
+		delete window.exports;
+		delete window.module;
+	</script> -->
+	
+	<script src="../javascript/lib/jquery-3.3.1.min.js"></script>
+	<script src="../javascript/lib/croppie.min.js"></script>
+    <!-- <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/croppie.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>		
+<div class="js-loginView-form form_section">
+		<div class="js-loginView-logo"></div>
+		<div class="js-loginView-login js-loginView-container" id="js_loginView_login">
+			<form>
+				<div class="js-loginVeiw-group">
+					<input type="text" id="username" class="js-loginView-input js-loginView-login-username" required>
+					<label for="username">Username</label>
+				</div>
+				<div class="js-loginVeiw-group">
+					<input type="password" id="password" class="js-loginView-input js-loginView-login-password" required>
+					<label for="password">Password</label>
+				</div>
+				<div class="js-loginView-button">
+					<button id="login" class="js-loginView-login-submit">Login</button>
+				</div>
+			</form>
+				
+			<div class="login_footer">
+				<p>Don't have an account: <a href="#" class="js-loginView-form-register js-loginView-new-account	" id="js-loginView-form-register"> Create one </a></p>
+				<div class="footer_social_media">
+						<a href="https://www.facebook.com/BigChainSolutions/" class="face_book" target="_blank"></a>
+						<a href="https://t.me/joinchat/AAAAAEaujt2dzq20lzKgRg" class="telegram" target="_blank"></a>
+						<a href="https://twitter.com/walletplusIO" class="twitter" target="_blank"></a>
+						<a href="https://www.linkedin.com/company/bigchainsolutions/" class="linkedin" target="_blank"></a>
+						<!-- Social Media Icons -->
+				</div>
+			</div>
+		</div>
+		<div class="js-loginView-register hidden js-loginView-container" id="js_loginView_register">
+				<form>
+					<div class="js-loginVeiw-group">
+						<input type="text" id="email" class="js-loginView-input js-loginView-register-mail" required>
+						<label for="email" class="js">Email</label>
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="password" id="reg_password" class="js-loginView-input js-loginView-register-password" required>
+						<label for="password" class="js">Password</label>						
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="password" id="password_rep" class="js-loginView-input js-loginView-register-repassword" required>
+						<label for="password_rep" class="js">Repeat Password</label>												
+					</div>
+					<div class="js-loginView-button">
+						<button id="register" class="js-loginView-register-submit">Register</button>
+					</div>
+				</form>
+				<div class="login_footer">
+					<p>Have an account: <a href="#" class="js-loginView-go-to-login" id="js-loginView-form-register"> Login </a></p>
+				</div>
+		</div>
+
+		<!--Personal info --> 
+		<div class="js-loginView-personal-information hidden js-loginView-container" id="js_loginView_personal-information">
+				<form>
+					<div class="js-loginVeiw-group">
+						<input type="text" id="first_name_intro" class="js-loginView-input js-loginView-personal-information-first_name" required>
+						<label for="first_name_intro" class="js">First Name</label>												
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="text" id="last_name_intro" class="js-loginView-input js-loginView-personal-information-last_name" required>
+						<label for="last_name_intro" class="js">Last Name</label>						
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="data" id="birthday_intro" class="js-loginView-input js-loginView-personal-information-birthday" required>
+						<label for="birthday_intro" class="js">Birthday</label>												
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="text" id="phone_intro" class="js-loginView-input js-loginView-personal-information-phone" required>
+						<label for="phone_intro" class="js">Phone</label>												
+					</div>
+					<div class="js-loginVeiw-group">
+						<select type="text" id="gender_intro" class="js-loginView-input js-loginView-personal-information-gender" placeholder="Gender"><option>Male<option>Female</select>
+					</div>
+					<div class="form_button js-loginView-personal-information-submit display-inline">
+						<button id="submit">Submit</button>
+					</div>
+					<div class="form_button js-loginView-personal-information-skip display-inline">
+						<button id="skip">Skip</button>
+					</div>
+
+				</form>
+		</div> 
+
+		<!--Address info --> 
+
+		<div class="js-loginView-address hidden js-loginView-container" id="js_loginView_address">
+				<form>
+					<div class="js-loginVeiw-group">
+						<input type="text" id="street_intro" class="js-loginView-input js-loginView-address-street" required>
+						<label for="birthday_intro" class="js">Street</label>																		
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="text" id="city_intro" class="js-loginView-input js-loginView-address-city" required>
+						<label for="birthday_intro" class="js">City</label>																		
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="data" id="state_intro" class="js-loginView-input js-loginView-address-state" required>
+						<label for="birthday_intro" class="js">State</label>																		
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="text" id="postal_code_intro" class="js-loginView-input js-loginView-address-postal_code" required>
+						<label for="birthday_intro" class="js">Postal Code</label>																		
+						
+					</div>
+					<div class="js-loginVeiw-group">
+						<input type="text" id="country_intro" class="js-loginView-input js-loginView-address-country" required>
+						<label for="birthday_intro" class="js">Country</label>
+					</div>
+					<div class="form_button js-loginView-address-submit display-inline">
+						<button id="submit">Submit</button>
+					</div>
+					<div class="form_button js-loginView-address-skip display-inline">
+						<button id="skip">Skip</button>
+					</div>
+
+				</form>
+		</div> 
+
+		<!-- Image upload -->
+
+		<div class="js-loginView-image hidden js-loginView-container" id="js_loginView_image">
+			<form>
+				<div class="form_button js-loginView-image-submit">
+					<button id="submit">Choose file</button>
+				</div>
+				<div class="js-loginView-image-crop hidden">
+					<button class="js-loginView-image-crop-save">Save</button>
+				</div>
+				<div class="form_button js-loginView-image-skip">
+					<button id="skip">Skip</button>
+				</div>
+			</form>
+		</div>
+		<div class="js-loginView-footer">
+			<p>© 2018 BigChainSolutions All Rights Reserved</p>
+		</div>
+	</div>
+	<script src='../javascript/mainViewController.js'></script>
+</body>
+</html>

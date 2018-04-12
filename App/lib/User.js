@@ -43,15 +43,27 @@ User.prototype.checkArguments = async function(user){
   return result;
 };
 
+User.prototype.setPassword = function(password) {
+  this._password = password;
+};
+
+User.prototype.getPassword = function(){
+  return this._password;
+}
+
 User.prototype.generateUser = async function(user){
   try{
     let validation = await this.checkArguments(user);
     if(validation === true) {
       let new_user = {};
       new_user.success = true;
-      new_user.data = await this.save(user);      
+      let salt = bcryptjs.genSaltSync(10);
+      this.setUser(user);      
+      let hash = bcryptjs.hashSync(this.getPassword(), salt);
+      this.setPassword(hash);
+      console.log(message.user,this);
+      new_user.data = await this.save(this);      
       console.log(message.user, user);
-      this.setUser(user);
       return new_user;
     }
   } catch(err) {
@@ -71,6 +83,7 @@ User.prototype.login = async function(data) {
     } 
     this.setUser(user.user);
     this.setPersonalInfo(user.user);
+    this.setAdress(user.user);
     // TODO set address and profile image
     this.setImage(user.user);
     return true;
@@ -85,7 +98,9 @@ User.prototype.personal_info_save = async function(current_user, data) {
     if (result.error === true) {
       return (result);
     }
-    let res = await store.store_personal_info(current_user, data);
+    message.print(message.user, `${current_user}, ${data}`);
+    this.setPersonalInfo(data);
+    let res = await store.update(current_user);
     if (res === true) {
       this.setPersonalInfo(data);
       return true;
@@ -207,8 +222,8 @@ User.prototype.setAdress = function(data) {
 };
 
 User.prototype.setImage = function(data) {
-      if (data.image) {
-      this._profile_image = data.image;
+      if (data.profile_image) {
+      this._profile_image = data.profile_image;
     }
 };
 

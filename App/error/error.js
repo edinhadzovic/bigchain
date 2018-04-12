@@ -14,6 +14,11 @@ module.exports = {
     message: 'There was an error in reading the DataBase.',
     type: 'ERR_DB_READING'
   },
+  ERR_DB_STORING: {
+    success: false,
+    message: 'The was an error in storing the File',
+    tpye: 'ERR_DB_STORING'
+  },
   ERR_EMAIL_FIELD_EMPTY: {
     success: false,
     message: 'Email field is empty.',
@@ -94,4 +99,9 @@ module.exports = {
     message: 'Country field is empty.',
     type: 'ERR_COUNTRY_MISSING'
   },
+  ERR_MAX_USER: {
+    success: false,
+    message: 'Maximal number of user reached',
+    type: 'ERR_MAX_USER'
+  }
 };

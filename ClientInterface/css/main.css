@@ -2,6 +2,7 @@
 @import 'login.css';
 @import 'home.css';
 @import 'settings.css';
+@import 'social-media.css';
 
 body,html {
     height: 100%;
@@ -17,6 +18,10 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     color: black;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 .hidden {

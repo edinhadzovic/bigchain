@@ -2,7 +2,10 @@ let messages = {
 	store:        "[STORE:        ] ",
 	verify:       "[VERIFICATION: ] ",
 	main:         "[MAIN:         ] ",
-	user:         "[USER:         ] "
+	user:         "[USER:         ] ",
+	print: function(type, messages) {
+		console.log(`${type} : ${messages}`);	
+	}
 };
 
 

@@ -2,9 +2,9 @@ const client = require('./../../App/client/User');
 const croppie = require('croppie');
 const fs = require('fs');
 const path = require('path');
+const {shell} = require('electron');
 
 const directory = path.join(__dirname, '../images/profile');
-
 
 var loginViewController = function (params) {
     var $params = $(params);
@@ -95,39 +95,35 @@ var loginViewController = function (params) {
 
     $(loginViewController.loginView.toRegister).click(function (event) {
         event.preventDefault();
-        setTimeout(() => {
-            loginViewController.registerView.show(loginViewController.registerView.body);
-        }, 250);
-        loginViewController.loginView.hide(loginViewController.loginView.body);
+        loginViewController.loginView.body.fadeOut(200, () => {
+            loginViewController.registerView.body.fadeIn(200);
+        });
     });
     
     $(loginViewController.registerView.toLogin).click(function(event) {
         event.preventDefault();
-        setTimeout(() => {
-            loginViewController.loginView.show(loginViewController.loginView.body);
-        }, 500);
-        loginViewController.registerView.hide(loginViewController.registerView.body);
+        loginViewController.registerView.body.fadeOut(200, () => {
+            loginViewController.loginView.body.fadeIn(200);
+        });
     });
 
     $(loginViewController.personalInfoView.toSkip).click(function(event){
         event.preventDefault();
-        setTimeout(() => {
-            loginViewController.addressView.show(loginViewController.addressView.body);
-        }, 500);
-        loginViewController.personalInfoView.hide(loginViewController.personalInfoView.body);
+        loginViewController.personalInfoView.body.fadeOut(200, () => {
+            loginViewController.addressView.body.fadeIn(200);
+        });
     });
 
     $(loginViewController.addressView.toSkip).click(function(event){
         event.preventDefault();
-        setTimeout(() => {
-            loginViewController.imageView.show(loginViewController.imageView.body);
-        }, 500);
-        loginViewController.addressView.hide(loginViewController.addressView.body);
+        loginViewController.addressView.body.fadeOut(200, () => {
+            loginViewController.imageView.body.fadeIn(200);
+        });
     });
 
     $(loginViewController.imageView.toSkip).click(function(event){
         event.preventDefault();
-        loginViewController.reference.fadeOut(500, function(){
+        loginViewController.registerView.body.fadeOut(200, () => {
             $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
                 new homeViewController($('.js-homeView-box',)); 
             });
@@ -189,11 +185,10 @@ var loginViewController = function (params) {
         ipcRenderer.send('register-submission', data_temp );
         
         ipcRenderer.on('register-success', (event, user) => {
-            setTimeout(() => {
-                loginViewController.personalInfoView.show(loginViewController.personalInfoView.body);
-            }, 250);
-            loginViewController.registerView.hide(loginViewController.registerView.body);
-
+            //event.preventDefault();
+            loginViewController.registerView.body.fadeOut(200, () => {
+                loginViewController.personalInfoView.body.fadeIn(200);
+            });
         });
 
         ipcRenderer.on('register-failed', (event, err) => {

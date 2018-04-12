@@ -1,0 +1,68 @@
+.login_footer .face_book {
+  display: inline-block;
+  background: url('../images/social/Facebook-color.svg') no-repeat center center;
+  filter: grayscale(100%);    
+  background-size: 25px;
+  width: 25px;
+  height: 25px;
+  content: " ";
+  margin: 0 10px;
+}
+
+.login_footer .face_book:hover {
+  filter: none;
+  background-size: 25px;
+  cursor: pointer;
+}
+
+.login_footer .twitter {
+  display: inline-block;
+  background: url('../images/social/Twitter-color.svg') no-repeat center center;
+  filter: grayscale(100%);    
+  background-size: 25px;
+  width: 25px;
+  height: 25px;
+  content: " ";
+  margin: 0 10px;
+}
+
+.login_footer .twitter:hover {
+  filter: none;
+  background-size: 25px;
+  cursor: pointer;
+}
+
+.login_footer .telegram {
+  display: inline-block;
+  background: url('../images/social/telegram.png') no-repeat center center;
+  filter: grayscale(100%);
+  background-size: 25px;
+  width: 25px;
+  height: 25px;
+  content: " ";
+  margin: 0 10px;
+}
+
+.login_footer .telegram:hover {
+  background: url('../images/social/telegram.png') no-repeat center center;
+  filter: none;
+  background-size: 25px;
+  cursor: pointer;
+}
+
+.login_footer .linkedin {
+  display: inline-block;
+  background: url('../images/social/LinkedIn-color.svg') no-repeat center center;
+  filter: grayscale(100%);    
+  background-size: 25px;
+  width: 25px;
+  height: 25px;
+  content: " ";
+  margin: 0 10px;
+}
+
+.login_footer .linkedin:hover {
+  filter: none;
+  background-size: 25px;
+  cursor: pointer;
+}
