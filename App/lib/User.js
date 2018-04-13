@@ -27,7 +27,7 @@ let User = function(){
 };
 
 User.prototype.save = async function(user){
-  let result = await store.pepper(user);
+  let result = await store.new_store(user);
   if(!result) throw({success: false, message: "Something want wrong with storing the data."});
   return result;
 };
@@ -81,6 +81,7 @@ User.prototype.login = async function(data) {
     if(!password_check) {
       return (error.ERR_PASSWORD_WRONG);
     } 
+    console.log(message.user, user);
     this.setUser(user.user);
     this.setPersonalInfo(user.user);
     this.setAdress(user.user);
@@ -92,6 +93,18 @@ User.prototype.login = async function(data) {
   }
 };
 
+User.prototype.format_personal_information_data = (data) => {
+  return {
+    personal_information : {
+      first_name: data.first_name,
+      last_name: data.last_name,
+      phone: data.phone,
+      birthday: data.birthday,
+      gender: data.gender,
+    }
+  }
+};
+
 User.prototype.personal_info_save = async function(current_user, data) {
   try {
     let result = await verification.personal_data(data);
@@ -99,13 +112,14 @@ User.prototype.personal_info_save = async function(current_user, data) {
       return (result);
     }
     message.print(message.user, `${current_user}, ${data}`);
-    this.setPersonalInfo(data);
+    let new_data = this.format_personal_information_data(data);
+    this.setPersonalInfo(new_data);
+    console.log(message.user, current_user);
+    console.log(current_user);
     let res = await store.update(current_user);
     if (res === true) {
-      this.setPersonalInfo(data);
       return true;
     } 
-
   } catch (err) {
     return err;
   }
@@ -129,6 +143,17 @@ User.prototype.personal_info_change = async function(current_user, data) {
 
 
 // TODO: craete function address_restore
+User.prototype.format_address_information_data = (data) => {
+  return {
+    address : {
+      street: data.street,
+      city: data.city,
+      state: data.state,
+      postal_code: data.postal_code,
+      country: data.country,
+    }
+  }
+};
 
 User.prototype.address_info_save = async function(current_user, data) {
   try {
@@ -136,13 +161,14 @@ User.prototype.address_info_save = async function(current_user, data) {
     if (result.error === true) {
       return (result);
     } 
-
-    let res =  await store.store_address_data(current_user, data);
+    let new_data = this.format_address_information_data(data);
+    this.setAdress(new_data);    
+    console.log(message.user, "saving address info");
+    let res =  await store.update(current_user);
       if (res === true) {
-      this.setAdress(data);
       return true;
     } 
-
+    return false;
   } catch (err) {
     return err;
   }
@@ -164,11 +190,12 @@ User.prototype.address_info_change = async function(current_user, data) {
 
 User.prototype.save_image = async function(current_user, data) {
   try {
-    let res = await store.save_image(current_user, data);
+    this.setImage(data);
+    let res = await store.update(current_user);
     if(res === true) {
-      this.setImage(data);
       return true;
     }
+    return false;
   } catch (error) {
     return error;
   }
@@ -186,38 +213,38 @@ User.prototype.setUser = function(data) {
 };
 
 User.prototype.setPersonalInfo = function(data) {
-    if (data.first_name) {
-      this._personal_information.first_name = data.first_name;
+    if (data.personal_information.first_name) {
+      this._personal_information.first_name = data.personal_information.first_name;
     }
-    if (data.last_name) {
-      this._personal_information.last_name = data.last_name;
+    if (data.personal_information.last_name) {
+      this._personal_information.last_name = data.personal_information.last_name;
     }
-    if (data.gender) {
-      this._personal_information.gender = data.gender;
+    if (data.personal_information.gender) {
+      this._personal_information.gender = data.personal_information.gender;
     }
-    if (data.birthday) {
-      this._personal_information.birthday = data.birthday;
+    if (data.personal_information.birthday) {
+      this._personal_information.birthday = data.personal_information.birthday;
     }
-    if (data.phone) {
-      this._personal_information.phone = data.phone;
+    if (data.personal_information.phone) {
+      this._personal_information.phone = data.personal_information.phone;
     }
 };
 
 User.prototype.setAdress = function(data) {
-    if (data.street) {
-        this._address.street = data.street;
+    if (data.address.street) {
+        this._address.street = data.address.street;
       }
-      if (data.city) {
-        this._address.city = data.city;
+      if (data.address.city) {
+        this._address.city = data.address.city;
       }
-      if (data.state) {
-        this._address.state = data.state;
+      if (data.address.state) {
+        this._address.state = data.address.state;
       }
-      if (data.postal_code) {
-        this._address.postal_code = data.postal_code;
+      if (data.address.postal_code) {
+        this._address.postal_code = data.address.postal_code;
       }
-      if (data.country) {
-        this._address.country = data.country;
+      if (data.address.country) {
+        this._address.country = data.address.country;
       }
 };
 

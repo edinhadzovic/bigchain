@@ -21,6 +21,38 @@ var current_user = new User();
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let loginWindow;
+let mainWindow;
+
+function createMainWindow (user, event) {
+  loginWindow.hide();
+  mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
+  width: 400,
+  height: 600,
+  minWidth: 400,
+  minHeight: 600,
+  backgroundColor: '#d1d1d1',
+  show: false });
+
+  mainWindow.maximize();
+
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, '../ClientInterface/views/mainView.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+
+  mainWindow.once('ready-to-show', () => {
+    console.log("send the message");
+    event.sender.send('init-main-window', current_user);
+  });
+
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null;
+  });
+}
 
 function createWindow () {
   try {
@@ -48,7 +80,7 @@ function createWindow () {
 
   loginWindow.once('ready-to-show', () => {
     loginWindow.show()
-})
+});
 
   // and load the index.html of the app.
   
@@ -62,7 +94,7 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     loginWindow = null;
-  })
+  });
 }
 
 // This method will be called when Electron has finished
@@ -77,7 +109,7 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit()
   }
-})
+});
 
 app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
@@ -85,18 +117,21 @@ app.on('activate', function () {
   if (loginWindow === null) {
     createWindow();
   }
-})
+});
+
+ipcMain.on('get-user-data', (event) => {
+  event.sender.send("init-user-data", current_user);
+});
 
 ipcMain.on("login-submission", async function(event, data) {
   
   console.log(message.main, 'Request to login of a user');
 
   let result = await current_user.login(data);
-
+  console.log(message.main,current_user);
   if(result === true) {
     console.log(message.main, "User connected successfully!");
-    console.log(' ');
-    event.sender.send("login-success", current_user);
+    createMainWindow(current_user, event);
   } else {
     console.log(message.main, 'Login failed');
     console.log(' ');
@@ -182,10 +217,12 @@ ipcMain.on("address-info-change", async function(event, data) {
 });
 
 ipcMain.on('form-submission-image', async function(event, data){
+  console.log(message.main, data);
   let result = await current_user.save_image(current_user, data);
   if(result === true) {
     console.log(message.main, 'Storing');
-    event.sender.send('image-submission-success', current_user);
+    createMainWindow(current_user, event);
+    //event.sender.send('image-submission-success', current_user);
   } else {
     console.log("false");
   }

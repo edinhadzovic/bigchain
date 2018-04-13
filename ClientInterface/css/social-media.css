@@ -1,3 +1,7 @@
+.footer_social_media {
+  margin: 40px 0px;
+}
+
 .login_footer .face_book {
   display: inline-block;
   background: url('../images/social/Facebook-color.svg') no-repeat center center;

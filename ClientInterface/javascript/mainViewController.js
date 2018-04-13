@@ -3,6 +3,8 @@ const croppie = require('croppie');
 const fs = require('fs');
 const path = require('path');
 const {shell} = require('electron');
+const {ipcRenderer} = require('electron');
+
 
 const directory = path.join(__dirname, '../images/profile');
 
@@ -136,12 +138,9 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
         
-        const {ipcRenderer} = require('electron');
-        /*
-        let data_temp = {};
-        data_temp.email = 'jelena.radisa@yahoo.com';
-        data_temp.password = 'Profi?danac321';
-        */
+        data.email = "edinfuad.hadzovic@gmail.com";
+        data.password = "Manchester99!";
+
         // send username to main.js 
         ipcRenderer.send('login-submission', data );
         
@@ -173,16 +172,12 @@ var loginViewController = function (params) {
         data.password = $(loginViewController.registerView.password).val();
         data.password_rep = $(loginViewController.registerView.repassword).val();
     
-        const {ipcRenderer} = require('electron');
-
-
-        let data_temp = {};
-        data_temp.email = 'dane.banane@yahoo.com';
-        data_temp.password = 'Profi?danac321';
-        data_temp.password_rep = 'Profi?danac321';
         
+        data.email = "edinfuad.hadzovic@gmail.com";
+        data.password = "Manchester99!";
+        data.password_rep = "Manchester99!";
         // send username to main.js 
-        ipcRenderer.send('register-submission', data_temp );
+        ipcRenderer.send('register-submission', data );
         
         ipcRenderer.on('register-success', (event, user) => {
             //event.preventDefault();
@@ -217,7 +212,6 @@ var loginViewController = function (params) {
     $(loginViewController.personalInfoView.toSubmit).click(function(event){
         event.preventDefault();
 
-        const {ipcRenderer} = require('electron');
 
         let data = {};
         data.first_name = $(loginViewController.personalInfoView.first_name).val();
@@ -257,11 +251,9 @@ var loginViewController = function (params) {
 
         ipcRenderer.on('store-personal-info-success', (event, current_user) => {
             console.log(current_user, "CURRENT USER");
-            setTimeout(() => {
-                loginViewController.addressView.show(loginViewController.addressView.body);
-            }, 500);
-            loginViewController.personalInfoView.hide(loginViewController.personalInfoView.body);
-
+            loginViewController.personalInfoView.body.fadeOut(500, () => {
+                loginViewController.addressView.body.fadeIn(500);
+            });
         });
     });
 
@@ -269,7 +261,6 @@ var loginViewController = function (params) {
 
         event.preventDefault();
 
-        const {ipcRenderer} = require('electron');
 
         let data = {};
         data.street = $(loginViewController.addressView.street).val();
@@ -321,11 +312,9 @@ var loginViewController = function (params) {
 
         ipcRenderer.on('store-address-info-success', (event, current_user) => {
             console.log(current_user, "CURRENT USER");
-            setTimeout(() => {
-                loginViewController.imageView.show(loginViewController.imageView.body);
-            }, 500);
-            loginViewController.addressView.hide(loginViewController.addressView.body);
-
+            loginViewController.addressView.body.fadeOut(500, () => {
+                loginViewController.imageView.body.fadeIn(500);
+            });
         });
     });
 
@@ -334,7 +323,6 @@ var loginViewController = function (params) {
         let image;
         const {dialog} = require('electron').remote;
         console.log(dialog);
-        const {ipcRenderer} = require('electron');
         dialog.showOpenDialog({properties: ['openFile']},  (file_names) => {
             if(file_names === undefined) return;
 
@@ -362,16 +350,13 @@ var loginViewController = function (params) {
                 event.preventDefault();
                 console.log(data.imageController);
                 data.imageController.croppie('result', {type: 'blob'}).then(function(resp){
-                    console.log(window.URL.createObjectURL(resp));
-                    data.image = window.URL.createObjectURL(resp);
                     reader.addEventListener('load', function(){
                         fs.writeFileSync(directory + '/user_profile.png', reader.result, 'binary', function(err){
                             if(err) console.log("down");
                             console.log("test");
-
                         });
 
-                        data.image = directory + '/user_profile.png';
+                        data.profile_image = directory + '/user_profile.png';
                         ipcRenderer.send('form-submission-image', data);
 
                     });
@@ -452,9 +437,12 @@ var homeViewController = function (params, user) {
                 body: $(params).find('.js-homeView-settings')
             }
         ],
-        active: function(user) {
-            $('.js-home-profile-image-tag').attr('src', user._profile_image);
-            $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
+        active: async function(user) {
+            await ipcRenderer.send('get-user-data');
+            ipcRenderer.on('init-user-data', (event, user) => {
+                $('.js-home-profile-image-tag').attr('src', user._profile_image);
+                $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
+            });
         },
         setPage: function(page_type) {
             homeViewController.views.forEach(page => {
@@ -479,7 +467,6 @@ var homeViewController = function (params, user) {
         data.birthday = $(homeViewController.personalInformation.birthday).val();
         data.phone = $(homeViewController.personalInformation.phone).val();
         
-        const {ipcRenderer} = require('electron');
         console.log(data);
     
         ipcRenderer.send('personal-info-change', data);
@@ -518,10 +505,13 @@ var homeViewController = function (params, user) {
     });
 };
 
-/*
+ipcRenderer.on('init-main-window', (event, current_user) => {
+    console.log(current_user);
+    new homeViewController($('.js-homeView-box'), current_user);     
+});
+
 $('document').ready(function(){
     $('.js-homeView-box').each(function () {
         new homeViewController(this);
     })
 });
-*/

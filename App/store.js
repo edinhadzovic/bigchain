@@ -18,6 +18,29 @@ const directory = path.join(__dirname, '../temp');
 var user_count;
 
 module.exports = {
+	formatData: function(user) {
+		console.log(message.store, user);
+		return {
+			unique_id: user._unique_id,
+			email: user._email,
+			password: user._password,
+			personal_information: {
+				first_name: user._personal_information.first_name,
+				last_name: user._personal_information.last_name,
+				gender: user._personal_information.gender,
+				birthday: user._personal_information.birthday,
+				phone: user._personal_information.phone,
+			},
+			address: {
+				street: user._address.street,
+				city: user._address.city,
+				state: user._address.state,
+				postal_code: user._address.postal_code,
+				country: user._address.country,
+			},
+			profile_image: user._profile_image
+		};
+	},
 
 	read: function(user) {
 		return new Promise((resolve, reject) => {
@@ -30,11 +53,12 @@ module.exports = {
 					let file = fs.readFileSync(directory + '/' + element, 'utf8');
 					var result = JSON.parse(file);
 
-					if(user.email === result.email){
+					if(user.email === result._email){
 						found = true;
 						let data = {};
 						data.success = found;
-						data.user = result;
+						data.user = this.formatData(result);
+						console.log(message.store, data);
 						resolve(data);
 					}
 				});
@@ -54,7 +78,7 @@ module.exports = {
 
 			user_count = files.length;
 
-			if(user_count >= 5) reject(error.ERR_MAX_USER);
+			if(user_count >= 1) reject(error.ERR_MAX_USER);
 
 			message.print(message.store, "Start to store data into a File");
 
@@ -83,7 +107,7 @@ module.exports = {
 					let file = fs.readFileSync(directory + '/' + element, 'utf8');
 					var result = JSON.parse(file);
 					console.log(result);
-					if(current_user._email === result.email){
+					if(current_user._email === result._email){
 						console.log("hollllaaaaa");
 						found = true;
 						try {
