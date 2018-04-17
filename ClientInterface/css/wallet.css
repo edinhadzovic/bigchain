@@ -1,0 +1,50 @@
+.js-homeView-wallet-nav {
+  display: flex;
+}
+
+
+.js-homeView-wallet-nav-item {
+  display: flex;
+  height: 75px;
+  margin: 20px;
+}
+
+.js-homeView-wallet-symbol {
+  width: 75px;
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 100px;
+  box-shadow: 1px 2px 2px gray;
+  transition: background, 0.5s ease;
+}
+
+.js-homeView-wallet-symbol:hover {
+  cursor: pointer;
+  background-color: aqua;
+}
+
+.js-homeView-wallet-status {
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
+  flex-direction: column;
+  text-align: right
+}
+
+.js-homeView-wallet-status ul li {
+  list-style-type: none;
+}
+
+.js-homeView-wallet-fiat {
+  color: black;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.js-homeView-wallet-coin {
+  color: #b1b1b1;
+  font-size: 14px;
+}

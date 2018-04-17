@@ -3,6 +3,7 @@
 @import 'home.css';
 @import 'settings.css';
 @import 'social-media.css';
+@import 'wallet.css';
 
 body,html {
     height: 100%;
