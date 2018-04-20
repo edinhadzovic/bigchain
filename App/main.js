@@ -1,7 +1,7 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
-
+const digibyte = require('digibyte');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -13,6 +13,7 @@ const ipcMain = electron.ipcMain;
 var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
 var message = require('./lib/Message');
+var DGB = require('./wallets/dgb');
 
 
 // Global current user
@@ -229,3 +230,19 @@ ipcMain.on('form-submission-image', async function(event, data){
   }
 });
 
+ipcMain.on('generate-dgb-address', async function(event) {
+  console.log(message.main, "generate new dgb address");
+  // let wallet = new DGB;
+  // let privateKey = wallet.generatePrivateKey();
+  try {
+    // let address = wallet.generateAddress(privateKey);    
+    var privateKey = new digibyte.PrivateKey();
+    console.log(privateKey);
+    // var publicKey = privateKey.publicKey;
+    // var address = publicKey.toAddress();   
+    event.sender.send('generate-dgb-address-success', privateKey);  
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(message.main, "generate new private key");
+});

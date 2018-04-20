@@ -415,6 +415,39 @@ var homeViewController = function (params, user) {
             phone: $params.find('.js-homeView-setting-input[input-type="phone"]'),
             personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
         },
+        wallet_navigation: {
+            body: $params.find('.js-homeView-wallet-nav'),
+            btc: $params.find('.js-homeView-wallet-symbol[request="btc"]'),
+            dgb: $params.find('.js-homeView-wallet-symbol[request="dgb"]'),
+            ltc: $params.find('.js-homeView-wallet-symbol[request="ltc"]'),
+            eth: $params.find('.js-homeView-wallet-symbol[request="eth"]'),
+        },
+        dgb_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
+            generateAddress: $params.find('.js-homeView-wallet-generate-address[for="dgb"]')
+        },
+        wallets: [
+            {
+                type: "btc",
+                body: $(params).find('.js-homeView-wallet-content[display="btc"]'),
+                class: 'btc-select'
+            },
+            {
+                type: "dgb",
+                body: $(params).find('.js-homeView-wallet-content[display="dgb"]'),
+                class: 'dgb-select'
+            },
+            {
+                type: "ltc",
+                body: $(params).find('.js-homeView-wallet-content[display="ltc"]'),
+                class: 'ltc-select'
+            },
+            {
+                type: "eth",
+                body: $(params).find('.js-homeView-wallet-content[display="eth"]'),
+                class: 'eth-select'
+            }
+        ],
         views: [
             {
                 type: "Wallet",
@@ -451,6 +484,19 @@ var homeViewController = function (params, user) {
                 } else {
                     if(!page.body.hasClass('hidden')) {
                         page.body.addClass('hidden');
+                    }
+                }
+            });
+        },
+        setWallet: function(wallet_type) {
+            homeViewController.wallets.forEach(wallet => {
+                if(wallet.type === wallet_type) {
+                    wallet.body.removeClass('hidden');
+                    $('.js-homeView-box').addClass(wallet.class);
+                } else {
+                    if(!wallet.body.hasClass('hidden')) {
+                        $('.js-homeView-box').removeClass(wallet.class);                        
+                        wallet.body.addClass('hidden');
                     }
                 }
             });
@@ -502,6 +548,33 @@ var homeViewController = function (params, user) {
     });
     $(homeViewController.navigaiton.manager_plus).click(function(){
         homeViewController.setPage("Manager");
+    });
+
+    $(homeViewController.wallet_navigation.btc).click(function() {
+        homeViewController.setWallet('btc');
+    });
+
+    $(homeViewController.wallet_navigation.dgb).click(function() {
+        homeViewController.setWallet('dgb');
+    });
+
+    $(homeViewController.wallet_navigation.ltc).click(function() {
+        homeViewController.setWallet('ltc');
+    });
+
+    $(homeViewController.wallet_navigation.eth).click(function() {
+        homeViewController.setWallet('eth');
+    });
+
+    $(homeViewController.dgb_wallet.generateAddress).click(function(event) {
+        console.log("test");
+
+        event.preventDefault();
+        ipcRenderer.send('generate-dgb-address');
+
+        ipcRenderer.on('generate-dgb-address-success', (event, private_key) => {
+            console.log(private_key);
+        });
     });
 };
 

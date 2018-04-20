@@ -19,8 +19,9 @@
   "homepage": "https://github.com/edinhadzovic/bigchain#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chart.js": "^2.7.2",
     "croppie": "^2.6.2",
-    "digibyte": "^0.14.3",
+    "digibyte": "^0.14.6",
     "electron": "^1.8.3",
     "install": "^0.10.4",
     "jquery": "^3.3.1",

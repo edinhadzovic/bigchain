@@ -1,10 +1,26 @@
+.btc-select {
+  background-color: #FF8E00;  
+}
+
+.dgb-select {
+  background-color: #091E54;
+}
+
+.ltc-select {
+  background-color: #4d4d4d;
+}
+
+.eth-select {
+  background-color: #3C3C3D;
+}
+
 .js-homeView-wallet-nav {
   display: flex;
 }
 
-
 .js-homeView-wallet-nav-item {
   display: flex;
+  width: 250px;
   height: 75px;
   margin: 20px;
 }
@@ -17,13 +33,64 @@
   justify-content: center;
   flex-direction: column;
   border-radius: 100px;
-  box-shadow: 1px 2px 2px gray;
-  transition: background, 0.5s ease;
+  background-color: #eee;
+  transition: all, 0.5s ease;
+}
+
+.js-homeView-wallet-symbol[request="btc"] {
+  border: 1px solid #FF8E00;
+  box-shadow: 1px 2px 2px #e67e00;
+}
+
+.js-homeView-wallet-symbol[request="btc"]:hover {
+  background-color: #FF8E00;
+  color: white;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px black;
+  box-shadow: inset 1px 2px 2px #cc7000;
+}
+
+.js-homeView-wallet-symbol[request="dgb"] {
+  border: 1px solid #091E54;
+  box-shadow: 1px 2px 2px #071945;
+}
+
+.js-homeView-wallet-symbol[request="dgb"]:hover {
+  background-color: #091E54;
+  color: white;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px black;
+  box-shadow: inset 1px 2px 2px #05112e;
+}
+
+.js-homeView-wallet-symbol[request="ltc"] {
+  border: 1px solid #4d4d4d;
+  box-shadow: 1px 2px 2px #333333;
+}
+
+.js-homeView-wallet-symbol[request="ltc"]:hover {
+  background-color: #4d4d4d;
+  color: white;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px black;
+  box-shadow: inset 1px 2px 2px #333333;
+}
+
+.js-homeView-wallet-symbol[request="eth"] {
+  border: 1px solid #C99D66;
+  box-shadow: 1px 2px 2px #3C3C3D;
+}
+
+.js-homeView-wallet-symbol[request="eth"]:hover {
+  background-color: #C99D66;
+  color: white;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px black;
+  box-shadow: inset 1px 2px 2px #3C3C3D;
 }
 
 .js-homeView-wallet-symbol:hover {
   cursor: pointer;
-  background-color: aqua;
 }
 
 .js-homeView-wallet-status {
@@ -32,6 +99,10 @@
   justify-content: center;
   flex-direction: column;
   text-align: right
+}
+
+.js-homeView-wallet-status {
+  padding-left: 40px;
 }
 
 .js-homeView-wallet-status ul li {
@@ -44,7 +115,97 @@
   font-size: 18px;
 }
 
-.js-homeView-wallet-coin {
+.js-homeView-wallet-satoshis {
   color: #b1b1b1;
   font-size: 14px;
+}
+
+.js-homeView-wallet-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.js-homeView-wallet-logo[display="dgb"] {
+  background: #091E54 url('../images/coins/digibyte.svg') no-repeat left top;
+  width: 100px;
+  height: 100px;
+  background-size: 100px;
+}
+
+.js-homeView-wallet-content[display="btc"] {
+  background-color: #FF8E00;  
+}
+
+.js-homeView-wallet-content[display="btc"] * {
+  color: whitesmoke;
+}
+
+.js-homeView-wallet-content[display="dgb"] {
+  height: 500px;
+  background-color: #091E54;
+}
+
+.js-homeView-wallet-content[display="dgb"] * {
+  color: whitesmoke;
+}
+
+.js-homeView-wallet-content[display="ltc"] {
+  background-color: #4d4d4d;  
+}
+
+.js-homeView-wallet-content[display="ltc"] * {
+  color: #b1b1b1;
+}
+
+.js-homeView-wallet-content[display="eth"] {
+  background-color: #3C3C3D;  
+}
+
+.js-homeView-wallet-content[display="eth"] * {
+  color: #ECF0F1;
+}
+
+.js-homeView-wallet-content h1 {
+  display: block;
+  text-align: center;
+}
+
+.js-homeView-wallet-balance {
+  text-align: center;
+}
+
+
+/* @Bitcoin */
+.js-homeView-wallet-info {
+  flex-grow: 50;
+  height: 100px;
+}
+
+.js-homeView-wallet-send {
+  flex-grow: 50;
+  height: 100px;
+}
+
+.js-homeView-wallet-send-form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.js-homeView-wallet-send-to {
+  text-align: center
+}
+
+.js-homeView-wallet-send-to h3 {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.js-homeView-wallet-send-form input {
+  width: 300px;
+  margin: 10px auto;
+  display: inline-block;
+  border: 2px solid whitesmoke;
+  border-radius: 25px;
+  padding: 15px 5px 15px 10px;
 }

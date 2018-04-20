@@ -103,5 +103,15 @@ module.exports = {
     success: false,
     message: 'Maximal number of user reached',
     type: 'ERR_MAX_USER'
+  },
+  ERR_GETTING_DGB_PRICE: {
+    success: false,
+    message: 'Could not get the dgb current market value',
+    type: 'ERR_GETTING_DGB_PRICE'
+  },
+  ERR_GETTING_WALLET_VALUE: {
+    success: false,
+    message: 'Could not get wallet value',
+    type: 'ERR_GETTING_WALLET_VALUE'
   }
 };

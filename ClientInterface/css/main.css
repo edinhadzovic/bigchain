@@ -5,6 +5,11 @@
 @import 'social-media.css';
 @import 'wallet.css';
 
+* {
+    padding: 0;
+    margin: 0;
+}
+
 body,html {
     height: 100%;
     padding: 0;

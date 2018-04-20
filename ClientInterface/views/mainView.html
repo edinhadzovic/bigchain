@@ -125,56 +125,119 @@
 				<div class="js-homeView-wallet hidden">
 					<!-- NAVIGATION -->
 					<div class="js-homeView-wallet-nav">
-						<div class="js-homeView-wallet-nav-item" request="btc">
-							<div class="js-homeView-wallet-symbol">
+						<div class="js-homeView-wallet-nav-item">
+							<div class="js-homeView-wallet-symbol" request="btc">
 								BTC
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
 									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
-									<li class="js-homeView-wallet-coin">0.00000000 BTC</li>
+									<li class="js-homeView-wallet-satoshis">0.00000000 BTC</li>
 								</ul>
 							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item" request="dgb">
-							<div class="js-homeView-wallet-symbol">
+						<div class="js-homeView-wallet-nav-item">
+							<div class="js-homeView-wallet-symbol" request="dgb">
 								DGB
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
 									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
-									<li class="js-homeView-wallet-coin">0.00000000 DGB</li>
+									<li class="js-homeView-wallet-satoshis">0.00000000 DGB</li>
 								</ul>
 							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item" request="ltc">
-							<div class="js-homeView-wallet-symbol">
+						<div class="js-homeView-wallet-nav-item">
+							<div class="js-homeView-wallet-symbol" request="ltc">
 								LTC
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
 									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
-									<li class="js-homeView-wallet-coin">0.00000000 LTC</li>
+									<li class="js-homeView-wallet-satoshis">0.00000000 LTC</li>
 								</ul>
 							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item" request="eth">
-							<div class="js-homeView-wallet-symbol">
+						<div class="js-homeView-wallet-nav-item">
+							<div class="js-homeView-wallet-symbol" request="eth">
 								ETH
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
 									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
-									<li class="js-homeView-wallet-coin">0.00000000 ETH</li>
+									<li class="js-homeView-wallet-satoshis">0.00000000 ETH</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<!-- CONTENT -->
-					<div class="js-homeView-wallet-content" display="btc">btc</div>
-					<div class="js-homeView-wallet-content" display="dgb">dgb</div>
-					<div class="js-homeView-wallet-content" display="ltc">ltc</div>
-					<div class="js-homeView-wallet-content" display="eth">eth</div>
+					<div class="js-homeView-wallet-content hidden" display="btc">
+						
+						<div class="js-homeView-wallet-info">
+							<!-- cointaining all information about the coin trading -->
+						</div>
+						<div class="js-homeView-wallet-send">
+							<h1>BTC</h1>
+							<!-- cointaining all function for sending / recieving coins -->
+							<div class="js-homeView-wallet-balance" balance="btc">
+								<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
+								<div class="js-homeView-wallet-satoshis">0.00000000 BTC</div>
+							</div>
+						</div>
+					</div>
+					<div class="js-homeView-wallet-content hidden" display="dgb">
+						
+						<div class="js-homeView-wallet-info">
+								<!-- cointaining all information about the coin trading -->
+								<div class="js-homeView-wallet-logo" display="dgb"></div>
+						</div>
+						<div class="js-homeView-wallet-send">
+								<!-- cointaining all function for sending / recieving coins -->
+								<h1>DGB</h1>
+								<div class="js-homeView-wallet-balance" balance="dgb">
+									<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
+									<div class="js-homeView-wallet-satoshis">0.00000000 DGB</div>
+								</div>
+								<div class="js-homeView-wallet-send-to" send="dgb">
+									<h3>Send</h3>
+									<form class="js-homeView-wallet-send-form">
+										<input type="text">
+										<input type="text">
+									</form>
+								</div>
+								<div class="js-homeView-wallet-generate-address-button">
+									<button class="js-homeView-wallet-generate-address" for="dgb">DGB</button>
+								</div>
+						</div>
+					</div>
+					<div class="js-homeView-wallet-content hidden" display="ltc">
+						
+						<div class="js-homeView-wallet-info">
+								<!-- cointaining all information about the coin trading -->
+						</div>
+						<div class="js-homeView-wallet-send">
+								<!-- cointaining all function for sending / recieving coins -->
+								<h1>LTC</h1>
+								<div class="js-homeView-wallet-balance" balance="ltc">
+									<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
+									<div class="js-homeView-wallet-satoshis">0.00000000 LTC</div>
+								</div>
+						</div>
+					</div>
+					<div class="js-homeView-wallet-content hidden" display="eth">
+						
+						<div class="js-homeView-wallet-info">
+								<!-- cointaining all information about the coin trading -->
+						</div>
+						<div class="js-homeView-wallet-send">
+								<!-- cointaining all function for sending / recieving coins -->
+								<h1>ETH</h1>
+								<div class="js-homeView-wallet-balance" balance="eth">
+									<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
+									<div class="js-homeView-wallet-satoshis">0.00000000 ETH</div>
+								</div>
+						</div>
+					</div>
 				</div>
 				<!-- Startup -->
 				<div class="js-homeView-startup hidden">
