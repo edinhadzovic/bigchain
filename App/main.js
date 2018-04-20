@@ -174,13 +174,20 @@ ipcMain.on("personal-info-submission", async function(event, data) {
 
 ipcMain.on("personal-info-change", async function(event, data) {
   console.log(message.main, 'Personal information changing!');
-  let result = await current_user.personal_info_change(current_user, data);
+  console.log(message.main, 'New user data provided!');
+  console.log(message.main, 'Name: ', data.first_name);
+  console.log(message.main, 'Last name: ', data.last_name);
+  console.log(message.main, 'Birthday: ', data.birthday);
+  console.log(message.main, 'Gender: ', data.gender);
+  console.log(message.main, 'Phone: ', data.phone);
+
+  let result = await current_user.personal_info_restore(current_user, data);
   if (result === true) {
-    console.log(message.main, 'Changing of personal information successfully done.');
+    console.log(message.main, 'Restoring successfully done.');
     console.log(' ');
     event.sender.send('store-success', current_user);
   } else {
-    console.log(message.main, 'Changing of personal information failed.');
+    console.log(message.main, 'Restoring failed.');
     console.log(' ');
     event.sender.send('store-failed', result);
   }
