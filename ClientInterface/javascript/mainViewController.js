@@ -1,4 +1,12 @@
 const client = require('./../../App/client/User');
+const croppie = require('croppie');
+const fs = require('fs');
+const path = require('path');
+const {shell} = require('electron');
+const {ipcRenderer} = require('electron');
+
+
+const directory = path.join(__dirname, '../images/profile');
 
 var loginViewController = function (params) {
     var $params = $(params);
@@ -33,23 +41,95 @@ var loginViewController = function (params) {
                 $(view).addClass(' js-loginView-register--fadeIn');
             }
         },  
+        personalInfoView: {
+            body: $params.find('.js-loginView-personal-information'),
+            first_name: $params.find('.js-loginView-personal-information-first_name'),
+            last_name: $params.find('.js-loginView-personal-information-last_name'),
+            birthday: $params.find('.js-loginView-personal-information-birthday'),
+            gender: $params.find('.js-loginView-personal-information-gender'),
+            phone: $params.find('.js-loginView-personal-information-phone'),
+            toSubmit: $params.find('.js-loginView-personal-information-submit'),
+            toSkip: $params.find('.js-loginView-personal-information-skip'),
+
+            hide: function(view){
+                $(view).removeClass('js-loginView-personal-information--fadeIn').addClass(' js-loginView-personal-information--fadeOut');
+            },
+            show: function(view){
+                if($(view).hasClass('js-loginView-personal-information--fadeOut')) $(view).removeClass('js-loginView-personal-information--fadeOut');
+                $(view).addClass(' js-loginView-personal-information--fadeIn');
+            }
+        },
+        addressView: {
+            body: $params.find('.js-loginView-address '),
+            street: $params.find('.js-loginView-address-street '),
+            city: $params.find('.js-loginView-address-city '),
+            state: $params.find('.js-loginView-address-state '),
+            postal_code: $params.find('.js-loginView-address-postal_code '),
+            country: $params.find('.js-loginView-address-country '),
+            toSubmit: $params.find('.js-loginView-address-submit '),
+            toSkip: $params.find('.js-loginView-address-skip '),
+
+            hide: function(view) {
+                $(view).removeClass('js-loginView-address--fadeIn').addClass(' js-loginView-address--fadeOut');
+            },
+            show: function(view) {
+                if($(view).hasClass('js-loginView-address--fadeOut')) $(view).removeClass('js-loginView-address--fadeOut');
+                $(view).addClass(' js-loginView-address--fadeIn');
+            }
+        },
+        imageView: {
+            body: $params.find('.js-loginView-image'),
+            image: $params.find('.js-loginView-image-image'),
+            crop: $params.find('.js-loginView-image-crop'),
+            toSubmit: $params.find('.js-loginView-image-submit'),
+            toSkip: $params.find('.js-loginView-image-skip'),
+            saveImage: $params.find('.js-loginView-image-crop-save'),
+
+            hide: function(view) {
+                $(view).removeClass('js-loginView-image--fadeIn').addClass(' js-loginView-image--fadeOut');
+            },
+            show: function(view) {
+                if($(view).hasClass('js-loginView-image--fadeOut')) $(view).removeClass('js-loginView-image--fadeOut');
+                $(view).addClass(' js-loginView-image--fadeIn');
+            }
+        }  
     };
-   
 
     $(loginViewController.loginView.toRegister).click(function (event) {
         event.preventDefault();
-        setTimeout(() => {
-            loginViewController.registerView.show(loginViewController.registerView.body);
-        }, 250);
-        loginViewController.loginView.hide(loginViewController.loginView.body);
+        loginViewController.loginView.body.fadeOut(200, () => {
+            loginViewController.registerView.body.fadeIn(200);
+        });
     });
-
+    
     $(loginViewController.registerView.toLogin).click(function(event) {
         event.preventDefault();
-        setTimeout(() => {
-            loginViewController.loginView.show(loginViewController.loginView.body);
-        }, 500);
-        loginViewController.registerView.hide(loginViewController.registerView.body);
+        loginViewController.registerView.body.fadeOut(200, () => {
+            loginViewController.loginView.body.fadeIn(200);
+        });
+    });
+
+    $(loginViewController.personalInfoView.toSkip).click(function(event){
+        event.preventDefault();
+        loginViewController.personalInfoView.body.fadeOut(200, () => {
+            loginViewController.addressView.body.fadeIn(200);
+        });
+    });
+
+    $(loginViewController.addressView.toSkip).click(function(event){
+        event.preventDefault();
+        loginViewController.addressView.body.fadeOut(200, () => {
+            loginViewController.imageView.body.fadeIn(200);
+        });
+    });
+
+    $(loginViewController.imageView.toSkip).click(function(event){
+        event.preventDefault();
+        loginViewController.registerView.body.fadeOut(200, () => {
+            $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                new homeViewController($('.js-homeView-box',)); 
+            });
+        });
     });
 
     $(loginViewController.loginView.submit).click(function(event) {
@@ -58,12 +138,9 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
         
-        const {ipcRenderer} = require('electron');
-        /*
-        let data_temp = {};
-        data_temp.email = 'jelena.radisa@yahoo.com';
-        data_temp.password = 'Profi?danac321';
-        */
+        data.email = "edinfuad.hadzovic@gmail.com";
+        data.password = "Manchester99!";
+
         // send username to main.js 
         ipcRenderer.send('login-submission', data );
         
@@ -95,18 +172,18 @@ var loginViewController = function (params) {
         data.password = $(loginViewController.registerView.password).val();
         data.password_rep = $(loginViewController.registerView.repassword).val();
     
-        const {ipcRenderer} = require('electron');
-    
-        console.log(data);
+        
+        data.email = "edinfuad.hadzovic@gmail.com";
+        data.password = "Manchester99!";
+        data.password_rep = "Manchester99!";
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         
         ipcRenderer.on('register-success', (event, user) => {
-            document.getElementById('email').style.border = "2px solid green";
-            document.getElementById('password_rep').style.border = "2px solid green";
-            document.getElementById('reg_password').style.border = "2px solid green";
-            
-
+            //event.preventDefault();
+            loginViewController.registerView.body.fadeOut(200, () => {
+                loginViewController.personalInfoView.body.fadeIn(200);
+            });
         });
 
         ipcRenderer.on('register-failed', (event, err) => {
@@ -130,6 +207,183 @@ var loginViewController = function (params) {
                 document.getElementById('email').style.border = '2px solid #d1d1d1';  
             }
         });
+    });
+
+    $(loginViewController.personalInfoView.toSubmit).click(function(event){
+        event.preventDefault();
+
+
+        let data = {};
+        data.first_name = $(loginViewController.personalInfoView.first_name).val();
+        data.last_name = $(loginViewController.personalInfoView.last_name).val();
+        data.gender = $(loginViewController.personalInfoView.gender).val();
+        data.birthday = $(loginViewController.personalInfoView.birthday).val();
+        data.phone = $(loginViewController.personalInfoView.phone).val();
+
+        ipcRenderer.send('personal-info-submission', data);
+
+        ipcRenderer.on('store-personal-info-failed', (event, err) => {
+            if(err.type === 'ERR_FIRST_NAME_MISSING') {
+                document.getElementById('first_name_intro').style.border = '2px solid red';
+                document.getElementById('last_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_LAST_NAME_MISSING') {
+                document.getElementById('last_name_intro').style.border = '2px solid red';
+                document.getElementById('first_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday_intro').style.border = '2px solid #d1d1d1';
+            }
+             if(err.type === 'ERR_BIRTHDAY_MISSING') {
+                document.getElementById('birthday_intro').style.border = '2px solid red';
+                document.getElementById('last_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('phone_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('first_name_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_PHONE_MISSING') {
+                document.getElementById('phone_intro').style.border = '2px solid red';
+                document.getElementById('last_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('first_name_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('birthday_intro').style.border = '2px solid #d1d1d1';
+            }
+        });
+
+        ipcRenderer.on('store-personal-info-success', (event, current_user) => {
+            console.log(current_user, "CURRENT USER");
+            loginViewController.personalInfoView.body.fadeOut(500, () => {
+                loginViewController.addressView.body.fadeIn(500);
+            });
+        });
+    });
+
+    $(loginViewController.addressView.toSubmit).click(function(event){
+
+        event.preventDefault();
+
+
+        let data = {};
+        data.street = $(loginViewController.addressView.street).val();
+        data.city = $(loginViewController.addressView.city).val();
+        data.state = $(loginViewController.addressView.state).val();
+        data.postal_code = $(loginViewController.addressView.postal_code).val();
+        data.country = $(loginViewController.addressView.country).val();
+        
+        ipcRenderer.send('address-info-submission', data);
+
+        ipcRenderer.on('store-address-info-failed', (event, err) => {
+
+            if(err.type === 'ERR_STREET_MISSING') {
+                document.getElementById('street_intro').style.border = '2px solid red';
+                document.getElementById('city_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('state_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('postal_code_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('country_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_CITY_MISSING') {
+                document.getElementById('city_intro').style.border = '2px solid red';
+                document.getElementById('street_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('state_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('postal_code_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('country_intro').style.border = '2px solid #d1d1d1';
+            }
+             if(err.type === 'ERR_STATE_MISSING') {
+                document.getElementById('state_intro').style.border = '2px solid red';
+                document.getElementById('street_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('city_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('postal_code_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('country_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_POSTAL_CODE_MISSING') {
+                document.getElementById('postal_code_intro').style.border = '2px solid red';
+                document.getElementById('street_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('city_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('state_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('country_intro').style.border = '2px solid #d1d1d1';
+            }
+            if(err.type === 'ERR_COUNTRY_MISSING') {
+                document.getElementById('country_intro').style.border = '2px solid red';
+                document.getElementById('street_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('city_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('state_intro').style.border = '2px solid #d1d1d1';
+                document.getElementById('postal_code_intro').style.border = '2px solid #d1d1d1';
+            }
+        });
+
+        ipcRenderer.on('store-address-info-success', (event, current_user) => {
+            console.log(current_user, "CURRENT USER");
+            loginViewController.addressView.body.fadeOut(500, () => {
+                loginViewController.imageView.body.fadeIn(500);
+            });
+        });
+    });
+
+    $(loginViewController.imageView.toSubmit).click(function(event){
+        event.preventDefault();
+        let image;
+        const {dialog} = require('electron').remote;
+        console.log(dialog);
+        dialog.showOpenDialog({properties: ['openFile']},  (file_names) => {
+            if(file_names === undefined) return;
+
+            image = file_names[0];
+            
+            let data = {};
+            data.image = image;
+            loginViewController.imageView.crop.removeClass('hidden').fadeIn(500, () => {
+                data.imageController = $('.js-loginView-image-crop').croppie({
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'circle'
+                    },
+                    boundary: { width: 300, height: 300 },
+                });
+
+                data.imageController.croppie('bind', {
+                    url: data.image
+                });
+            });
+
+            $('.js-loginView-image-crop-save').click(function(event){
+                var reader = new FileReader();
+                event.preventDefault();
+                console.log(data.imageController);
+                data.imageController.croppie('result', {type: 'blob'}).then(function(resp){
+                    reader.addEventListener('load', function(){
+                        fs.writeFileSync(directory + '/user_profile.png', reader.result, 'binary', function(err){
+                            if(err) console.log("down");
+                            console.log("test");
+                        });
+
+                        data.profile_image = directory + '/user_profile.png';
+                        ipcRenderer.send('form-submission-image', data);
+
+                    });
+                    reader.readAsBinaryString(resp);
+                    
+                
+                });
+            });
+            //
+        });
+    
+        
+        ipcRenderer.on('image-submission-success', (event, current_user) => {
+            loginViewController.reference.fadeOut(500, function(){
+                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                    new homeViewController($('.js-homeView-box'), current_user); 
+                });
+            });
+        });
+        ipcRenderer.on('image-submission-fail', (event, current_user) => {
+            
+        });
+        //let data = {};
+        //data.image = reader.readAsDataURL($(loginViewController.imageView.image).val());
+        //console.log(data.image);
+        console.log(image);
+
     });
 };
 
@@ -161,6 +415,39 @@ var homeViewController = function (params, user) {
             phone: $params.find('.js-homeView-setting-input[input-type="phone"]'),
             personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
         },
+        wallet_navigation: {
+            body: $params.find('.js-homeView-wallet-nav'),
+            btc: $params.find('.js-homeView-wallet-symbol[request="btc"]'),
+            dgb: $params.find('.js-homeView-wallet-symbol[request="dgb"]'),
+            ltc: $params.find('.js-homeView-wallet-symbol[request="ltc"]'),
+            eth: $params.find('.js-homeView-wallet-symbol[request="eth"]'),
+        },
+        dgb_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
+            generateAddress: $params.find('.js-homeView-wallet-generate-address[for="dgb"]')
+        },
+        wallets: [
+            {
+                type: "btc",
+                body: $(params).find('.js-homeView-wallet-content[display="btc"]'),
+                class: 'btc-select'
+            },
+            {
+                type: "dgb",
+                body: $(params).find('.js-homeView-wallet-content[display="dgb"]'),
+                class: 'dgb-select'
+            },
+            {
+                type: "ltc",
+                body: $(params).find('.js-homeView-wallet-content[display="ltc"]'),
+                class: 'ltc-select'
+            },
+            {
+                type: "eth",
+                body: $(params).find('.js-homeView-wallet-content[display="eth"]'),
+                class: 'eth-select'
+            }
+        ],
         views: [
             {
                 type: "Wallet",
@@ -183,8 +470,12 @@ var homeViewController = function (params, user) {
                 body: $(params).find('.js-homeView-settings')
             }
         ],
-        active: function(user) {
-            $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
+        active: async function(user) {
+            await ipcRenderer.send('get-user-data');
+            ipcRenderer.on('init-user-data', (event, user) => {
+                $('.js-home-profile-image-tag').attr('src', user._profile_image);
+                $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
+            });
         },
         setPage: function(page_type) {
             homeViewController.views.forEach(page => {
@@ -193,6 +484,19 @@ var homeViewController = function (params, user) {
                 } else {
                     if(!page.body.hasClass('hidden')) {
                         page.body.addClass('hidden');
+                    }
+                }
+            });
+        },
+        setWallet: function(wallet_type) {
+            homeViewController.wallets.forEach(wallet => {
+                if(wallet.type === wallet_type) {
+                    wallet.body.removeClass('hidden');
+                    $('.js-homeView-box').addClass(wallet.class);
+                } else {
+                    if(!wallet.body.hasClass('hidden')) {
+                        $('.js-homeView-box').removeClass(wallet.class);                        
+                        wallet.body.addClass('hidden');
                     }
                 }
             });
@@ -209,36 +513,16 @@ var homeViewController = function (params, user) {
         data.birthday = $(homeViewController.personalInformation.birthday).val();
         data.phone = $(homeViewController.personalInformation.phone).val();
         
-        const {ipcRenderer} = require('electron');
         console.log(data);
     
-        ipcRenderer.send('personal-info-submission', data);
+        ipcRenderer.send('personal-info-change', data);
 
         ipcRenderer.on('store-failed', (event, err) => {
-            if(err.type === 'ERR_FIRST_NAME_MISSING') {
-                document.getElementById('first_name').style.border = '2px solid red';
-                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('phone').style.border = '2px solid #d1d1d1';
-                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
-            }
-            if(err.type === 'ERR_LAST_NAME_MISSING') {
-                document.getElementById('last_name').style.border = '2px solid red';
-                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('phone').style.border = '2px solid #d1d1d1';
-                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
-            }
-            if(err.type === 'ERR_PHONE_MISSING') {
-                document.getElementById('phone').style.border = '2px solid red';
-                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('birthday').style.border = '2px solid #d1d1d1';
-            }
-            if(err.type === 'ERR_BIRTHDAY_MISSING') {
-                document.getElementById('birthday').style.border = '2px solid red';
-                document.getElementById('last_name').style.border = '2px solid #d1d1d1';
-                document.getElementById('phone').style.border = '2px solid #d1d1d1';
-                document.getElementById('first_name').style.border = '2px solid #d1d1d1';
-            }
+            // Cant fail
+            // It will never reach here
+            // GOod to know this 
+            // Can be changed if all entries are equal 0 just return some error bla bla]
+
         });
 
         ipcRenderer.on('store-success', (event, current_user) => {
@@ -265,12 +549,42 @@ var homeViewController = function (params, user) {
     $(homeViewController.navigaiton.manager_plus).click(function(){
         homeViewController.setPage("Manager");
     });
+
+    $(homeViewController.wallet_navigation.btc).click(function() {
+        homeViewController.setWallet('btc');
+    });
+
+    $(homeViewController.wallet_navigation.dgb).click(function() {
+        homeViewController.setWallet('dgb');
+    });
+
+    $(homeViewController.wallet_navigation.ltc).click(function() {
+        homeViewController.setWallet('ltc');
+    });
+
+    $(homeViewController.wallet_navigation.eth).click(function() {
+        homeViewController.setWallet('eth');
+    });
+
+    $(homeViewController.dgb_wallet.generateAddress).click(function(event) {
+        console.log("test");
+
+        event.preventDefault();
+        ipcRenderer.send('generate-dgb-address');
+
+        ipcRenderer.on('generate-dgb-address-success', (event, private_key) => {
+            console.log(private_key);
+        });
+    });
 };
 
-/*
+ipcRenderer.on('init-main-window', (event, current_user) => {
+    console.log(current_user);
+    new homeViewController($('.js-homeView-box'), current_user);     
+});
+
 $('document').ready(function(){
     $('.js-homeView-box').each(function () {
         new homeViewController(this);
     })
 });
-*/

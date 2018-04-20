@@ -144,13 +144,43 @@ module.exports = {
 				count++;
 				reject(error.ERR_LAST_NAME_MISSING);
 			}
+			if (validator.isEmpty(data.birthday)) {
+				count++;
+				reject(error.ERR_BIRTHDAY_MISSING);
+			}
 			if(validator.isEmpty(data.phone)) {
 				count++;
 				reject(error.ERR_PHONE_MISSING);
 			}
-			if (validator.isEmpty(data.birthday)) {
+			if (count == 0) {
+				resolve(true);
+			}
+		});
+	},
+
+	address_data: function(data) {
+		return new Promise((resolve, reject) => {
+			console.log(message.verify, 'Personal data verifying.');
+			let count = 0;
+			if(validator.isEmpty(data.street)) {
 				count++;
-				reject(error.ERR_BIRTHDAY_MISSING);
+				reject(error.ERR_STREET_MISSING);
+			}
+			if(validator.isEmpty(data.city)) {
+				count++;
+				reject(error.ERR_CITY_MISSING);
+			}
+			if (validator.isEmpty(data.state)) {
+				count++;
+				reject(error.ERR_STATE_MISSING);
+			}
+			if(validator.isEmpty(data.postal_code)) {
+				count++;
+				reject(error.ERR_POSTAL_CODE_MISSING);
+			}
+			if(validator.isEmpty(data.country)) {
+				count++;
+				reject(error.ERR_COUNTRY_MISSING);
 			}
 			if (count == 0) {
 				resolve(true);

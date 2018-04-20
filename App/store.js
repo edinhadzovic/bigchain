@@ -18,6 +18,29 @@ const directory = path.join(__dirname, '../temp');
 var user_count;
 
 module.exports = {
+	formatData: function(user) {
+		console.log(message.store, user);
+		return {
+			unique_id: user._unique_id,
+			email: user._email,
+			password: user._password,
+			personal_information: {
+				first_name: user._personal_information.first_name,
+				last_name: user._personal_information.last_name,
+				gender: user._personal_information.gender,
+				birthday: user._personal_information.birthday,
+				phone: user._personal_information.phone,
+			},
+			address: {
+				street: user._address.street,
+				city: user._address.city,
+				state: user._address.state,
+				postal_code: user._address.postal_code,
+				country: user._address.country,
+			},
+			profile_image: user._profile_image
+		};
+	},
 
 	read: function(user) {
 		return new Promise((resolve, reject) => {
@@ -28,32 +51,14 @@ module.exports = {
 
 				files.forEach(element => {
 					let file = fs.readFileSync(directory + '/' + element, 'utf8');
-					var result = file.split("'");
+					var result = JSON.parse(file);
 
-					/*
-						for (var x = 0; x < result.length; x++ )
-						{
-							console.log(result[x], " ", x);
-						}
-					*/
-
-					if(user.email === result[1]){
+					if(user.email === result._email){
 						found = true;
 						let data = {};
 						data.success = found;
-						data.user = {
-							email: result[1],
-							password: result[3],
-							first_name: result[5],
-							last_name: result[7],
-							gander: result[9],
-							birthday: result[11],
-							phone	: result[13],
-
-							// TODO: ADDRESS AND PROFILE IMAGE ADDITION
-							address: null,
-							profile_image: null,
-						};
+						data.user = this.formatData(result);
+						console.log(message.store, data);
 						resolve(data);
 					}
 				});
@@ -61,44 +66,61 @@ module.exports = {
 			});
 		});
 	},
-	// Store function stors data in file
-	store: function(data, callback){
-		// ?? Should check how many users are already registered
-		// if more then 5 leave with error
-		let files = fs.readdirSync(directory);
 
-		if(files.constructor !== Array) {
-			throw({
-				success: false,
-				error: 'Wrong directory'
+	new_store: function(user) {
+		return new Promise((resolve, reject) => {
+			//reading file directory
+			let files = fs.readdirSync(directory);
+
+			if(files.constructor !== Array) {
+				reject(error.ERR_DB_STORING);
+			}
+
+			user_count = files.length;
+
+			if(user_count >= 1) reject(error.ERR_MAX_USER);
+
+			message.print(message.store, "Start to store data into a File");
+
+			path_file = path.join(__dirname, '../temp/test'+ user_count);
+
+			delete user.password_rep;
+
+			try {
+				fs.writeFileSync(path_file, JSON.stringify(user));
+				resolve(true);			
+			} catch (error) {
+				reject(error);
+			}
+		});
+	},
+
+	update: function(current_user) {
+		return new Promise((resolve, reject) => {
+			message.print(message.store, "updating data");
+			console.log(current_user);
+			let found = false;
+			fs.readdir(directory, (err, files) => {
+				if(err) reject(error.ERR_DB_READING);
+
+				files.forEach(element => {
+					let file = fs.readFileSync(directory + '/' + element, 'utf8');
+					var result = JSON.parse(file);
+					console.log(result);
+					if(current_user._email === result._email){
+						console.log("hollllaaaaa");
+						found = true;
+						try {
+							fs.writeFileSync(directory + '/' + element, JSON.stringify(current_user));
+							resolve(true);
+						} catch (e) {
+							reject(error.ERR_DB_STORING)
+						}
+					}
+				});
+				if(!found) reject(error.ERR_NOT_VALID_EMAIL);
 			});
-		}
-
-		user_count = files.length;
-
-		if(user_count >= 5) {
-			console.log(message.store, "MAX AMOUNT OF USERS " + user_count + " REACHED!");
-			callback({
-				error: true,
-				error_type: 'Registration failed, login into existing accounts.'
-			});
-		}	
-		else {
-		    console.log(message.store, "Storing data into file /tmp/test");
-		    
-		    path_dir = path.join(__dirname, '../temp/test'+ user_count);
-		    fs.writeFile(path_dir, util.inspect([data.email, data.password]), function(error) {
-		    
-		    if(error) {
-		        return console.log(error);
-		    }
-
-		    user_count++;
-			
-			});
-			callback(true);
-		}
-
+		});
 	},
 
 	// Salt function starts encryption 
@@ -119,49 +141,12 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 		console.log(message.store, "Starting with storing!");
 		console.log(message.store, "Pepper process...");
-		let peper = data.password;
+		let peper = data._password;
 		this.salt(data, peper, (data) => {
-			this.store(data, (result) => {
-				if (result != true) reject(result);
-				if(result === true) resolve(result);
-			});
-		});
-		})
-	},
-
-	store_personal_info: function(current_user, data) {
-		return new Promise((resolve, reject) => {
-			console.log(message.store, 'Restoring process starting.');
-
-			let replaced = false;
-			fs.readdir(directory, (err, files) => {
-				if(err) reject(error.ERR_DB_READING);
-
-				files.forEach(element => {
-					let file = fs.readFileSync(directory + '/' + element, 'utf8');
-					var result = file.split("'");
-					if(current_user._email === result[1]){
-						var new_data = {
-							email: current_user._email,
-							password: current_user._password,
-							gender: data.gender,
-							first_name: data.first_name,
-							last_name: data.last_name,
-							birthday: data.birthday,
-							phone: data.phone,
-						}
-						fs.writeFileSync(directory + '/' + element, util.inspect([new_data.email, new_data.password, new_data.first_name,
-						 	new_data.last_name, new_data.gender, new_data.birthday, new_data.phone]));
-						if(err) reject(error.ERR_DB_READING);
-						replaced = true;
-						resolve(true);
-					}
-				});
-				if(!replaced) {
-					reject(error.ERR_NOT_VALID_EMAIL);
-				} 
+			this.new_store(data).then((res) => {
+				resolve(res);
+			}).catch(e => reject(e));
 			});
 		})
 	},
-
 };

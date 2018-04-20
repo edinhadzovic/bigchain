@@ -1,7 +1,7 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
-
+const digibyte = require('digibyte');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -13,6 +13,7 @@ const ipcMain = electron.ipcMain;
 var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
 var message = require('./lib/Message');
+var DGB = require('./wallets/dgb');
 
 
 // Global current user
@@ -20,9 +21,42 @@ var current_user = new User();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
+let loginWindow;
 let mainWindow;
 
-async function createWindow () {
+function createMainWindow (user, event) {
+  loginWindow.hide();
+  mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
+  width: 400,
+  height: 600,
+  minWidth: 400,
+  minHeight: 600,
+  backgroundColor: '#d1d1d1',
+  show: false });
+
+  mainWindow.maximize();
+
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, '../ClientInterface/views/mainView.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+
+  mainWindow.once('ready-to-show', () => {
+    console.log("send the message");
+    event.sender.send('init-main-window', current_user);
+  });
+
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null;
+    app.emit('window-all-closed');
+  });
+}
+
+function createWindow () {
   try {
     //let result = await wallet.getWalletValue();
   } catch (error) {
@@ -30,39 +64,39 @@ async function createWindow () {
   }
 
   // Create the browser window.
-  mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
-  width: 1281,
-  height: 800,
-  minWidth: 1281,
-  minHeight: 800,
-  backgroundColor: '#a3c6ff',
+  loginWindow = new BrowserWindow({titleBarStyle: 'hidden',
+  width: 400,
+  height: 600,
+  minWidth: 400,
+  minHeight: 600,
+  backgroundColor: '#d1d1d1',
   show: false
 });
-  mainWindow.maximize();
+  //loginWindow.maximize();
 
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../ClientInterface/views/mainView.html'),
+  loginWindow.loadURL(url.format({
+    pathname: path.join(__dirname, '../ClientInterface/views/loginView.html'),
     protocol: 'file:',
     slashes: true
   }))
 
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
-})
+  loginWindow.once('ready-to-show', () => {
+    loginWindow.show()
+});
 
   // and load the index.html of the app.
   
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  // loginWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
+  loginWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null;
-  })
+    loginWindow = null;
+  });
 }
 
 // This method will be called when Electron has finished
@@ -77,32 +111,30 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit()
   }
-})
+});
 
 app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
+  if (loginWindow === null) {
     createWindow();
   }
-})
+});
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+ipcMain.on('get-user-data', (event) => {
+  event.sender.send("init-user-data", current_user);
+});
 
-//Getting user input
 ipcMain.on("login-submission", async function(event, data) {
   
   console.log(message.main, 'Request to login of a user');
 
   let result = await current_user.login(data);
-
+  console.log(message.main,current_user);
   if(result === true) {
     console.log(message.main, "User connected successfully!");
-    console.log(' ');
-    event.sender.send("login-success", current_user);
+    createMainWindow(current_user, event);
   } else {
-    console.log(message.main, result);
     console.log(message.main, 'Login failed');
     console.log(' ');
     event.sender.send("login-failed", result);
@@ -113,7 +145,6 @@ ipcMain.on("login-submission", async function(event, data) {
 ipcMain.on("register-submission", async function(event, data) {
   console.log(message.main, 'Request for creation of new user.');
   let result = await current_user.generateUser(data);
-
   if (result.success) {
     console.log(message.main, "Status success!");
     console.log(' ');
@@ -127,6 +158,22 @@ ipcMain.on("register-submission", async function(event, data) {
 });
 
 ipcMain.on("personal-info-submission", async function(event, data) {
+  console.log(message.main, 'Personal information provided!');
+  let result = await current_user.personal_info_save(current_user, data);
+  if (result === true) {
+    console.log(message.main, 'Storing of personal information successfully done.');
+    console.log(' ');
+    event.sender.send('store-personal-info-success', current_user);
+  } else {
+    console.log(message.main, 'Storing of personal information failed.');
+    console.log(' ');
+    event.sender.send('store-personal-info-failed', result);
+  }
+});
+
+
+ipcMain.on("personal-info-change", async function(event, data) {
+  console.log(message.main, 'Personal information changing!');
   console.log(message.main, 'New user data provided!');
   console.log(message.main, 'Name: ', data.first_name);
   console.log(message.main, 'Last name: ', data.last_name);
@@ -144,4 +191,65 @@ ipcMain.on("personal-info-submission", async function(event, data) {
     console.log(' ');
     event.sender.send('store-failed', result);
   }
-})
+});
+
+
+ipcMain.on("address-info-submission", async function(event, data) {
+  console.log(message.main, 'Personal information provided!');
+  let result = await current_user.address_info_save(current_user, data);
+  if (result === true) {
+    console.log(message.main, 'Storing of address information successfully done.');
+    console.log(' ');
+    event.sender.send('store-address-info-success', current_user);
+  } else {
+    console.log(message.main, 'Storing of address information failed.');
+    console.log(' ');
+    event.sender.send('store-address-info-failed', result);
+  }
+});
+
+
+// USE IT WHEN CHANGE IS CREATED IN SETTINGS
+
+ipcMain.on("address-info-change", async function(event, data) {
+  console.log(message.main, 'Personal information provided!');
+  let result = await current_user.address_info_change(current_user, data);
+  if (result === true) {
+    console.log(message.main, 'Storing of address information successfully done.');
+    console.log(' ');
+    event.sender.send('change-address-info-success', current_user);
+  } else {
+    console.log(message.main, 'Storing of address information failed.');
+    console.log(' ');
+    event.sender.send('change-address-info-failed', result);
+  }
+});
+
+ipcMain.on('form-submission-image', async function(event, data){
+  console.log(message.main, data);
+  let result = await current_user.save_image(current_user, data);
+  if(result === true) {
+    console.log(message.main, 'Storing');
+    createMainWindow(current_user, event);
+    //event.sender.send('image-submission-success', current_user);
+  } else {
+    console.log("false");
+  }
+});
+
+ipcMain.on('generate-dgb-address', async function(event) {
+  console.log(message.main, "generate new dgb address");
+  // let wallet = new DGB;
+  // let privateKey = wallet.generatePrivateKey();
+  try {
+    // let address = wallet.generateAddress(privateKey);    
+    var privateKey = new digibyte.PrivateKey();
+    console.log(privateKey);
+    // var publicKey = privateKey.publicKey;
+    // var address = publicKey.toAddress();   
+    event.sender.send('generate-dgb-address-success', privateKey);  
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(message.main, "generate new private key");
+});

@@ -14,6 +14,11 @@ module.exports = {
     message: 'There was an error in reading the DataBase.',
     type: 'ERR_DB_READING'
   },
+  ERR_DB_STORING: {
+    success: false,
+    message: 'The was an error in storing the File',
+    tpye: 'ERR_DB_STORING'
+  },
   ERR_EMAIL_FIELD_EMPTY: {
     success: false,
     message: 'Email field is empty.',
@@ -69,4 +74,44 @@ module.exports = {
     message: 'Birthday field is empty.',
     type: 'ERR_BIRTHDAY_MISSING'
   },
+  ERR_STREET_MISSING: {
+    success: false,
+    message: 'Street field is empty.',
+    type: 'ERR_STREET_MISSING'
+  },
+  ERR_CITY_MISSING: {
+    success: false,
+    message: 'City field is empty.',
+    type: 'ERR_CITY_MISSING'
+  },
+  ERR_STATE_MISSING: {
+    success: false,
+    message: 'State field is empty.',
+    type: 'ERR_STATE_MISSING'
+  },
+  ERR_POSTAL_CODE_MISSING: {
+    success: false,
+    message: 'Postal code field is empty.',
+    type: 'ERR_POSTAL_CODE_MISSING'
+  },
+  ERR_COUNTRY_MISSING: {
+    success: false,
+    message: 'Country field is empty.',
+    type: 'ERR_COUNTRY_MISSING'
+  },
+  ERR_MAX_USER: {
+    success: false,
+    message: 'Maximal number of user reached',
+    type: 'ERR_MAX_USER'
+  },
+  ERR_GETTING_DGB_PRICE: {
+    success: false,
+    message: 'Could not get the dgb current market value',
+    type: 'ERR_GETTING_DGB_PRICE'
+  },
+  ERR_GETTING_WALLET_VALUE: {
+    success: false,
+    message: 'Could not get wallet value',
+    type: 'ERR_GETTING_WALLET_VALUE'
+  }
 };
