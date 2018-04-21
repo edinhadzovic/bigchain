@@ -415,6 +415,12 @@ var homeViewController = function (params, user) {
             ltc: $params.find('.js-homeView-wallet-symbol[request="ltc"]'),
             eth: $params.find('.js-homeView-wallet-symbol[request="eth"]'),
         },
+        btc_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="btc"]'),
+            address: $params.find('.js-homeView-wallet-send-btc-to-address'),
+            amount: $params.find('.js-homeView-wallet-send-btc-amount'),
+            send_button: $params.find('.js-homeView-wallet-btc-send'),
+        },
         dgb_wallet: {
             body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
             generateAddress: $params.find('.js-homeView-wallet-generate-address[for="dgb"]')
@@ -569,6 +575,19 @@ var homeViewController = function (params, user) {
             console.log(private_key);
         });
     });
+
+    $(homeViewController.btc_wallet.send_button).click(function(event){
+        event.preventDefault();
+   
+        let data = {};
+        data.btc_address = $(homeViewController.btc_wallet.address).val();
+        data.btc_amount = homeViewController.btc_wallet.amount.val();
+        console.log('test' +  data.btc_amount);
+        ipcRenderer.send('send_btc',data);
+    });
+
+
+
 };
 
 ipcRenderer.on('init-main-window', (event, current_user) => {

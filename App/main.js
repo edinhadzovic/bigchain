@@ -254,3 +254,10 @@ ipcMain.on('generate-dgb-address', async function(event) {
   }
   console.log(message.main, "generate new private key");
 });
+
+ipcMain.on('send_btc', async function(data) { 
+  console.log("Jesmol sve pokupili" + data);
+  current_user._btc_wallet.send(data.btc_amount, data.btc_address, current_user._btc_wallet);
+
+  console.log('TREBALO BI DA RADI');
+});

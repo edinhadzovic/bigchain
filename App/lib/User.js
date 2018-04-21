@@ -63,6 +63,9 @@ User.prototype.generateUser = async function(user){
       this.setUser(user);      
       let hash = bcryptjs.hashSync(this.getPassword(), salt);
       this.setPassword(hash);
+      this.setBtc(user.user);
+      this.setAdress(user.user);
+      this.setPersonalInfo(user.user);
       console.log(message.user,this);
       new_user.data = await this.save(this);      
       console.log(message.user, user);
@@ -89,6 +92,7 @@ User.prototype.login = async function(data) {
     this.setAdress(user.user);
     // TODO set address and profile image
     this.setImage(user.user);
+    this.setBtc(user.user);
     return true;
   } catch (err) {
     return err;
@@ -256,13 +260,21 @@ User.prototype.setImage = function(data) {
     }
 };
 
-User.prototype.generate_wallets = function() {
+
+User.prototype.setBtc = function(data) {
+
+  this._btc_wallet._btc_address = data._btc_wallet.btc_address;
+  this._btc_wallet._btc_privateKey = data._btc_wallet.btc_privateKey;
+}
+
+User.prototype.generate_wallets = async function() {
   return new Promise((resolve, reject) => {
     if(this._btc_wallet._btc_privateKey === null) {
       //generate address
       this._btc_wallet.generateAddress_and_PrivateKey(this);
-      this._btc_wallet.send(0.0003, 'mx53JEMYRLYTW7UQb1SyBuaTfkX6pNCwvL', this._btc_wallet);
+      //this._btc_wallet.send(0.0003, 'mx53JEMYRLYTW7UQb1SyBuaTfkX6pNCwvL', this._btc_wallet);
       console.log(this._btc_wallet);
+      let res = store.update(this); 
       resolve(true);
     }
     reject(false);

@@ -39,6 +39,7 @@ module.exports = {
 				country: user._address.country,
 			},
 			profile_image: user._profile_image,
+
 		};
 	},
 
