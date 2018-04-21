@@ -3,7 +3,7 @@ const error = require('./../error/error');
 let verification = require('../verification');
 let store = require('../store');
 var message = require('./Message');
-const btc = require ('./../wallet/btc');
+const btc = require ('./../wallets/btc');
 
 //_constructor
 let User = function(){
@@ -254,6 +254,19 @@ User.prototype.setImage = function(data) {
       if (data.profile_image) {
       this._profile_image = data.profile_image;
     }
+};
+
+User.prototype.generate_wallets = function() {
+  return new Promise((resolve, reject) => {
+    if(this._btc_wallet._btc_privateKey === null) {
+      //generate address
+      this._btc_wallet.generateAddress_and_PrivateKey(this);
+      this._btc_wallet.send(0.0003, 'mx53JEMYRLYTW7UQb1SyBuaTfkX6pNCwvL', this._btc_wallet);
+      console.log(this._btc_wallet);
+      resolve(true);
+    }
+    reject(false);
+  });
 };
 
 module.exports = User;

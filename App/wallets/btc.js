@@ -1,5 +1,3 @@
-import { PrivateKey } from 'digibyte';
-
 const bitcoin = require('bitcoinjs-lib');
 
 const bigi = require('bigi');
@@ -22,13 +20,11 @@ class Bitcoin {
         this._btc_standing = null;
     }
 
-    generateAddress_and_PrivateKey() 
+    generateAddress_and_PrivateKey(user) 
     {
         // More and less create a buffer from data, big big buffer
 
-        var buffer = new Buffer(this._personal_information.first_name + this._personal_information.last_name
-             + this._personal_information.birthday + this._personal_information.phone + this._email + this._password + this._address.street
-             + this._address.city + this._address.state + this._address.postal_code + this._address.country + 'walletplus.io');
+        var buffer = new Buffer(JSON.stringify(user) + 'walletplus.io');
         var hash = bitcoin.crypto.sha256(buffer);
         var bigNum = bigi.fromBuffer(hash);
 
@@ -44,9 +40,9 @@ class Bitcoin {
         
     }
 
-    send(amount, address, user)
+    send(amount, address, wallet)
     {
-        insight.getUnspentUtxos(user.btc.btc_address, (err, utxos) => {
+        insight.getUnspentUtxos(wallet.btc_address, (err, utxos) => {
             if (err) {
                 // Handle errors
             } else {
@@ -55,9 +51,9 @@ class Bitcoin {
                 var tx = bitcore.Transaction();
                 tx.from(utxos);
                 tx.to(address, amountSatoshi); // .0001 BTC
-                tx.change(user.btc_address);
+                tx.change(wallet.btc_address);
                 tx.fee(10000);
-                tx.sign(user.btc_privateKey);
+                tx.sign(wallet.btc_privateKey);
                 
                 tx.serialize();
                 console.log(tx.toObject());
@@ -76,8 +72,11 @@ class Bitcoin {
         });
     }
 
-    readStandingFromAddress(user){
+    readStandingFromAddress(wallet){
         // procitati stanje sa adrese
     }
     
 }
+
+
+module.exports = Bitcoin;
