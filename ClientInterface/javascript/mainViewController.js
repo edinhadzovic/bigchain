@@ -138,9 +138,6 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
         
-        data.email = "edinfuad.hadzovic@gmail.com";
-        data.password = "Manchester99!";
-
         // send username to main.js 
         ipcRenderer.send('login-submission', data );
         
@@ -172,10 +169,6 @@ var loginViewController = function (params) {
         data.password = $(loginViewController.registerView.password).val();
         data.password_rep = $(loginViewController.registerView.repassword).val();
     
-        
-        data.email = "edinfuad.hadzovic@gmail.com";
-        data.password = "Manchester99!";
-        data.password_rep = "Manchester99!";
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         

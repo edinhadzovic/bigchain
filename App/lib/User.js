@@ -3,6 +3,7 @@ const error = require('./../error/error');
 let verification = require('../verification');
 let store = require('../store');
 var message = require('./Message');
+const btc = require ('./../wallet/btc');
 
 //_constructor
 let User = function(){
@@ -24,6 +25,7 @@ let User = function(){
     country: null,
   };
   this._profile_image = null;
+  this._btc_wallet = new btc();
 };
 
 User.prototype.save = async function(user){

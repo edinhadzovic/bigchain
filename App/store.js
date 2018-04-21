@@ -38,7 +38,7 @@ module.exports = {
 				postal_code: user._address.postal_code,
 				country: user._address.country,
 			},
-			profile_image: user._profile_image
+			profile_image: user._profile_image,
 		};
 	},
 
