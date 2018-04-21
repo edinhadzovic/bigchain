@@ -39,7 +39,10 @@ module.exports = {
 				country: user._address.country,
 			},
 			profile_image: user._profile_image,
-
+			_btc_wallet: {
+				_btc_address: user._btc_wallet._btc_address,
+				_btc_privateKey: user._btc_wallet._btc_privateKey
+			}
 		};
 	},
 

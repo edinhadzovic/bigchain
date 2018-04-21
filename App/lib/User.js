@@ -263,9 +263,9 @@ User.prototype.setImage = function(data) {
 
 User.prototype.setBtc = function(data) {
 
-  this._btc_wallet._btc_address = data._btc_wallet.btc_address;
-  this._btc_wallet._btc_privateKey = data._btc_wallet.btc_privateKey;
-}
+  this._btc_wallet._btc_address = data._btc_wallet._btc_address;
+  this._btc_wallet._btc_privateKey = data._btc_wallet._btc_privateKey;
+};
 
 User.prototype.generate_wallets = async function() {
   return new Promise((resolve, reject) => {

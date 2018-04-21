@@ -1,4 +1,5 @@
 const bitcoin = require('bitcoinjs-lib');
+const bitcore = require('bitcore-lib');
 
 const bigi = require('bigi');
 
@@ -42,7 +43,7 @@ class Bitcoin {
 
     send(amount, address, wallet)
     {
-        insight.getUnspentUtxos(wallet.btc_address, (err, utxos) => {
+        insight.getUnspentUtxos(wallet._btc_address, (err, utxos) => {
             if (err) {
                 // Handle errors
             } else {
@@ -51,9 +52,9 @@ class Bitcoin {
                 var tx = bitcore.Transaction();
                 tx.from(utxos);
                 tx.to(address, amountSatoshi); // .0001 BTC
-                tx.change(wallet.btc_address);
+                tx.change(wallet._btc_address);
                 tx.fee(10000);
-                tx.sign(wallet.btc_privateKey);
+                tx.sign(wallet._btc_privateKey);
                 
                 tx.serialize();
                 console.log(tx.toObject());
@@ -62,12 +63,9 @@ class Bitcoin {
                     if (err) {
                         // Handle err
                     } else {
-                        console.log('succesfully  sent bla bla ' + returnTxt);
-                        res.send("SUCCESSFULLY SENT " + amount + "BTC to address " + address + "\n" + tx.serialize());
-                        
+                        console.log('succesfully  sent bla bla ' + returnTxt);                    
                     }
-                })
-    
+                });
             }
         });
     }

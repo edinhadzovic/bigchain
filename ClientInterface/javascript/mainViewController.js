@@ -581,9 +581,9 @@ var homeViewController = function (params, user) {
    
         let data = {};
         data.btc_address = $(homeViewController.btc_wallet.address).val();
-        data.btc_amount = homeViewController.btc_wallet.amount.val();
+        data.btc_amount = $(homeViewController.btc_wallet.amount).val();
         console.log('test' +  data.btc_amount);
-        ipcRenderer.send('send_btc',data);
+        ipcRenderer.send('send_btc', data);
     });
 
 
