@@ -138,8 +138,11 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
         
+        let data_temp = {};
+        data_temp.email = 'Danilo@yahoo.com';
+        data_temp.password = 'Profi?danac321';
         // send username to main.js 
-        ipcRenderer.send('login-submission', data );
+        ipcRenderer.send('login-submission', data_temp );
         
         ipcRenderer.on("login-success", (event, arg) => {
             loginViewController.reference.fadeOut(500, function(){
@@ -168,7 +171,7 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.registerView.email).val();
         data.password = $(loginViewController.registerView.password).val();
         data.password_rep = $(loginViewController.registerView.repassword).val();
-    
+        
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
         
@@ -420,6 +423,8 @@ var homeViewController = function (params, user) {
             address: $params.find('.js-homeView-wallet-send-btc-to-address'),
             amount: $params.find('.js-homeView-wallet-send-btc-amount'),
             send_button: $params.find('.js-homeView-wallet-btc-send'),
+            market_price: $params.find('.js-homeView-wallet-fiat-btc'),
+            personal_standing: $params.find('.js-homeView-wallet-standing-btc'),
         },
         dgb_wallet: {
             body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
@@ -551,6 +556,13 @@ var homeViewController = function (params, user) {
 
     $(homeViewController.wallet_navigation.btc).click(function() {
         homeViewController.setWallet('btc');
+        ipcRenderer.send('get-price-btc');
+        
+        ipcRenderer.on('init-btc-price', (event, data) => {
+            $('.js-homeView-wallet-fiat-btc').text('Price ' + data.market_price+ '\u20AC');
+            $('.js-homeView-wallet-standing-btc').text('BTC personal konto ' + data.standing);
+        });
+
     });
 
     $(homeViewController.wallet_navigation.dgb).click(function() {

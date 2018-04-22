@@ -180,15 +180,17 @@
 							<h1>BTC</h1>
 							<!-- cointaining all function for sending / recieving coins -->
 							<div class="js-homeView-wallet-balance" balance="btc">
-								<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
-								<div class="js-homeView-wallet-satoshis">0.00000000 BTC</div>
+								<div class="js-homeView-wallet-fiat-btc"> &euro;</div>
+								<div class="js-homeView-wallet-standing-btc"> BTC</div>
 							</div>
-
-							<form>
-								<input type="text"  placeholder="address" name= "btc_add" class="js-homeView-wallet-send-btc-to-address">
-								<input type="number" placeholder=" amount" name = "btc_amount" class="js-homeView-wallet-send-btc-amount">
-								<button class="js-homeView-wallet-btc-send" > send</button>
-							</form>
+							<div class="js-homeView-wallet-send-to" send="btc">
+								<form class="js-homeView-wallet-send-form">
+									<h3>Send</h3>
+									<input type="text"  placeholder="Receiver BTC address" name= "btc_add" class="js-homeView-wallet-send-btc-to-address">
+									<input type="number" placeholder="Enter the amount" name = "btc_amount" class="js-homeView-wallet-send-btc-amount">
+									<button class="js-homeView-wallet-btc-send" > send</button>
+								</form>
+							</div>
 						</div>
 					</div>
 					<div class="js-homeView-wallet-content hidden" display="dgb">

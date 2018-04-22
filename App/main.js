@@ -2,6 +2,7 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 const digibyte = require('digibyte');
+const market_price = require('./wallets/market_price');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -260,4 +261,16 @@ ipcMain.on('send_btc', async function(event, data) {
   current_user._btc_wallet.send(data.btc_amount, data.btc_address, current_user._btc_wallet);
 
   console.log('TREBALO BI DA RADI');
+});
+
+ipcMain.on('get-price-btc', async function(event) {
+  let data = {};
+  
+  data.market_price = await market_price.getBtcPrice();
+  data.standing = await current_user._btc_wallet.readStandingFromAddress(current_user._btc_wallet); 
+  console.log('BUDEM LI JA OVDE SUNCE TI KALAJISANO', data.market_price + data.standing);
+
+
+  event.sender.send('init-btc-price', data);
+
 });

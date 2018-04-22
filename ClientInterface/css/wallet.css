@@ -1,5 +1,5 @@
 .btc-select {
-  background-color: #FF8E00;  
+  background-color: white;  
 }
 
 .dgb-select {
@@ -38,16 +38,16 @@
 }
 
 .js-homeView-wallet-symbol[request="btc"] {
-  border: 1px solid #FF8E00;
-  box-shadow: 1px 2px 2px #e67e00;
+  border: 1px solid #0d4dc4;
+  box-shadow: 1px 2px 2px #0d4dc4;
 }
 
 .js-homeView-wallet-symbol[request="btc"]:hover {
-  background-color: #FF8E00;
-  color: white;
+  background-color: #0d4dc4;
+  color: #0d4dc4;
   font-weight: 700;
   text-shadow: 1px 1px 2px black;
-  box-shadow: inset 1px 2px 2px #cc7000;
+  box-shadow: inset 1px 2px 2px #0d4dc4;
 }
 
 .js-homeView-wallet-symbol[request="dgb"] {
@@ -133,11 +133,11 @@
 }
 
 .js-homeView-wallet-content[display="btc"] {
-  background-color: #FF8E00;  
+  background-color: white;  
 }
 
 .js-homeView-wallet-content[display="btc"] * {
-  color: whitesmoke;
+  color: #0d4dc4;
 }
 
 .js-homeView-wallet-content[display="dgb"] {
@@ -200,6 +200,12 @@
   font-size: 32px;
   margin: 10px 0;
 }
+.js-homeView-wallet-send-to h3 {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+
 
 .js-homeView-wallet-send-form input {
   width: 300px;
@@ -208,4 +214,19 @@
   border: 2px solid whitesmoke;
   border-radius: 25px;
   padding: 15px 5px 15px 10px;
+}
+
+.js-homeView-wallet-btc-send {
+  width: 120px;
+  height: 30px;
+  margin: 10px auto;
+  color: #05112e;
+}
+
+.js-homeView-wallet-send-btc-to-address {
+  color: #05112e;
+} 
+
+.js-homeView-wallet-send-btc-amount{
+  color: #05112e;
 }

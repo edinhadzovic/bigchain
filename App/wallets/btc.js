@@ -8,6 +8,8 @@ var sb = require('satoshi-bitcoin');
 var bitcore_exp = require('bitcore-explorers').Insight;
 var insight = new bitcore_exp('testnet');
 
+// balance
+var balance = require('crypto-balances');
 
 class Bitcoin {
 
@@ -71,7 +73,13 @@ class Bitcoin {
     }
 
     readStandingFromAddress(wallet){
-        // procitati stanje sa adrese
+        return new Promise((resolve, reject) => {
+            insight.getUnspentUtxos(wallet._btc_address, function(err, utxos) {
+                // Complete object
+                console.log(utxos[0]);
+                resolve(sb.toBitcoin(utxos[0].satoshis));
+            });
+        });
     }
     
 }
