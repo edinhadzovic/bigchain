@@ -75,9 +75,13 @@ class Bitcoin {
     readStandingFromAddress(wallet){
         return new Promise((resolve, reject) => {
             insight.getUnspentUtxos(wallet._btc_address, function(err, utxos) {
+                let satoshis = 0;
                 // Complete object
-                console.log(utxos[0]);
-                resolve(sb.toBitcoin(utxos[0].satoshis));
+                console.log("btc", utxos);
+                for(let transfer of utxos) {
+                    satoshis = satoshis + transfer.satoshis;
+                }
+                resolve(sb.toBitcoin(satoshis));
             });
         });
     }

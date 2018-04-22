@@ -138,11 +138,8 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
         
-        let data_temp = {};
-        data_temp.email = 'Danilo@yahoo.com';
-        data_temp.password = 'Profi?danac321';
         // send username to main.js 
-        ipcRenderer.send('login-submission', data_temp );
+        ipcRenderer.send('login-submission', data );
         
         ipcRenderer.on("login-success", (event, arg) => {
             loginViewController.reference.fadeOut(500, function(){

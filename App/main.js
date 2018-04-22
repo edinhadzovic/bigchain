@@ -267,7 +267,7 @@ ipcMain.on('get-price-btc', async function(event) {
   let data = {};
   
   data.market_price = await market_price.getBtcPrice();
-  data.standing = await current_user._btc_wallet.readStandingFromAddress(current_user._btc_wallet); 
+  data.standing = await current_user._btc_wallet.readStandingFromAddress(current_user._btc_wallet);
   console.log('BUDEM LI JA OVDE SUNCE TI KALAJISANO', data.market_price + data.standing);
 
 
