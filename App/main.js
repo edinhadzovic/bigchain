@@ -278,3 +278,9 @@ ipcMain.on('get-ltc', async function(event) {
   data.standing = await current_user._ltc_wallet.readStandingFromAddress(current_user._ltc_wallet);
   event.sender.send('init-ltc-info', data);
 });
+
+ipcMain.on('send_ltc', async function(event, data) { 
+  console.log("Jesmol sve pokupili" + data.ltc_amount);
+  current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
+
+});

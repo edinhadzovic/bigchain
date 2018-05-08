@@ -618,6 +618,16 @@ var homeViewController = function (params, user) {
     });
 
 
+    $(homeViewController.ltc_wallet.send_button).click(function(event){
+        event.preventDefault();
+   
+        let data = {};
+        data.ltc_address = $(homeViewController.ltc_wallet.address).val();
+        data.ltc_amount = $(homeViewController.ltc_wallet.amount).val();
+        console.log('test' +  data.ltc_amount);
+        ipcRenderer.send('send_ltc', data);
+    });
+
 
 };
 

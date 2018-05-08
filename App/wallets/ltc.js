@@ -3,11 +3,10 @@ const request = require('request');
 
 const bigi = require('bigi');
 
-var sb = require('satoshi-bitcoin');
-
 var explorers = require('litecore-explorers');
 var insight = new explorers.Insight();
  
+var exc = require('cryptocurrency-unit-convert')
 
 // balance
 var balance = require('crypto-balances');
@@ -52,21 +51,68 @@ class Litecoin {
  
     }
 
-    /*
-    send(amount, address, wallet)
-    {
-        insight.getUnspentUtxos(wallet._btc_address, (err, utxos) => {
+    /**
+     * 
+     * @param {String} addr 
+     * @returns {Array}  
+     */
+    getUTXOs(addr) {
+        let address = `https://testnet.litecore.io/api/addr/${addr}/utxo`;
+
+        return new Promise((resolve, reject) => {
+            request({url: address, json: true},(err, res, body)=> {
+                if(err) reject(err);
+                resolve(body);
+            })
+        });
+    }
+
+    broadcastTransaction(transaction) {
+        return new Promise((resolve, reject) => {
+                request({
+                  url: 'https://testnet.litecore.io/tx/send',
+                  method: 'POST',
+                  json: {
+                    transaction
+                  }
+                },
+                  (error, response, body) => {
+                    if(error) reject(error);
+                    resolve(body.txid)
+                  }
+                )
+        });
+    }
+
+    send(amount, address, wallet) {
+
+        this.getUTXOs(wallet._ltc_address).then((utxos) => {
+            let tx = litecore.Transaction()
+                .from(utxos)
+                .to(address, 800000)
+                .change(wallet._ltc_address)
+                .sign(wallet._ltc_privateKey)
+                .serialize();
+            
+            this.broadcastTransaction(tx).then((result) => {
+                console.log(result, " sfafasgasga");
+            }).catch(e => console.log(e)); 
+
+        }).catch(e => console.log(e)); 
+
+       /* insight.getUnspentUtxos(wallet._ltc_address, (err, utxos) => {
             if (err) {
                 // Handle errors
             } else {
     
-                var amountSatoshi = sb.toSatoshi(amount);
+                var amountSatoshi = exc.convertLTC(amount,'ltc','satoshi');
+                console.log(amountSatoshi);
                 var tx = bitcore.Transaction();
                 tx.from(utxos);
                 tx.to(address, amountSatoshi); // .0001 BTC
-                tx.change(wallet._btc_address);
+                tx.change(wallet.ltc_address);
                 tx.fee(10000);
-                tx.sign(wallet._btc_privateKey);
+                tx.sign(wallet._ltc_privateKey);
                 
                 tx.serialize();
                 console.log(tx.toObject());
@@ -77,12 +123,12 @@ class Litecoin {
                     } else {
                         console.log('succesfully  sent bla bla ' + returnTxt);                    
                     }
-                });ddress: LZY1k9q68doG66hC1oUesebhumNNbi6qyk, type: pubkeyhash, network: livenet>
+                });
 
             }
-        });
+        });*/
     }
-    */
+    
 
     readStandingFromAddress(wallet){
         let address = `https://testnet.litecore.io/api/addr/${wallet._ltc_address}/utxo`
