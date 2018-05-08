@@ -4,6 +4,8 @@ let verification = require('../verification');
 let store = require('../store');
 var message = require('./Message');
 const btc = require ('./../wallets/btc');
+const ltc = require ('./../wallets/ltc');
+const market_price = require('./../wallets/market_price');
 
 //_constructor
 let User = function(){
@@ -26,6 +28,7 @@ let User = function(){
   };
   this._profile_image = null;
   this._btc_wallet = new btc();
+  this._ltc_wallet = new ltc();
 };
 
 User.prototype.save = async function(user){
@@ -63,12 +66,9 @@ User.prototype.generateUser = async function(user){
       this.setUser(user);      
       let hash = bcryptjs.hashSync(this.getPassword(), salt);
       this.setPassword(hash);
-      this.setBtc(user.user);
-      this.setAdress(user.user);
-      this.setPersonalInfo(user.user);
-      console.log(message.user,this);
+     // console.log(message.user,this);
       new_user.data = await this.save(this);      
-      console.log(message.user, user);
+     // console.log(message.user, user);
       return new_user;
     }
   } catch(err) {
@@ -86,13 +86,14 @@ User.prototype.login = async function(data) {
     if(!password_check) {
       return (error.ERR_PASSWORD_WRONG);
     } 
-    console.log(message.user, user);
+    // console.log(message.user, user);
     this.setUser(user.user);
     this.setPersonalInfo(user.user);
     this.setAdress(user.user);
     // TODO set address and profile image
     this.setImage(user.user);
     this.setBtc(user.user);
+    this.setLtc(user.user);
     return true;
   } catch (err) {
     return err;
@@ -120,8 +121,8 @@ User.prototype.personal_info_save = async function(current_user, data) {
     message.print(message.user, `${current_user}, ${data}`);
     let new_data = this.format_personal_information_data(data);
     this.setPersonalInfo(new_data);
-    console.log(message.user, current_user);
-    console.log(current_user);
+   // console.log(message.user, current_user);
+   // console.log(current_user);
     let res = await store.update(current_user);
     if (res === true) {
       return true;
@@ -261,10 +262,18 @@ User.prototype.setImage = function(data) {
 };
 
 
-User.prototype.setBtc = function(data) {
+User.prototype.setBtc = async function(data) {
 
   this._btc_wallet._btc_address = data._btc_wallet._btc_address;
   this._btc_wallet._btc_privateKey = data._btc_wallet._btc_privateKey;
+  this._btc_wallet._btc_market_price = await market_price.getBtcPrice(this._btc_wallet);
+};
+
+User.prototype.setLtc = async function(data) {
+
+  this._ltc_wallet._ltc_address = data._ltc_wallet._ltc_address;
+  this._ltc_wallet._ltc_privateKey = data._ltc_wallet._ltc_privateKey;
+  this._btc_wallet._btc_market_price = await market_price.getLtcPrice(this._ltc_wallet);
 };
 
 User.prototype.generate_wallets = async function() {
@@ -272,8 +281,12 @@ User.prototype.generate_wallets = async function() {
     if(this._btc_wallet._btc_privateKey === null) {
       //generate address
       this._btc_wallet.generateAddress_and_PrivateKey(this);
-      //this._btc_wallet.send(0.0003, 'mx53JEMYRLYTW7UQb1SyBuaTfkX6pNCwvL', this._btc_wallet);
+      this._ltc_wallet.generateAddress_and_PrivateKey(this);
+      this.setBtc(this);
+      this.setLtc(this);
       console.log(this._btc_wallet);
+      console.log(this._ltc_wallet);
+
       let res = store.update(this); 
       resolve(true);
     }

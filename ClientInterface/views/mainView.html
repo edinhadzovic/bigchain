@@ -221,16 +221,28 @@
 					<div class="js-homeView-wallet-content hidden" display="ltc">
 						
 						<div class="js-homeView-wallet-info">
-								<!-- cointaining all information about the coin trading -->
+							<!-- cointaining all information about the coin trading -->
 						</div>
 						<div class="js-homeView-wallet-send">
-								<!-- cointaining all function for sending / recieving coins -->
-								<h1>LTC</h1>
-								<div class="js-homeView-wallet-balance" balance="ltc">
-									<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
-									<div class="js-homeView-wallet-satoshis">0.00000000 LTC</div>
-								</div>
+							<h1>LTC</h1>
+							<!-- cointaining all function for sending / recieving coins -->
+							<div class="js-homeView-wallet-balance" balance="ltc">
+								<div class="js-homeView-wallet-fiat-ltc"> &dollar;</div>
+								<div class="js-homeView-wallet-standing-ltc"> LTC</div>
+							</div>
+							<div class="js-homeView-wallet-send-to" send="ltc">
+								<form class="js-homeView-wallet-send-form">
+									<h3>Send</h3>
+									<input type="text"  placeholder="Receiver LTC address" name= "ltc_add" class="js-homeView-wallet-send-ltc-to-address">
+									<input type="number" placeholder="Enter the amount" name = "ltc_amount" class="js-homeView-wallet-send-ltc-amount">
+									<button class="js-homeView-wallet-ltc-send" > send</button>
+								</form>
+							</div>
 						</div>
+
+
+
+
 					</div>
 					<div class="js-homeView-wallet-content hidden" display="eth">
 						

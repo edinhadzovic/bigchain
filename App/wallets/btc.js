@@ -1,5 +1,5 @@
 const bitcoin = require('bitcoinjs-lib');
-const bitcore = require('bitcore-lib');
+const bitcore = require('bitcore-explorers/node_modules/bitcore-lib');
 
 const bigi = require('bigi');
 
@@ -16,8 +16,7 @@ class Bitcoin {
     // Change link to bitcoin info and price bitcoin
     constructor() 
     {
-        this._explorerUrl = "https://digiexplorer.info";
-        this._marketUrl = "https://api.coinmarketcap.com/v1/ticker";
+        this._btc_market_price = null;
         this._btc_privateKey = null;
         this._btc_address = null; 
         this._btc_standing = null;
@@ -27,11 +26,12 @@ class Bitcoin {
     {
         // More and less create a buffer from data, big big buffer
 
-        var buffer = new Buffer(JSON.stringify(user) + 'walletplus.io');
+        var buffer = new Buffer(JSON.stringify(user) + 'walletplus.io' + 'bitcoinstring');
         var hash = bitcoin.crypto.sha256(buffer);
         var bigNum = bigi.fromBuffer(hash);
 
         // Testnet addressa 
+        // Normal address var keyPair = new bitcoin.ECPair(bigNum);
         var testnet = bitcoin.networks.testnet;
         // We are doing the same thing just we are using testnet network instead of real one
         var keyPair = new bitcoin.ECPair(bigNum, null, {network: testnet});
@@ -77,7 +77,7 @@ class Bitcoin {
             insight.getUnspentUtxos(wallet._btc_address, function(err, utxos) {
                 let satoshis = 0;
                 // Complete object
-                console.log("btc", utxos);
+                // console.log("btc", utxos);
                 for(let transfer of utxos) {
                     satoshis = satoshis + transfer.satoshis;
                 }

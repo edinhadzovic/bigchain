@@ -260,17 +260,21 @@ ipcMain.on('send_btc', async function(event, data) {
   console.log("Jesmol sve pokupili" + data.btc_amount);
   current_user._btc_wallet.send(data.btc_amount, data.btc_address, current_user._btc_wallet);
 
-  console.log('TREBALO BI DA RADI');
 });
 
-ipcMain.on('get-price-btc', async function(event) {
+ipcMain.on('get-btc', async function(event) {
   let data = {};
   
-  data.market_price = await market_price.getBtcPrice();
+  data.market_price = current_user._btc_wallet._btc_market_price;
   data.standing = await current_user._btc_wallet.readStandingFromAddress(current_user._btc_wallet);
-  console.log('BUDEM LI JA OVDE SUNCE TI KALAJISANO', data.market_price + data.standing);
+  event.sender.send('init-btc-info', data);
+});
 
 
-  event.sender.send('init-btc-price', data);
-
+ipcMain.on('get-ltc', async function(event) {
+  let data = {};
+  
+  data.market_price = current_user._ltc_wallet._ltc_market_price;
+  data.standing = await current_user._ltc_wallet.readStandingFromAddress(current_user._ltc_wallet);
+  event.sender.send('init-ltc-info', data);
 });

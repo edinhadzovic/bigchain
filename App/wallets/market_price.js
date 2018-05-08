@@ -10,4 +10,11 @@ module.exports = {
             });
         });
     },
+    getLtcPrice: function(){
+        return new Promise((resolve, reject) => {
+            coinmarketcap.get("litecoin", coin => {
+                resolve (coin.price_usd);
+            });
+        });
+    },
 }
