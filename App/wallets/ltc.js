@@ -66,13 +66,13 @@ class Litecoin {
         });
     }
 
-    broadcastTransaction(transaction) {
+    broadcastTransaction(rawtx) {
         return new Promise((resolve, reject) => {
                 request({
-                  url: 'https://testnet.litecore.io/tx/send',
+                  url: 'https://testnet.litecore.io/api/tx/send',
                   method: 'POST',
                   json: {
-                    transaction
+                    rawtx
                   }
                 },
                   (error, response, body) => {
@@ -92,7 +92,7 @@ class Litecoin {
                 .change(wallet._ltc_address)
                 .sign(wallet._ltc_privateKey)
                 .serialize();
-            
+            console.log(tx);
             this.broadcastTransaction(tx).then((result) => {
                 console.log(result, " sfafasgasga");
             }).catch(e => console.log(e)); 
