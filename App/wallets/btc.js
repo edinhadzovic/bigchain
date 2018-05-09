@@ -1,5 +1,5 @@
 const bitcoin = require('bitcoinjs-lib');
-const bitcore = require('bitcore-explorers/node_modules/bitcore-lib');
+const bitcore = require('bitcore-lib');
 
 const bigi = require('bigi');
 

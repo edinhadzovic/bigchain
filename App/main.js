@@ -182,7 +182,7 @@ ipcMain.on("personal-info-change", async function(event, data) {
   console.log(message.main, 'Gender: ', data.gender);
   console.log(message.main, 'Phone: ', data.phone);
 
-  let result = await current_user.personal_info_restore(current_user, data);
+  let result = await current_user.personal_info_change(current_user, data);
   if (result === true) {
     console.log(message.main, 'Restoring successfully done.');
     console.log(' ');
