@@ -172,7 +172,6 @@ ipcMain.on("personal-info-submission", async function(event, data) {
   }
 });
 
-
 ipcMain.on("personal-info-change", async function(event, data) {
   console.log(message.main, 'Personal information changing!');
   console.log(message.main, 'New user data provided!');
@@ -194,7 +193,6 @@ ipcMain.on("personal-info-change", async function(event, data) {
   }
 });
 
-
 ipcMain.on("address-info-submission", async function(event, data) {
   console.log(message.main, 'Personal information provided!');
   let result = await current_user.address_info_save(current_user, data);
@@ -208,9 +206,6 @@ ipcMain.on("address-info-submission", async function(event, data) {
     event.sender.send('store-address-info-failed', result);
   }
 });
-
-
-// USE IT WHEN CHANGE IS CREATED IN SETTINGS
 
 ipcMain.on("address-info-change", async function(event, data) {
   console.log(message.main, 'Personal information provided!');
@@ -233,7 +228,6 @@ ipcMain.on('form-submission-image', async function(event, data){
     let generate_address = await current_user.generate_wallets();
     console.log(message.main, 'Storing');
     createMainWindow(current_user, event);
-    //event.sender.send('image-submission-success', current_user);
   } else {
     console.log("false");
   }
@@ -257,7 +251,6 @@ ipcMain.on('generate-dgb-address', async function(event) {
 });
 
 ipcMain.on('send_btc', async function(event, data) { 
-  console.log("Jesmol sve pokupili" + data.btc_amount);
   current_user._btc_wallet.send(data.btc_amount, data.btc_address, current_user._btc_wallet);
 
 });
@@ -265,7 +258,7 @@ ipcMain.on('send_btc', async function(event, data) {
 ipcMain.on('get-btc', async function(event) {
   let data = {};
   
-  data.market_price = current_user._btc_wallet._btc_market_price;
+  data.market_price = await market_price.getBtcPrice(current_user._btc_wallet);
   data.standing = await current_user._btc_wallet.readStandingFromAddress(current_user._btc_wallet);
   event.sender.send('init-btc-info', data);
 });
@@ -274,13 +267,12 @@ ipcMain.on('get-btc', async function(event) {
 ipcMain.on('get-ltc', async function(event) {
   let data = {};
   
-  data.market_price = current_user._ltc_wallet._ltc_market_price;
+  data.market_price = await market_price.getLtcPrice(current_user._ltc_wallet);
   data.standing = await current_user._ltc_wallet.readStandingFromAddress(current_user._ltc_wallet);
   event.sender.send('init-ltc-info', data);
 });
 
 ipcMain.on('send_ltc', async function(event, data) { 
-  console.log("Jesmol sve pokupili" + data.ltc_amount);
   current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
 
 });

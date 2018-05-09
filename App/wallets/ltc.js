@@ -22,7 +22,6 @@ class Litecoin {
     // Change link to bitcoin info and price bitcoin
     constructor() 
     {
-        this._ltc_market_price = null;
         this._ltc_privateKey = null;
         this._ltc_address = null; 
         this._ltc_standing = null;
@@ -131,8 +130,7 @@ class Litecoin {
     
 
     readStandingFromAddress(wallet){
-        let address = `https://testnet.litecore.io/api/addr/${wallet._ltc_address}/utxo`
-        console.log(address);
+        let address = `https://testnet.litecore.io/api/addr/${wallet._ltc_address}/utxo`    
         let litecoin = 0;
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {

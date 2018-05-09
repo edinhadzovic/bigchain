@@ -571,8 +571,7 @@ var homeViewController = function (params, user) {
         ipcRenderer.send('get-btc');
         
         ipcRenderer.on('init-btc-info', (event, data) => {
-            console.log(data);
-            $('.js-homeView-wallet-fiat-btc').text('Price ' + data.market_price+ '\u20AC');
+            $('.js-homeView-wallet-fiat-btc').text('Price ' + data.market_price + '\u20AC');
             $('.js-homeView-wallet-standing-btc').text('BTC personal konto ' + data.standing);
         });
     });
@@ -586,8 +585,7 @@ var homeViewController = function (params, user) {
         ipcRenderer.send('get-ltc');
         
         ipcRenderer.on('init-ltc-info', (event, data) => {
-            console.log(data);
-            $('.js-homeView-wallet-fiat-ltc').text('Price ' + data.market_price+ '\u20AC');
+            $('.js-homeView-wallet-fiat-ltc').text('Price ' + data.market_price + '\u20AC');
             $('.js-homeView-wallet-standing-ltc').text('LTC personal konto ' + data.standing);
         });
     });

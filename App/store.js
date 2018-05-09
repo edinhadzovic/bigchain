@@ -40,12 +40,10 @@ module.exports = {
 			},
 			profile_image: user._profile_image,
 			_btc_wallet: {
-				_btc_market_price: user._btc_wallet._btc_market_price,
 				_btc_address: user._btc_wallet._btc_address,
 				_btc_privateKey: user._btc_wallet._btc_privateKey
 			},
 			_ltc_wallet: {
-				_ltc_market_price: user._ltc_wallet._ltc_market_price,
 				_ltc_address: user._ltc_wallet._ltc_address,
 				_ltc_privateKey: user._ltc_wallet._ltc_privateKey
 			},

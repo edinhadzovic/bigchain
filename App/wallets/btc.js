@@ -1,5 +1,5 @@
 const bitcoin = require('bitcoinjs-lib');
-const bitcore = require('bitcore-lib');
+const bitcore = require('bitcore-explorers/node_modules/bitcore-lib');
 
 const bigi = require('bigi');
 
@@ -16,7 +16,6 @@ class Bitcoin {
     // Change link to bitcoin info and price bitcoin
     constructor() 
     {
-        this._btc_market_price = null;
         this._btc_privateKey = null;
         this._btc_address = null; 
         this._btc_standing = null;

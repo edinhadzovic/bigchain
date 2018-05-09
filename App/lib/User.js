@@ -266,14 +266,12 @@ User.prototype.setBtc = async function(data) {
 
   this._btc_wallet._btc_address = data._btc_wallet._btc_address;
   this._btc_wallet._btc_privateKey = data._btc_wallet._btc_privateKey;
-  this._btc_wallet._btc_market_price = await market_price.getBtcPrice(this._btc_wallet);
 };
 
 User.prototype.setLtc = async function(data) {
 
   this._ltc_wallet._ltc_address = data._ltc_wallet._ltc_address;
   this._ltc_wallet._ltc_privateKey = data._ltc_wallet._ltc_privateKey;
-  this._btc_wallet._btc_market_price = await market_price.getLtcPrice(this._ltc_wallet);
 };
 
 User.prototype.generate_wallets = async function() {

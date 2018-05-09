@@ -6,15 +6,20 @@ module.exports = {
     getBtcPrice: function(){
         return new Promise((resolve, reject) => {
             coinmarketcap.get("bitcoin", coin => {
-                resolve (coin.price_usd);
+                let price = this.roundToTwo(coin.price_usd);
+                resolve (price);
             });
         });
     },
     getLtcPrice: function(){
         return new Promise((resolve, reject) => {
             coinmarketcap.get("litecoin", coin => {
-                resolve (coin.price_usd);
+                let price = this.roundToTwo(coin.price_usd);
+                resolve (price);
             });
         });
+    },
+    roundToTwo: function (num) {  
+        return +(Math.round(num + "e+2")  + "e-2");
     },
 }
