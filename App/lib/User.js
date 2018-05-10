@@ -5,6 +5,7 @@ let store = require('../store');
 var message = require('./Message');
 const btc = require ('./../wallets/btc');
 const ltc = require ('./../wallets/ltc');
+const bch = require('./../wallets/bch');
 const market_price = require('./../wallets/market_price');
 
 //_constructor
@@ -29,6 +30,7 @@ let User = function(){
   this._profile_image = null;
   this._btc_wallet = new btc();
   this._ltc_wallet = new ltc();
+  this._bch_wallet = new bch();
 };
 
 User.prototype.save = async function(user){
@@ -91,9 +93,11 @@ User.prototype.login = async function(data) {
     this.setPersonalInfo(user.user);
     this.setAdress(user.user);
     // TODO set address and profile image
+    console.log(user.user);
     this.setImage(user.user);
     this.setBtc(user.user);
     this.setLtc(user.user);
+    this.setBch(user.user);
     return true;
   } catch (err) {
     return err;
@@ -274,17 +278,25 @@ User.prototype.setLtc = async function(data) {
   this._ltc_wallet._ltc_privateKey = data._ltc_wallet._ltc_privateKey;
 };
 
+User.prototype.setBch = async function(data) {
+
+  this._bch_wallet.address = data._bch_wallet.address;
+  this._bch_wallet.private_key = data._bch_wallet.private_key;
+};
+
 User.prototype.generate_wallets = async function() {
   return new Promise((resolve, reject) => {
     if(this._btc_wallet._btc_privateKey === null) {
       //generate address
       this._btc_wallet.generateAddress_and_PrivateKey(this);
       this._ltc_wallet.generateAddress_and_PrivateKey(this);
+      this._bch_wallet.generateAddress_and_PrivateKey(this);
+      this.setBch(this);
       this.setBtc(this);
       this.setLtc(this);
       console.log(this._btc_wallet);
       console.log(this._ltc_wallet);
-
+      console.log(this._bch_wallet);
       let res = store.update(this); 
       resolve(true);
     }

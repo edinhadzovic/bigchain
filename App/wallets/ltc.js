@@ -6,7 +6,7 @@ const bigi = require('bigi');
 var explorers = require('litecore-explorers');
 var insight = new explorers.Insight();
  
-var exc = require('cryptocurrency-unit-convert')
+var exc = require('cryptocurrency-unit-convert');
 
 // balance
 var balance = require('crypto-balances');

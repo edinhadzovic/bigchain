@@ -438,6 +438,14 @@ var homeViewController = function (params, user) {
             market_price: $params.find('.js-homeView-wallet-fiat-ltc'),
             personal_standing: $params.find('.js-homeView-wallet-standing-ltc'),
         },
+        bch_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
+            address: $params.find('.js-homeView-wallet-send-bch-to-address'),
+            amount: $params.find('.js-homeView-wallet-send-bch-amount'),
+            send_button: $params.find('.js-homeView-wallet-bch-send'),
+            market_price: $params.find('.js-homeView-wallet-fiat-bch'),
+            personal_standing: $params.find('.js-homeView-wallet-standing-bch'),
+        },
         dgb_wallet: {
             body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
             generateAddress: $params.find('.js-homeView-wallet-generate-address[for="dgb"]')
@@ -578,6 +586,12 @@ var homeViewController = function (params, user) {
 
     $(homeViewController.wallet_navigation.dgb).click(function() {
         homeViewController.setWallet('dgb');
+        console.log("bch is active");
+        ipcRenderer.send('get-bch');
+        ipcRenderer.on('init-bch-info', (event, data) => {
+            $('.js-homeView-wallet-fiat-bch').text('Price ' + data.market_price + '\u20AC');
+            $('.js-homeView-wallet-satoshis-bch').text('BCH personal konto ' + data.standing);
+        });
     });
 
     $(homeViewController.wallet_navigation.ltc).click(function() {
@@ -624,6 +638,16 @@ var homeViewController = function (params, user) {
         data.ltc_amount = $(homeViewController.ltc_wallet.amount).val();
         console.log('test' +  data.ltc_amount);
         ipcRenderer.send('send_ltc', data);
+    });
+
+    homeViewController.bch_wallet.send_button.click(function(evt) {
+        evt.preventDefault();
+
+        let data = {};
+        data.bch_address = homeViewController.bch_wallet.address.val();
+        data.bch_amount = homeViewController.bch_wallet.amount.val();
+        console.log("test", data);
+        ipcRenderer.send('send_bch', data);
     });
 
 

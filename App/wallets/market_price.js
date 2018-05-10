@@ -19,6 +19,14 @@ module.exports = {
             });
         });
     },
+    getBchPrice: function(){
+        return new Promise((resolve, reject) => {
+            coinmarketcap.get("bitcoin-cash", coin => {
+                let price = this.roundToTwo(coin.price_usd);
+                resolve (price);
+            });
+        });
+    },
     roundToTwo: function (num) {  
         return +(Math.round(num + "e+2")  + "e-2");
     },

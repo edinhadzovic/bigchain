@@ -47,6 +47,10 @@ module.exports = {
 				_ltc_address: user._ltc_wallet._ltc_address,
 				_ltc_privateKey: user._ltc_wallet._ltc_privateKey
 			},
+			_bch_wallet: {
+				address: user._bch_wallet.address,
+				private_key: user._bch_wallet.private_key
+			}
 		};
 	},
 
