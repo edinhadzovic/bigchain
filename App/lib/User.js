@@ -5,6 +5,7 @@ let store = require('../store');
 var message = require('./Message');
 const btc = require ('./../wallets/btc');
 const ltc = require ('./../wallets/ltc');
+const eth = require('./../wallets/eth');
 const market_price = require('./../wallets/market_price');
 
 //_constructor
@@ -29,6 +30,7 @@ let User = function(){
   this._profile_image = null;
   this._btc_wallet = new btc();
   this._ltc_wallet = new ltc();
+  this._eth_wallet = new eth();
 };
 
 User.prototype.save = async function(user){
@@ -94,6 +96,7 @@ User.prototype.login = async function(data) {
     this.setImage(user.user);
     this.setBtc(user.user);
     this.setLtc(user.user);
+    this.setEth(user.user);
     return true;
   } catch (err) {
     return err;
@@ -274,16 +277,25 @@ User.prototype.setLtc = async function(data) {
   this._ltc_wallet._ltc_privateKey = data._ltc_wallet._ltc_privateKey;
 };
 
+User.prototype.setEth = async function(data) {
+
+  this._eth_wallet._eth_address = data._eth_wallet._eth_address;
+  this._eth_wallet._eth_privateKey = data._eth_wallet._eth_privateKey;
+};
+
 User.prototype.generate_wallets = async function() {
   return new Promise((resolve, reject) => {
     if(this._btc_wallet._btc_privateKey === null) {
       //generate address
       this._btc_wallet.generateAddress_and_PrivateKey(this);
       this._ltc_wallet.generateAddress_and_PrivateKey(this);
+      this._eth_wallet.generateAddress_and_PrivateKey(this);
       this.setBtc(this);
       this.setLtc(this);
+      this.setEth(this);
       console.log(this._btc_wallet);
       console.log(this._ltc_wallet);
+      console.log(this._eth_wallet);
 
       let res = store.update(this); 
       resolve(true);

@@ -263,6 +263,11 @@ ipcMain.on('get-btc', async function(event) {
   event.sender.send('init-btc-info', data);
 });
 
+ipcMain.on('send_ltc', async function(event, data) { 
+  current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
+
+});
+
 
 ipcMain.on('get-ltc', async function(event) {
   let data = {};
@@ -272,7 +277,18 @@ ipcMain.on('get-ltc', async function(event) {
   event.sender.send('init-ltc-info', data);
 });
 
-ipcMain.on('send_ltc', async function(event, data) { 
-  current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
 
+ipcMain.on('send_eth', async function(event, data) { 
+  //current_user._eth_wallet.send(data.eth_amount, data.eth_address, current_user._eth_wallet);
+  console.log('DIDNT IMPLEMENTED SEND YET');
 });
+
+
+ipcMain.on('get-eth', async function(event) {
+  let data = {};
+  
+  data.market_price = await market_price.getEthPrice(current_user._eth_wallet);
+  data.standing = await current_user._eth_wallet.readStandingFromAddress(current_user._eth_wallet);
+  event.sender.send('init-eth-info', data);
+});
+
