@@ -279,8 +279,9 @@ ipcMain.on('get-ltc', async function(event) {
 
 
 ipcMain.on('send_eth', async function(event, data) { 
-  //current_user._eth_wallet.send(data.eth_amount, data.eth_address, current_user._eth_wallet);
-  console.log('DIDNT IMPLEMENTED SEND YET');
+  console.log(data);
+  current_user._eth_wallet.send(data.eth_amount, data.eth_address, current_user._eth_wallet);
+  //console.log('DIDNT IMPLEMENTED SEND YET');
 });
 
 

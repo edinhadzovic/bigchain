@@ -55,7 +55,7 @@ class Ethereum {
 
         if (eth_util.isValidPrivate(eth_privateKey) && eth_util.isValidAddress(eth_address) && eth_util.isValidChecksumAddress(eth_address)) {
             this._eth_address = eth_address;
-            this._eth_privateKey = eth_util.addHexPrefix(eth_privateKey.toString('hex')); // toString('hex'); optional
+            this._eth_privateKey = eth_util.baToJSON(eth_privateKey); // toString('hex'); optional
             console.log("EVeryhitng went well bla bal bla", this._eth_address, this._eth_privateKey);
         }
         
@@ -63,8 +63,7 @@ class Ethereum {
 
     send(amount, address, wallet) {
 
-        let messageBuffer = new Buffer('Sending from ' + JSON.stringify(wallet) + 'This ethereum is sent over the walletplus desktop application!' 
-            + 'Let this work, sending to: ' + address);
+        let messageBuffer = new Buffer('hi');
         var amountSatoshi = sb.toSatoshi(amount);
         /*
 
@@ -81,19 +80,21 @@ class Ethereum {
 
         */
         const txParams = {
-        nonce: 0,
-        gasPrice: 100, 
-        gasLimit: 1000,
-        to: address, 
-        data: messageBuffer,
-        value: amountSatoshi, 
-        // EIP 155 chainId - mainnet: 1, ropsten: 3 ROPSTEN IS USED AS TESTNET 
-        chainId: 3
+            nonce: 0,
+            gasPrice: 100, 
+            gasLimit: 1000,
+            to: address, 
+            data: messageBuffer,
+            value: amountSatoshi, 
+            // EIP 155 chainId - mainnet: 1, ropsten: 3 ROPSTEN IS USED AS TESTNET 
+            chainId: 3
         }
 
         const tx = new EthereumTx(txParams);
-        tx.sign(wallet._eth_privateKey);
+        console.log(eth_util.toBuffer(wallet._eth_privateKey));
+        tx.sign(eth_util.toBuffer(wallet._eth_privateKey));
         const serializedTx = tx.serialize();
+        console.log(serializedTx.toString('hex'));
         
     }
 
