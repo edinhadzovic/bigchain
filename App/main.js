@@ -3,6 +3,7 @@ const path = require('path');
 const url = require('url');
 const digibyte = require('digibyte');
 const market_price = require('./wallets/market_price');
+const ShapeShift = require('./lib/Shapeshift');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -15,6 +16,11 @@ var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
 var message = require('./lib/Message');
 var DGB = require('./wallets/dgb');
+let shapeshift = new ShapeShift();
+
+shapeshift.getCoins().then((coinData) => {
+  console.log(coinData);
+});
 
 
 // Global current user
