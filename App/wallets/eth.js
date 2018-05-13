@@ -4,17 +4,11 @@
 
 var sb = require('satoshi-bitcoin');
 var request = require('request');
-//const bigi = require('bigi');
-
-
-const eth_util = require('ethereumjs-util')
-const keythereum = require("keythereum");
-const EthereumTx = require('ethereumjs-tx')
-const ethers = require('ethers');
-
-
-// for hash
-const createKeccakHash = require("keccak/js");
+var ethers = require('ethers');
+var Wallet = ethers.Wallet;
+var utils = ethers.utils;
+var providers = ethers.providers;
+console.log(providers.networks);
 
 class Ethereum {
 
@@ -28,107 +22,53 @@ class Ethereum {
 
     generateAddress_and_PrivateKey(user) 
     {
-        let eth_address;
-        let eth_privateKey;
-
-        var buffer = keythereum.str2buf(JSON.stringify(user) + 'walletplus.io' + 'ethereumstring');
-        var hash = createKeccakHash('keccak256').update(buffer).digest();
-
-        var params = {keyBytes: 32, ivBytes: 16 };
-        var dk = keythereum.create(params);
-        console.log(dk);
-
-        let pbkdf2 = {
-            c:262144, 
-            dklen: 32, 
-            hash:"keccak256",
-            prf: "hmac-sha256"
-        };
-        // Export object with everything hash, address and some other stuff we have no use to now.
-        var keyObject = keythereum.dump(hash, dk.privateKey, dk.salt, dk.iv, pbkdf2);
-        console.log(keyObject);
-        
-        eth_privateKey = dk.privateKey;
-        console.log('Is private key valid: ', eth_util.isValidPrivate(eth_privateKey));
-        // Create checksum address from address
-        eth_address = eth_util.toChecksumAddress(keyObject.address);
-        console.log('Is address valid: ', eth_util.isValidAddress(eth_address));
-        console.log('Is address checksum valid: ', eth_util.isValidChecksumAddress(eth_address));
-
-        if (eth_util.isValidPrivate(eth_privateKey) && eth_util.isValidAddress(eth_address) && eth_util.isValidChecksumAddress(eth_address)) {
-            this._eth_address = eth_address;
-            this._eth_privateKey = eth_util.baToJSON(eth_privateKey); // toString('hex'); optional
-            console.log("EVeryhitng went well bla bal bla", this._eth_address, this._eth_privateKey);
-        }
-        
+        let wallet = Wallet.createRandom();
+        this._eth_privateKey = wallet.privateKey;
+        this._eth_address = wallet.address;
     }
 
     send(amount, address, wallet) {
+        console.log(wallet);
+        // let data = providers.getDefaultProvider(true);
+        // console.log(data);
+        let new_wallet = new Wallet(wallet._eth_privateKey, 'testnet');
+        // new_wallet.provider
+        // var gasPrice = (new_wallet.provider.testnet ? 0x4a817c800: 0xba43b7400);
+        new_wallet.provider = providers.getDefaultProvider({ chainId: 3,
+            ensAddress: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+            name: 'ropsten' });
+       
+        // console.log(new_wallet.provider);
 
-        let messageBuffer = new Buffer('hi');
-        var amountSatoshi = sb.toSatoshi(amount);
-        /*
-
-            data.chainId Number EIP 155 chainId - mainnet: 1, ropsten: 3
-            data.gasLimit Buffer transaction gas limit
-            data.gasPrice Buffer transaction gas price
-            data.to Buffer to the to address
-            data.nonce Buffer nonce number
-            data.data Buffer this will contain the data of the message or the init of a contract
-            data.v Buffer EC recovery ID
-            data.r Buffer EC signature parameter
-            data.s Buffer EC signature parameter
-            data.value Buffer the amount of ether sent
-
+        new_wallet.send("0x9dfdaC421E18A89d26b4AE7C88f4d4f97bDCf435", utils.parseEther("0.05"), {
+            gasPrice: 0x4a817c800,
+            gasLimit: 21000
+        }).then((txId) => {
+            console.log(txId);
+        }).catch(e => console.log(e));
         
-       let gasPrice = 100000;
-       let gasLimit = 500000;
-        const txParams = {
-            nonce: '0x00',
-            gasPrice: '0x4800', 
-            gasLimit: '0x0',
-            to: address,
-            data: messageBuffer,
-            value: amountSatoshi, 
-            // EIP 155 chainId - mainnet: 1, ropsten: 3 ROPSTEN IS USED AS TESTNET 
-            chainId: 3
-        }
-
-
-        const tx = new EthereumTx(txParams);
-        console.log(eth_util.toBuffer(wallet._eth_privateKey));
-
-        var feeCost = tx.getUpfrontCost()
-        tx.gas = feeCost.toString('hex');
-
-        tx.sign(eth_util.toBuffer(wallet._eth_privateKey));
-        const serializedTx = tx.serialize();
-        console.log(serializedTx.toString('hex')); 
-        */
-
-       var Wallet = ethers.Wallet;
-       var utils = ethers.utils;
-       var wall = new ethers.Wallet(eth_util.toBuffer(wallet._eth_privateKey));
-
-        var transaction = {
-            nonce: 0,
-            gasLimit: 21000,
-            gasPrice: utils.bigNumberify("20000000000"),
+        // var transaction = {
+        //     nonce: 0,
+        //     gasLimit: 21000,
+        //     gasPrice: utils.bigNumberify("20000000000"),
         
-            to: address,
+        //     to: "0x9dfdaC421E18A89d26b4AE7C88f4d4f97bDCf435",
         
-            value: utils.parseEther(amount),
-            data: "0x",
-            // This ensures the transaction cannot be replayed on different networks
-            chainId: 3
-        };
+        //     value: utils.parseEther("0.05"),
+        //     data: "0x",
+        
+        //     // This ensures the transaction cannot be replayed on different networks
+        //     chainId: 3
+        
+        // };
 
-        var signedTransaction = wall.sign(transaction);
-        console.log(wall);
-        var transaction = Wallet.parseTransaction(signedTransaction);
-        console.log(signedTransaction);
-        console.log(transaction);
-        
+        // let tx = new_wallet.sign(transaction);
+        // console.log(tx);
+        // var provider = providers.getDefaultProvider(false);
+        // console.log("2");
+        // provider.sendTransaction(tx).then((hash) => {
+        //     console.log(hash);
+        // }).catch(e => console.log(e));
     }
 
     readStandingFromAddress(wallet){
