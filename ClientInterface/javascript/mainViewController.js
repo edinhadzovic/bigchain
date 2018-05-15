@@ -442,6 +442,19 @@ var homeViewController = function (params, user) {
             body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
             generateAddress: $params.find('.js-homeView-wallet-generate-address[for="dgb"]')
         },
+
+        // 
+        exchange: {
+            body: $params.find('.js-homeView-exchange-form'),
+            what_from: $params.find('.js-homeView-exchange-what-from'),
+            what_to: $params.find('.js-homeView-exchange-what-to'),
+            address_from: $params.find('.js-homeView-exchange-address-from'),
+            exchange_amount_from: $params.find('.js-homeView-exchange-amount-from'),
+            address_to: $params.find('.js-homeView-exchange-address-to'),
+            receive_amount_to:  $params.find('.js-homeView-exchange-amount-to'),
+            fee: $params.find('.js-homeView-exchange-fee'),
+            exchange_button: $params.find('.js-homeView-exchange-button'),
+        },
         wallets: [
             {
                 type: "btc",
@@ -626,6 +639,22 @@ var homeViewController = function (params, user) {
         ipcRenderer.send('send_ltc', data);
     });
 
+    $(homeViewController.exchange.exchange_button).click(function(event){
+        event.preventDefault();
+        console.log("am i here?");
+        let data = {};
+        data.what_from = $(homeViewController.exchange.what_from).val();
+        data.what_to = $(homeViewController.exchange.what_to).val();
+        data.address_from = $(homeViewController.exchange.address_from).val();
+        data.amount_of =  $(homeViewController.exchange.exchange_amount_from).val();
+        data.address_to = $(homeViewController.exchange.address_to).val();
+        console.log(data);
+        ipcRenderer.send('exchange', data);
+        ipcRenderer.on('fee-exchange', (event)=> {
+            $('.js-homeView-exchange-amount-to').text('Recieved amount is 20 BTC');
+            $('.js-homeView-exchange-fee').text('fee for transaction is 2000d$');
+        });
+    });
 
 };
 

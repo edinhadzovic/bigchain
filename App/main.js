@@ -282,3 +282,8 @@ ipcMain.on('send_ltc', async function(event, data) {
   current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
 
 });
+
+ipcMain.on('exchange', async function(event,data){
+  console.log("I received this data", data);
+  event.sender.send('fee_exchange');
+})
