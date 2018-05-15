@@ -18,9 +18,31 @@ var message = require('./lib/Message');
 var DGB = require('./wallets/dgb');
 let shapeshift = new ShapeShift();
 
-shapeshift.getCoins().then((coinData) => {
-  console.log(coinData);
+
+// shapeshift.getCoins().then((coinData) => {
+//   console.log(coinData);
+// });
+
+// shapeshift.getCoinsManuel().then((coinData) => {
+//   console.log(coinData);
+// });
+
+shapeshift.getPairRate('btc_ltc').then((coinData) => {
+  console.log("1", coinData);
 });
+
+shapeshift.getPairLimit('btc_ltc').then((coinData) => {
+  console.log(2, coinData);
+});
+
+shapeshift.getMarketInfo('btc_ltc').then((coinData) => {
+  console.log(3, coinData);
+});
+
+shapeshift.getRecentTx().then((coinData) => {
+  console.log(4, coinData);
+});
+
 
 
 // Global current user
@@ -285,5 +307,8 @@ ipcMain.on('send_ltc', async function(event, data) {
 
 ipcMain.on('exchange', async function(event,data){
   console.log("I received this data", data);
+  shapeshift.shiftFixed(data).then((res) => {
+    console.log(res);
+  }).catch(e => console.log(e));
   event.sender.send('fee_exchange');
 })
