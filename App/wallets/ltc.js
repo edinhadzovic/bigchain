@@ -6,11 +6,7 @@ const bigi = require('bigi');
 var explorers = require('litecore-explorers');
 var insight = new explorers.Insight();
  
-<<<<<<< HEAD
-var exc = require('cryptocurrency-unit-convert');
-=======
 var sb = require('satoshi-bitcoin');
->>>>>>> master
 
 // balance
 var balance = require('crypto-balances');
