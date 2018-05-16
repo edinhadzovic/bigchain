@@ -27,6 +27,14 @@ module.exports = {
             });
         });
     },
+    getEthPrice: function(){
+        return new Promise((resolve, reject) => {
+            coinmarketcap.get("ethereum", coin => {
+                let price = this.roundToTwo(coin.price_usd);
+                resolve (price);
+            });
+        });
+    },
     roundToTwo: function (num) {  
         return +(Math.round(num + "e+2")  + "e-2");
     },

@@ -446,6 +446,14 @@ var homeViewController = function (params, user) {
             market_price: $params.find('.js-homeView-wallet-fiat-bch'),
             personal_standing: $params.find('.js-homeView-wallet-standing-bch'),
         },
+        eth_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="eth"]'),
+            address: $params.find('.js-homeView-wallet-send-eth-to-address'),
+            amount: $params.find('.js-homeView-wallet-send-eth-amount'),
+            send_button: $params.find('.js-homeView-wallet-eth-send'),
+            market_price: $params.find('.js-homeView-wallet-fiat-eth'),
+            personal_standing: $params.find('.js-homeView-wallet-standing-eth'),
+        },
         dgb_wallet: {
             body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
             generateAddress: $params.find('.js-homeView-wallet-generate-address[for="dgb"]')
@@ -579,7 +587,7 @@ var homeViewController = function (params, user) {
         ipcRenderer.send('get-btc');
         
         ipcRenderer.on('init-btc-info', (event, data) => {
-            $('.js-homeView-wallet-fiat-btc').text('Price ' + data.market_price + '\u20AC');
+            $('.js-homeView-wallet-fiat-btc').text('Price ' + data.market_price + '$');
             $('.js-homeView-wallet-standing-btc').text('BTC personal konto ' + data.standing);
         });
     });
@@ -599,13 +607,21 @@ var homeViewController = function (params, user) {
         ipcRenderer.send('get-ltc');
         
         ipcRenderer.on('init-ltc-info', (event, data) => {
-            $('.js-homeView-wallet-fiat-ltc').text('Price ' + data.market_price + '\u20AC');
+            $('.js-homeView-wallet-fiat-ltc').text('Price ' + data.market_price + '$');
             $('.js-homeView-wallet-standing-ltc').text('LTC personal konto ' + data.standing);
         });
     });
 
     $(homeViewController.wallet_navigation.eth).click(function() {
         homeViewController.setWallet('eth');
+
+        ipcRenderer.send('get-eth');
+        
+        ipcRenderer.on('init-eth-info', (event, data) => {
+           console.log(data);
+            $('.js-homeView-wallet-fiat-eth').text('Price ' + data.market_price + '$');
+            $('.js-homeView-wallet-standing-eth').text('ETH personal konto ' + data.standing);
+        });
     });
 
     $(homeViewController.dgb_wallet.generateAddress).click(function(event) {
@@ -648,6 +664,17 @@ var homeViewController = function (params, user) {
         data.bch_amount = homeViewController.bch_wallet.amount.val();
         console.log("test", data);
         ipcRenderer.send('send_bch', data);
+    });
+
+
+    $(homeViewController.eth_wallet.send_button).click(function(event){
+        event.preventDefault();
+   
+        let data = {};
+        data.eth_address = $(homeViewController.eth_wallet.address).val();
+        data.eth_amount = $(homeViewController.eth_wallet.amount).val();
+        console.log('test' +  data.eth_amount);
+        ipcRenderer.send('send_eth', data);
     });
 
 
