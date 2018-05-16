@@ -6,7 +6,11 @@ const bigi = require('bigi');
 var explorers = require('litecore-explorers');
 var insight = new explorers.Insight();
  
+<<<<<<< HEAD
 var exc = require('cryptocurrency-unit-convert');
+=======
+var sb = require('satoshi-bitcoin');
+>>>>>>> master
 
 // balance
 var balance = require('crypto-balances');
@@ -84,11 +88,12 @@ class Litecoin {
     }
 
     send(amount, address, wallet) {
-
+            
+        let amountSatoshi = sb.toSatoshi(amount);
         this.getUTXOs(wallet._ltc_address).then((utxos) => {
             let tx = litecore.Transaction()
                 .from(utxos)
-                .to(address, 800000)
+                .to(address, amountSatoshi)
                 .change(wallet._ltc_address)
                 .sign(wallet._ltc_privateKey)
                 .serialize();

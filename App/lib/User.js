@@ -140,8 +140,8 @@ User.prototype.personal_info_save = async function(current_user, data) {
 User.prototype.personal_info_change = async function(current_user, data) {
   try {
     // TODO: MB check is everyhitng valid before chaning just in case, but i'm not sure is that needed
-    
-    let res = await store.change_personal_info(current_user, data);
+    console.log("im here lets see where i go")
+    let res = await store.update(current_user, data); 
     if (res === true) {
       this.setPersonalInfo(data);
       return true;
