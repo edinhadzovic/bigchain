@@ -82,7 +82,7 @@ function createWindow () {
   }))
 
   loginWindow.once('ready-to-show', () => {
-    loginWindow.show()
+    loginWindow.show();
 });
 
   // and load the index.html of the app.
@@ -110,7 +110,7 @@ app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 });
 
@@ -277,6 +277,24 @@ ipcMain.on('get-ltc', async function(event) {
   event.sender.send('init-ltc-info', data);
 });
 
+ipcMain.on('send_ltc', async function(event, data) { 
+  current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
+});
+
+ipcMain.on('get-bch', async function(event) {
+  let data = {};
+  console.log(message.main, "get Bch");
+  
+  data.market_price = await market_price.getBchPrice(current_user._bch_wallet);
+  data.standing = await current_user._bch_wallet.readBalance(current_user._bch_wallet);
+  console.log(message.main, "send back to user");
+  event.sender.send('init-bch-info', data);
+});
+
+ipcMain.on('send_bch', async function(event, data) { 
+  console.log(message.main, data);
+  current_user._bch_wallet.send(data.bch_amount, data.bch_address, current_user._bch_wallet);
+});
 
 ipcMain.on('send_eth', async function(event, data) { 
   console.log(data);
