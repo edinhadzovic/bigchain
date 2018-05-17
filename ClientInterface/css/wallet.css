@@ -16,93 +16,96 @@
 
 .js-homeView-wallet-nav {
   display: flex;
+  height: 100%;
+  /* width: 100%; */
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .js-homeView-wallet-nav-item {
-  display: flex;
-  width: 250px;
-  height: 75px;
-  margin: 20px;
+  display: inline-flex;
+  width: 50%;
+  /* height: 75px; */
+  /* margin: 20px; */
+  color: white;
+  flex-basis: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .js-homeView-wallet-symbol {
-  width: 75px;
-  display: flex;
+  font-weight: 600;
+  font-size: 3.5rem;
+  /*width: 75px;*/
+  /*display: flex;*/
+  /*text-align: center;*/
+  /*vertical-align: middle;*/
+  /*justify-content: center;*/
+  /*flex-direction: column;*/
+  /*border-radius: 100px;*/
+  /*background-color: #eee;*/
+  /*transition: all, 0.5s ease;*/
+}
+
+.js-homeView-wallet-nav-item[request="btc"]  {
+  background: #FF8E00;
+  box-shadow:inset 0px 0px 300px -60px black;
+}
+
+/*.js-homeView-wallet-symbol[request="btc"]:hover {*/
+  /*background-color: #FF8E00;*/
+  /*color: white;*/
+  /*font-weight: 700;*/
+  /*text-shadow: 1px 1px 2px black;*/
+  /*box-shadow: inset 1px 2px 2px #cc7000;*/
+/*}*/
+
+.js-homeView-wallet-nav-item[request="dgb"] {
+  background: #091E54;
+  box-shadow:inset 0px 0px 300px -60px black;
+}
+
+/*.js-homeView-wallet-symbol[request="dgb"]:hover {*/
+  /*background-color: #091E54;*/
+  /*color: white;*/
+  /*font-weight: 700;*/
+  /*text-shadow: 1px 1px 2px black;*/
+  /*box-shadow: inset 1px 2px 2px #05112e;*/
+/*}*/
+
+.js-homeView-wallet-nav-item[request="ltc"] {
+  background:#4d4d4d;
+  box-shadow:inset 0px 0px 300px -60px black;
+}
+
+/*.js-homeView-wallet-symbol[request="ltc"]:hover {*/
+  /*background-color: #4d4d4d;*/
+  /*color: white;*/
+  /*font-weight: 700;*/
+  /*text-shadow: 1px 1px 2px black;*/
+  /*box-shadow: inset 1px 2px 2px #333333;*/
+/*}*/
+
+.js-homeView-wallet-nav-item[request="eth"] {
+  background: #C99D66;
+  box-shadow:inset 0px 0px 300px -60px black;
+}
+
+/*.js-homeView-wallet-symbol[request="eth"]:hover {*/
+  /*background-color: #C99D66;*/
+  /*color: white;*/
+  /*font-weight: 700;*/
+  /*text-shadow: 1px 1px 2px black;*/
+  /*box-shadow: inset 1px 2px 2px #3C3C3D;*/
+/*}*/
+
+/*.js-homeView-wallet-symbol:hover {*/
+  /*cursor: pointer;*/
+/*}*/
+
+.js-homeView-wallet-status {
   text-align: center;
-  vertical-align: middle;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 100px;
-  background-color: #eee;
-  transition: all, 0.5s ease;
-}
-
-.js-homeView-wallet-symbol[request="btc"] {
-  border: 1px solid #FF8E00;
-  box-shadow: 1px 2px 2px #e67e00;
-}
-
-.js-homeView-wallet-symbol[request="btc"]:hover {
-  background-color: #FF8E00;
-  color: white;
-  font-weight: 700;
-  text-shadow: 1px 1px 2px black;
-  box-shadow: inset 1px 2px 2px #cc7000;
-}
-
-.js-homeView-wallet-symbol[request="dgb"] {
-  border: 1px solid #091E54;
-  box-shadow: 1px 2px 2px #071945;
-}
-
-.js-homeView-wallet-symbol[request="dgb"]:hover {
-  background-color: #091E54;
-  color: white;
-  font-weight: 700;
-  text-shadow: 1px 1px 2px black;
-  box-shadow: inset 1px 2px 2px #05112e;
-}
-
-.js-homeView-wallet-symbol[request="ltc"] {
-  border: 1px solid #4d4d4d;
-  box-shadow: 1px 2px 2px #333333;
-}
-
-.js-homeView-wallet-symbol[request="ltc"]:hover {
-  background-color: #4d4d4d;
-  color: white;
-  font-weight: 700;
-  text-shadow: 1px 1px 2px black;
-  box-shadow: inset 1px 2px 2px #333333;
-}
-
-.js-homeView-wallet-symbol[request="eth"] {
-  border: 1px solid #C99D66;
-  box-shadow: 1px 2px 2px #3C3C3D;
-}
-
-.js-homeView-wallet-symbol[request="eth"]:hover {
-  background-color: #C99D66;
-  color: white;
-  font-weight: 700;
-  text-shadow: 1px 1px 2px black;
-  box-shadow: inset 1px 2px 2px #3C3C3D;
-}
-
-.js-homeView-wallet-symbol:hover {
-  cursor: pointer;
-}
-
-.js-homeView-wallet-status {
-  display: flex;
-  vertical-align: middle;
-  justify-content: center;
-  flex-direction: column;
-  text-align: right
-}
-
-.js-homeView-wallet-status {
-  padding-left: 40px;
 }
 
 .js-homeView-wallet-status ul li {
@@ -110,13 +113,13 @@
 }
 
 .js-homeView-wallet-fiat {
-  color: black;
+  /*color: black;*/
   font-weight: 700;
   font-size: 18px;
 }
 
 .js-homeView-wallet-satoshis {
-  color: #b1b1b1;
+  /*color: #b1b1b1;*/
   font-size: 14px;
 }
 

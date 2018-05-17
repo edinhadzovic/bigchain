@@ -1,10 +1,10 @@
 .js-homeView-box  {
   background-color: #eee;
-  width: 100%;
+  /* flex: 10; */
   height: 100%;
   transition: opacity 1s ease-in;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
 }
 
 .js-homeView-box--fadeIn {
@@ -14,33 +14,39 @@
 .js-homeView-mainContent{
   display: flex;
   flex-grow: 10;
-  margin: 20px;
+  /* margin: 20px; */
 }
-
+.js-homeView-wallet {
+  flex: 1;
+  position: relative;
+}
 .js-homeView-navigation {
   display: flex;
   flex-grow: 1;
-  max-width: 160px;
-  min-width: 160px;
+  /* max-width: 224px; */
+  /* min-width: 160px; */
   flex-direction: column;
   text-align: center;
-  width: 150px;
-  height: 100%;
+  /* width: 150px; */
+  font-weight: 300;
+  /* height: 100%; */
   background-color: #eee;
-  border-left: aqua 5px solid;     
-  color: aqua;
+  /* border-left: aqua 5px solid; */
+  /* color: aqua; */
   z-index: 2;
-  box-shadow: -3px 0px 10px black;
+  box-shadow: 0px 0px 40px black;
 }
 
 .js-homeView-navigation-item {
   text-decoration: none;
   position: relative;
-  z-index: 3;
+  /* z-index: 3; */
+  font-size: 1.3rem;
+  text-align: left;
   display: block;
-  padding: 20px 15px;
+  padding: 1rem 0 1rem 2rem;
   background-color: #eee;
-  color: black; 
+  color: black;
   transition: border-bottom 0.5s ease;
 }
 
@@ -56,18 +62,19 @@
 }
 
 .js-homeView-profile {
-  padding: 20px 0;
-  border-bottom: 1px solid #d1d1d1;
+  padding: 2rem 0;
+  border-bottom: 5px solid #ffffff;
 }
 
 .js-homeView-profile-image img {
-  width: 75px;
-  height: 75px;
+  width: 140px;
+  /* height: 75px; */
   border-radius: 50%;
-  border: 2px solid #d1d1d1;
-};
+  /*border: 2px solid #d1d1d1;*/
+}
 
 .js-homeView-profile-name {
-  margin-top: 10px;
+  margin: 1rem auto 0;
+  font-size: 1.5rem;
   color: black;
 }
