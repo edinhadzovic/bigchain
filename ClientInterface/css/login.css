@@ -11,10 +11,11 @@
 
 /* logo for the login view */
 .js-loginView-logo {
-    width: 100%;
-    height: 125px;
-    background: #d1d1d1 url('../images/logo/walletplus-logo.png') no-repeat center/cover;
-    background-size: 100px; 
+    /*width: 100%; */
+    height: 100px;
+    background: #d1d1d1 url(../images/logo/walletplus-logo.png) no-repeat center/contain;
+    /* background-size: 100px; */
+    margin-bottom: 1rem;
 }
 
 /* container of the login form */
@@ -80,6 +81,7 @@
     background-color: #bababa;
     padding: 10px 20px;
     max-width: 260px;
+    margin: 1rem 0 0rem;
     width: 100%;
     text-transform: uppercase;
     /* color: black; */
@@ -99,7 +101,7 @@
     text-decoration: none;
     /* padding: 10px; */
     display: inline-block;
-    margin: 1rem 0 1rem;
+    margin: 1rem 0 2rem;
     /* font-weight: 700; */
     transition: .2s;
 }
@@ -107,7 +109,18 @@
 .js-loginView-new-account:hover {
     font-weight: 500;
 }
-
+.js-loginView-go-to-login {
+    color: black;
+    text-decoration: none;
+    /* padding: 10px; */
+    display: inline-block;
+    margin: 1rem 0 2rem;
+    /* font-weight: 700; */
+    transition: .2s;
+}
+.js-loginView-go-to-login:hover {
+    font-weight: 500;
+}
 /*
 .js-loginView-form {
     position: relative;

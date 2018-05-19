@@ -1,72 +1,33 @@
 .footer_social_media {
-  margin: 40px 0px;
+  /*margin: 40px 0px;*/
 }
-
-.login_footer .face_book {
+.footer_social_media a {
   display: inline-block;
-  background: url('../images/social/Facebook-color.svg') no-repeat center center;
-  filter: grayscale(100%);    
-  background-size: 25px;
-  width: 25px;
-  height: 25px;
-  content: " ";
-  margin: 0 10px;
-}
-
-.login_footer .face_book:hover {
-  filter: none;
-  background-size: 25px;
-  cursor: pointer;
-}
-
-.login_footer .twitter {
-  display: inline-block;
-  background: url('../images/social/Twitter-color.svg') no-repeat center center;
-  filter: grayscale(100%);    
-  background-size: 25px;
-  width: 25px;
-  height: 25px;
-  content: " ";
-  margin: 0 10px;
-}
-
-.login_footer .twitter:hover {
-  filter: none;
-  background-size: 25px;
-  cursor: pointer;
-}
-
-.login_footer .telegram {
-  display: inline-block;
-  background: url('../images/social/telegram.png') no-repeat center center;
   filter: grayscale(100%);
-  background-size: 25px;
+  background-size: contain;
   width: 25px;
   height: 25px;
-  content: " ";
-  margin: 0 10px;
+  content: "";
+  margin: 0 5px;
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+  -ms-transition: .2s;
+  -o-transition: .2s;
+  transition: .2s;
 }
-
-.login_footer .telegram:hover {
-  background: url('../images/social/telegram.png') no-repeat center center;
+.footer_social_media a:hover {
   filter: none;
-  background-size: 25px;
   cursor: pointer;
 }
-
-.login_footer .linkedin {
-  display: inline-block;
-  background: url('../images/social/LinkedIn-color.svg') no-repeat center center;
-  filter: grayscale(100%);    
-  background-size: 25px;
-  width: 25px;
-  height: 25px;
-  content: " ";
-  margin: 0 10px;
+.footer_social_media .face_book {
+  background: url('../images/social/Facebook-color.svg') no-repeat center / contain;
 }
-
-.login_footer .linkedin:hover {
-  filter: none;
-  background-size: 25px;
-  cursor: pointer;
+.footer_social_media .twitter {
+  background: url('../images/social/Twitter-color.svg') no-repeat center / contain;
+}
+.footer_social_media .telegram {
+  background: url('../images/social/telegram.png') no-repeat center / contain;
+}
+.footer_social_media .linkedin {
+  background: url('../images/social/LinkedIn-color.svg') no-repeat center / contain;
 }
