@@ -609,10 +609,10 @@ var chart = new Chart(ctx, {
     options: {
         layout: {
             padding: {
-                left: 5,
-                right: 5,
-                top: 5,
-                bottom: 5
+                left: 50,
+                right: 50,
+                top: 50,
+                bottom: 50
             }
         },
         legend: {
@@ -632,16 +632,16 @@ var chart = new Chart(ctx, {
                 ticks: {
                     display: false
                 },
-                zeroLineWidth: 0
+                display: false
             }],
             yAxes: [{
+                display: false,
                 gridLines: {
                     display:false
                 },
                 ticks: {
                     display: false
                 },
-                zeroLineWidth: 0
             }]
         }
     }

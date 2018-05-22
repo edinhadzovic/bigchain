@@ -38,8 +38,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  /*top: 0;*/
-  bottom: 0;
+  /* top: 0; */
+  bottom: 5rem;
 }
 .js-homeView-wallet-symbol {
   font-weight: 600;
@@ -249,3 +249,55 @@
   border-radius: 25px;
   padding: 15px 5px 15px 10px;
 }
+.js-homeView-wallet-menu {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+}
+.js-homeView-wallet-menu-btn {
+  background: rgba(255, 255, 255, 0.8);
+  border-width: 2px;
+  border-color: white;
+  border-radius: 3px;
+  border-style: solid;
+  padding: 1rem;
+  line-height: 3px;
+  cursor: pointer;
+  -webkit-transition: border-color .2s, background .2s;
+  -moz-transition: border-color .2s, background .2s;
+  -ms-transition: border-color .2s, background .2s;
+  -o-transition: border-color .2s, background .2s;
+  transition: border-color .2s, background .2s;
+}
+.js-homeView-wallet-menu-btn:hover {
+  background: transparent;
+  color: white;
+  border-color: white;
+}
+.js-homeView-wallet-menu > input{
+  flex: 1;
+  background: transparent;
+  color: white;
+  border-color: white;
+}
+.js-homeView-wallet-menu > input:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+}
+.js-homeView-wallet-menu > div {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+
+}
+.js-homeView-wallet-menu > div > input:first-child {
+  border-radius: 3px 0 0 3px;
+  border-right: 1px solid rgb(241, 225, 204);
+}
+.js-homeView-wallet-menu > div > input:last-child {
+  border-radius: 0 3px 3px 0;
+  border-left: 1px solid rgb(241, 225, 204);
+}
+
