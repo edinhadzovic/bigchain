@@ -40,7 +40,7 @@ var loginViewController = function (params) {
                 if($(view).hasClass('js-loginView-register--fadeOut')) $(view).removeClass('js-loginView-register--fadeOut');
                 $(view).addClass(' js-loginView-register--fadeIn');
             }
-        },  
+        },
         personalInfoView: {
             body: $params.find('.js-loginView-personal-information'),
             first_name: $params.find('.js-loginView-personal-information-first_name'),
@@ -92,7 +92,7 @@ var loginViewController = function (params) {
                 if($(view).hasClass('js-loginView-image--fadeOut')) $(view).removeClass('js-loginView-image--fadeOut');
                 $(view).addClass(' js-loginView-image--fadeIn');
             }
-        }  
+        }
     };
 
     $(loginViewController.loginView.toRegister).click(function (event) {
@@ -101,7 +101,7 @@ var loginViewController = function (params) {
             loginViewController.registerView.body.fadeIn(200);
         });
     });
-    
+
     $(loginViewController.registerView.toLogin).click(function(event) {
         event.preventDefault();
         loginViewController.registerView.body.fadeOut(200, () => {
@@ -127,7 +127,7 @@ var loginViewController = function (params) {
         event.preventDefault();
         loginViewController.registerView.body.fadeOut(200, () => {
             $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                new homeViewController($('.js-homeView-box',)); 
+                new homeViewController($('.js-homeView-box',));
             });
         });
     });
@@ -137,17 +137,17 @@ var loginViewController = function (params) {
         let data = {};
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
-        
+
         data.email = "edinfuad.hadzovic@gmail.com";
         data.password = "Manchester99!";
 
         // send username to main.js 
         ipcRenderer.send('login-submission', data );
-        
+
         ipcRenderer.on("login-success", (event, arg) => {
             loginViewController.reference.fadeOut(500, function(){
                 $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    new homeViewController($('.js-homeView-box'), arg); 
+                    new homeViewController($('.js-homeView-box'), arg);
                 });
             });
         });
@@ -160,7 +160,7 @@ var loginViewController = function (params) {
 
             if(arg.type === 'ERR_NOT_VALID_EMAIL') {
 				document.getElementById('password').style.border = "2px solid #d1d1d1";
-                document.getElementById('username').style.border = "2px solid red";  
+                document.getElementById('username').style.border = "2px solid red";
             }
         });
     });
@@ -171,14 +171,14 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.registerView.email).val();
         data.password = $(loginViewController.registerView.password).val();
         data.password_rep = $(loginViewController.registerView.repassword).val();
-    
-        
+
+
         data.email = "edinfuad.hadzovic@gmail.com";
         data.password = "Manchester99!";
         data.password_rep = "Manchester99!";
         // send username to main.js 
         ipcRenderer.send('register-submission', data );
-        
+
         ipcRenderer.on('register-success', (event, user) => {
             //event.preventDefault();
             loginViewController.registerView.body.fadeOut(200, () => {
@@ -188,7 +188,7 @@ var loginViewController = function (params) {
 
         ipcRenderer.on('register-failed', (event, err) => {
 
-            if(err.type === 'ERR_PASSWORD_WRONG' || err.type === 'ERR_PASSWORD_FIELD_EMPTY' || 
+            if(err.type === 'ERR_PASSWORD_WRONG' || err.type === 'ERR_PASSWORD_FIELD_EMPTY' ||
                 err.type === 'ERR_PASSWORD_TO_SHORT' || err.type === 'ERR_PASSWORD_TO_SIMPLE') {
                 document.getElementById('email').style.border = "2px solid #d1d1d1";
                 document.getElementById('password_rep').style.border = "2px solid #d1d1d1";
@@ -199,12 +199,12 @@ var loginViewController = function (params) {
                 err.type === 'ERR_EMAIL_TAKEN') {
                 document.getElementById('reg_password').style.border = '2px solid #d1d1d1';
                 document.getElementById('password_rep').style.border = '2px solid #d1d1d1';
-                document.getElementById('email').style.border = '2px solid red';  
+                document.getElementById('email').style.border = '2px solid red';
             }
             if(err.type === 'ERR_PASSWORD_REP_FIELD_EMPTY' || err.type === 'ERR_PASSWORD_DO_NOT_MATCH') {
                 document.getElementById('reg_password').style.border = '2px solid #d1d1d1';
                 document.getElementById('password_rep').style.border = '2px solid red';
-                document.getElementById('email').style.border = '2px solid #d1d1d1';  
+                document.getElementById('email').style.border = '2px solid #d1d1d1';
             }
         });
     });
@@ -268,7 +268,7 @@ var loginViewController = function (params) {
         data.state = $(loginViewController.addressView.state).val();
         data.postal_code = $(loginViewController.addressView.postal_code).val();
         data.country = $(loginViewController.addressView.country).val();
-        
+
         ipcRenderer.send('address-info-submission', data);
 
         ipcRenderer.on('store-address-info-failed', (event, err) => {
@@ -327,7 +327,7 @@ var loginViewController = function (params) {
             if(file_names === undefined) return;
 
             image = file_names[0];
-            
+
             let data = {};
             data.image = image;
             loginViewController.imageView.crop.removeClass('hidden').fadeIn(500, () => {
@@ -361,23 +361,23 @@ var loginViewController = function (params) {
 
                     });
                     reader.readAsBinaryString(resp);
-                    
-                
+
+
                 });
             });
             //
         });
-    
-        
+
+
         ipcRenderer.on('image-submission-success', (event, current_user) => {
             loginViewController.reference.fadeOut(500, function(){
                 $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    new homeViewController($('.js-homeView-box'), current_user); 
+                    new homeViewController($('.js-homeView-box'), current_user);
                 });
             });
         });
         ipcRenderer.on('image-submission-fail', (event, current_user) => {
-            
+
         });
         //let data = {};
         //data.image = reader.readAsDataURL($(loginViewController.imageView.image).val());
@@ -463,7 +463,7 @@ var homeViewController = function (params, user) {
             },
             {
                 type: 'Manager',
-                body: $(params).find('.js-homeView-manager')            
+                body: $(params).find('.js-homeView-manager')
             },
             {
                 type: 'Settings',
@@ -495,7 +495,7 @@ var homeViewController = function (params, user) {
                     $('.js-homeView-box').addClass(wallet.class);
                 } else {
                     if(!wallet.body.hasClass('hidden')) {
-                        $('.js-homeView-box').removeClass(wallet.class);                        
+                        $('.js-homeView-box').removeClass(wallet.class);
                         wallet.body.addClass('hidden');
                     }
                 }
@@ -512,9 +512,9 @@ var homeViewController = function (params, user) {
         data.gender = $(homeViewController.personalInformation.gender).val();
         data.birthday = $(homeViewController.personalInformation.birthday).val();
         data.phone = $(homeViewController.personalInformation.phone).val();
-        
+
         console.log(data);
-    
+
         ipcRenderer.send('personal-info-change', data);
 
         ipcRenderer.on('store-failed', (event, err) => {
@@ -580,11 +580,69 @@ var homeViewController = function (params, user) {
 
 ipcRenderer.on('init-main-window', (event, current_user) => {
     console.log(current_user);
-    new homeViewController($('.js-homeView-box'), current_user);     
+    new homeViewController($('.js-homeView-box'), current_user);
 });
 
 $('document').ready(function(){
     $('.js-homeView-box').each(function () {
         new homeViewController(this);
     })
+});
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ["May", "June", "July",'august','september'],
+        datasets: [{
+            // label: "My First dataset",
+            backgroundColor: 'rgba(255, 99, 132,0)',
+            borderColor: 'rgba(0, 0, 0,.2)',
+            data: [25, 2, 30,35,25]
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        layout: {
+            padding: {
+                left: 5,
+                right: 5,
+                top: 5,
+                bottom: 5
+            }
+        },
+        legend: {
+            display: false
+        },
+        title: {
+            display: false
+        },
+        scaleLabel: {
+            display: false
+        },
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display:false
+                },
+                ticks: {
+                    display: false
+                },
+                zeroLineWidth: 0
+            }],
+            yAxes: [{
+                gridLines: {
+                    display:false
+                },
+                ticks: {
+                    display: false
+                },
+                zeroLineWidth: 0
+            }]
+        }
+    }
 });

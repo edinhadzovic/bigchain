@@ -23,20 +23,33 @@
 }
 
 .js-homeView-wallet-nav-item {
+  position: relative;
   display: inline-flex;
-  width: 50%;
+  width: 33%;
   /* height: 75px; */
   /* margin: 20px; */
   color: white;
-  flex-basis: 50%;
+  flex-basis: 33%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
+#myChart{
+  position: absolute;
+  left: 0;
+  right: 0;
+  /*top: 0;*/
+  bottom: 0;
+}
 .js-homeView-wallet-symbol {
   font-weight: 600;
-  font-size: 3.5rem;
+  font-size: 1rem;
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  height: 50px;
+  width: 50px;
+  background: no-repeat center / contain;
   /*width: 75px;*/
   /*display: flex;*/
   /*text-align: center;*/
@@ -47,10 +60,27 @@
   /*background-color: #eee;*/
   /*transition: all, 0.5s ease;*/
 }
+.js-homeView-wallet-symbol span {
+  position: absolute;
+  left: 60px;
+}
 
-.js-homeView-wallet-nav-item[request="btc"]  {
+.js-homeView-wallet-symbol[request="btc"] {
+  background-image: url("https://www.freeiconspng.com/uploads/currency-digital-payment-sign-icon-29.png");
+}
+.js-homeView-wallet-symbol[request="dgb"] {
+  background-image: url("http://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/DigiByte-DGB-icon.png");
+}
+.js-homeView-wallet-symbol[request="ltc"] {
+  background-image: url("https://cdn.iconscout.com/public/images/icon/free/png-512/litecoin-386c0ef8cda50168-512x512.png");
+}
+.js-homeView-wallet-symbol[request="eth"] {
+  background-image: url("https://png.icons8.com/color/1600/ethereum.png");
+}
+
+.js-homeView-wallet-nav-item.btc  {
   background: #FF8E00;
-  box-shadow:inset 0px 0px 300px -60px black;
+  box-shadow:inset 0 0 300px -60px black;
 }
 
 /*.js-homeView-wallet-symbol[request="btc"]:hover {*/
@@ -61,7 +91,7 @@
   /*box-shadow: inset 1px 2px 2px #cc7000;*/
 /*}*/
 
-.js-homeView-wallet-nav-item[request="dgb"] {
+.js-homeView-wallet-nav-item.dgb {
   background: #091E54;
   box-shadow:inset 0px 0px 300px -60px black;
 }
@@ -74,7 +104,7 @@
   /*box-shadow: inset 1px 2px 2px #05112e;*/
 /*}*/
 
-.js-homeView-wallet-nav-item[request="ltc"] {
+.js-homeView-wallet-nav-item.ltc {
   background:#4d4d4d;
   box-shadow:inset 0px 0px 300px -60px black;
 }
@@ -87,7 +117,7 @@
   /*box-shadow: inset 1px 2px 2px #333333;*/
 /*}*/
 
-.js-homeView-wallet-nav-item[request="eth"] {
+.js-homeView-wallet-nav-item.eth {
   background: #C99D66;
   box-shadow:inset 0px 0px 300px -60px black;
 }
@@ -105,7 +135,10 @@
 /*}*/
 
 .js-homeView-wallet-status {
-  text-align: center;
+  text-align: right;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .js-homeView-wallet-status ul li {
@@ -113,11 +146,15 @@
 }
 
 .js-homeView-wallet-fiat {
-  /*color: black;*/
   font-weight: 700;
-  font-size: 18px;
+  font-size: 2rem;
 }
-
+.js-homeView-wallet-fiat i.up {
+  color: #28b600;
+}
+.js-homeView-wallet-fiat i.down {
+  color: #b60005;
+}
 .js-homeView-wallet-satoshis {
   /*color: #b1b1b1;*/
   font-size: 14px;

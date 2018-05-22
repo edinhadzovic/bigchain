@@ -21,11 +21,11 @@
   position: relative;
 }
 .js-homeView-navigation {
-  display: flex;
-  flex-grow: 1;
-  /* max-width: 224px; */
+  /*display: flex;*/
+  /*flex-grow: 1;*/
+   width: 230px;
   /* min-width: 160px; */
-  flex-direction: column;
+  /*flex-direction: column;*/
   text-align: center;
   /* width: 150px; */
   font-weight: 300;

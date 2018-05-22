@@ -14,7 +14,8 @@
 	
 	<script src="../javascript/lib/jquery-3.3.1.min.js"></script>
 	<script src="../javascript/lib/croppie.min.js"></script>
-    <!-- <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css"> -->
+	<script src="../javascript/lib/chart.js"></script>
+	<!-- <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css"> -->
     <link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/croppie.css">
@@ -126,46 +127,47 @@
 				<div class="js-homeView-wallet hidden">
 					<!-- NAVIGATION -->
 					<div class="js-homeView-wallet-nav">
-						<div class="js-homeView-wallet-nav-item" request="btc">
-							<div class="js-homeView-wallet-symbol">
-								BTC
+						<div class="js-homeView-wallet-nav-item btc">
+							<canvas id="myChart"></canvas>
+							<div class="js-homeView-wallet-symbol" request="btc">
+								<span>Bitcoin</span>
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
-									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
+									<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300 &euro;</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 BTC</li>
 								</ul>
 							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item" request="dgb">
-							<div class="js-homeView-wallet-symbol">
-								DGB
+						<div class="js-homeView-wallet-nav-item eth">
+							<div class="js-homeView-wallet-symbol" request="dgb">
+								<span>Digibytes</span>
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
-									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
+									<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-down down"></i> 1.300 &euro;</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 DGB</li>
 								</ul>
 							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item" request="ltc">
-							<div class="js-homeView-wallet-symbol">
-								LTC
+						<div class="js-homeView-wallet-nav-item ltc">
+							<div class="js-homeView-wallet-symbol" request="ltc">
+								<span>Litecoin</span>
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
-									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
+									<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300 &euro;</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 LTC</li>
 								</ul>
 							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item" request="eth">
-							<div class="js-homeView-wallet-symbol">
-								ETH
+						<div class="js-homeView-wallet-nav-item eth">
+							<div class="js-homeView-wallet-symbol" request="eth">
+								<span>Etherium</span>
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
-									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
+									<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300 &euro;</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 ETH</li>
 								</ul>
 							</div>
