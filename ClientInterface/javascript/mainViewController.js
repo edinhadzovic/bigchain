@@ -4,7 +4,26 @@ const fs = require('fs');
 const path = require('path');
 const {shell} = require('electron');
 const {ipcRenderer} = require('electron');
+const blockstack = require('blockstack');
+let user = null;
 
+$('.js-blockstack').click((e)=>{
+    e.preventDefault();
+    const transitPrivateKey = blockstack.generateAndStoreTransitKey();
+    const redirectURI = 'http://localhost:9876/callback';
+    const manifestURI = 'http://localhost:9876/manifest.json';
+    const scopes = blockstack.DEFAULT_SCOPE;
+    const appDomain = 'http://localhost:9876';
+    var authRequest = blockstack.makeAuthRequest(transitPrivateKey, redirectURI, manifestURI, scopes, appDomain);
+    blockstack.redirectToSignInWithAuthRequest(authRequest);
+});
+
+ipcRenderer.on('test', function(event, profile) {
+    console.log("wow");
+    user = profile;
+    console.log(user);
+    ipcRenderer.send('start-main-window', user);    
+});
 
 const directory = path.join(__dirname, '../images/profile');
 
@@ -638,6 +657,7 @@ var homeViewController = function (params, user) {
         console.log('test' +  data.ltc_amount);
         ipcRenderer.send('send_ltc', data);
     });
+<<<<<<< HEAD
 
     $(homeViewController.exchange.exchange_button).click(function(event){
         event.preventDefault();
@@ -656,10 +676,11 @@ var homeViewController = function (params, user) {
         });
     });
 
+=======
+>>>>>>> 5abb7f8672caca9966b4889bebda05bc30eafdf3
 };
 
 ipcRenderer.on('init-main-window', (event, current_user) => {
-    console.log(current_user);
     new homeViewController($('.js-homeView-box'), current_user);     
 });
 

@@ -1,21 +1,28 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
+const op = require('child_process');
 const digibyte = require('digibyte');
 const market_price = require('./wallets/market_price');
+<<<<<<< HEAD
 const ShapeShift = require('./lib/Shapeshift');
+=======
+const blockstack = require('blockstack');
+>>>>>>> 5abb7f8672caca9966b4889bebda05bc30eafdf3
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const ipcMain = electron.ipcMain;
+const server = op.fork(__dirname + '/lib/Server.js');
 
 
 var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
 var message = require('./lib/Message');
 var DGB = require('./wallets/dgb');
+<<<<<<< HEAD
 let shapeshift = new ShapeShift();
 
 
@@ -43,7 +50,15 @@ shapeshift.getRecentTx().then((coinData) => {
   console.log(4, coinData);
 });
 
+=======
+let new_user = null;
+>>>>>>> 5abb7f8672caca9966b4889bebda05bc30eafdf3
 
+server.on('message', async (m) => {
+  new_user = await authCallback(m.authResponse);
+  current_user.saveBlockstack(new_user);
+  createMainWindow();
+});
 
 // Global current user
 var current_user = new User();
@@ -53,8 +68,9 @@ var current_user = new User();
 let loginWindow;
 let mainWindow;
 
-function createMainWindow (user, event) {
+function createMainWindow () {
   loginWindow.hide();
+  
   mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
   width: 400,
   height: 600,
@@ -70,10 +86,11 @@ function createMainWindow (user, event) {
     protocol: 'file:',
     slashes: true
   }));
+  
 
   mainWindow.once('ready-to-show', () => {
     console.log("send the message");
-    event.sender.send('init-main-window', current_user);
+    event.sender.send('init-main-window', current_user);    
   });
 
   mainWindow.on('closed', function () {
@@ -104,7 +121,7 @@ function createWindow () {
   //loginWindow.maximize();
 
   loginWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../ClientInterface/views/loginView.html'),
+    pathname: path.join(__dirname, '../ClientInterface/views/blockstackLoginView.html'),
     protocol: 'file:',
     slashes: true
   }))
@@ -124,6 +141,7 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    server.send('quit');
     loginWindow = null;
   });
 }
@@ -153,6 +171,10 @@ app.on('activate', function () {
 ipcMain.on('get-user-data', (event) => {
   event.sender.send("init-user-data", current_user);
 });
+
+ipcMain.on('start-main-window', (event, user) => {
+  createMainWindow(user, event);
+})
 
 ipcMain.on("login-submission", async function(event, data) {
   
@@ -302,9 +324,9 @@ ipcMain.on('get-ltc', async function(event) {
 
 ipcMain.on('send_ltc', async function(event, data) { 
   current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
-
 });
 
+<<<<<<< HEAD
 ipcMain.on('exchange', async function(event,data){
   console.log("I received this data", data);
   shapeshift.shiftFixed(data).then((res) => {
@@ -312,3 +334,27 @@ ipcMain.on('exchange', async function(event,data){
   }).catch(e => console.log(e));
   event.sender.send('fee_exchange');
 })
+=======
+function authCallback(authResponse) {
+  // Bring app window to front
+  loginWindow.focus();
+  return new Promise((resolve, reject) => {
+    const tokenPayload = blockstack.decodeToken(authResponse).payload;
+
+    const profileURL = tokenPayload.profile_url;
+    fetch(profileURL)
+      .then(response => {
+        if (!response.ok) {
+          reject("Error fetching user profile")
+        } else {
+          response.text()
+          .then(responseText => JSON.parse(responseText))
+          .then(wrappedProfile => blockstack.extractProfile(wrappedProfile[0].token))
+          .then(profile => {
+            resolve(profile);
+          });
+        }
+    });
+  });
+};
+>>>>>>> 5abb7f8672caca9966b4889bebda05bc30eafdf3

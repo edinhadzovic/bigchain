@@ -29,6 +29,18 @@ let User = function(){
   this._profile_image = null;
   this._btc_wallet = new btc();
   this._ltc_wallet = new ltc();
+  this.account = [];
+  this.desc = null;
+  this.name = null;
+};
+
+User.prototype.saveBlockstack = function(user){
+  let temp = user.name.split(' ');
+  this._personal_information.first_name = temp[0];
+  this._personal_information.last_name = temp[1];
+  this._profile_image = user.image[0].contentUrl;
+  this.desc = user.description;
+  this.account = user.account;
 };
 
 User.prototype.save = async function(user){
