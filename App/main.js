@@ -1,21 +1,29 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
+const op = require('child_process');
 const digibyte = require('digibyte');
 const market_price = require('./wallets/market_price');
+const blockstack = require('blockstack');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const ipcMain = electron.ipcMain;
+const server = op.fork(__dirname + '/lib/Server.js');
 
 
 var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
 var message = require('./lib/Message');
 var DGB = require('./wallets/dgb');
+let new_user = null;
 
+server.on('message', async (m) => {
+  new_user = await authCallback(m.authResponse);
+  createMainWindow(new_user);
+});
 
 // Global current user
 var current_user = new User();
@@ -25,8 +33,9 @@ var current_user = new User();
 let loginWindow;
 let mainWindow;
 
-function createMainWindow (user, event) {
+function createMainWindow (user) {
   loginWindow.hide();
+  console.log(user);
   mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
   width: 400,
   height: 600,
@@ -42,10 +51,10 @@ function createMainWindow (user, event) {
     protocol: 'file:',
     slashes: true
   }));
+  mainWindow.webContents.send('init-main-window', user);
 
   mainWindow.once('ready-to-show', () => {
     console.log("send the message");
-    event.sender.send('init-main-window', current_user);
   });
 
   mainWindow.on('closed', function () {
@@ -76,7 +85,7 @@ function createWindow () {
   //loginWindow.maximize();
 
   loginWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../ClientInterface/views/loginView.html'),
+    pathname: path.join(__dirname, '../ClientInterface/views/blockstackLoginView.html'),
     protocol: 'file:',
     slashes: true
   }))
@@ -96,6 +105,7 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    server.send('quit');
     loginWindow = null;
   });
 }
@@ -274,5 +284,27 @@ ipcMain.on('get-ltc', async function(event) {
 
 ipcMain.on('send_ltc', async function(event, data) { 
   current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
-
 });
+
+function authCallback(authResponse) {
+  // Bring app window to front
+  loginWindow.focus();
+  return new Promise((resolve, reject) => {
+    const tokenPayload = blockstack.decodeToken(authResponse).payload;
+
+    const profileURL = tokenPayload.profile_url;
+    fetch(profileURL)
+      .then(response => {
+        if (!response.ok) {
+          reject("Error fetching user profile")
+        } else {
+          response.text()
+          .then(responseText => JSON.parse(responseText))
+          .then(wrappedProfile => blockstack.extractProfile(wrappedProfile[0].token))
+          .then(profile => {
+            resolve(profile);
+          });
+        }
+    });
+  });
+};

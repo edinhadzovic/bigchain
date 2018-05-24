@@ -9,7 +9,11 @@
     padding: 0;
     margin: 0;
 }
-
+.blockstack {
+    color: white;
+    background-color: gray;
+    border: 2px solid white;
+}
 body,html {
     height: 100%;
     padding: 0;

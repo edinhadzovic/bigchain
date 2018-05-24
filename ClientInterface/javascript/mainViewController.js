@@ -4,7 +4,22 @@ const fs = require('fs');
 const path = require('path');
 const {shell} = require('electron');
 const {ipcRenderer} = require('electron');
+const blockstack = require('blockstack');
 
+$('.js-blockstack').click(()=>{
+    const transitPrivateKey = blockstack.generateAndStoreTransitKey();
+    const redirectURI = 'http://localhost:9876/callback';
+    const manifestURI = 'http://localhost:9876/manifest.json';
+    const scopes = blockstack.DEFAULT_SCOPE;
+    const appDomain = 'http://localhost:9876';
+    var authRequest = blockstack.makeAuthRequest(transitPrivateKey, redirectURI, manifestURI, scopes, appDomain);
+    blockstack.redirectToSignInWithAuthRequest(authRequest);
+});
+
+ipcRenderer.on('displayUsername', function(event, profile) {
+    console.log("Whaat????", profile);
+    new homeViewController('.js-homeView-box', profile);    
+});
 
 const directory = path.join(__dirname, '../images/profile');
 
