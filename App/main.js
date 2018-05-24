@@ -22,7 +22,7 @@ let new_user = null;
 
 server.on('message', async (m) => {
   new_user = await authCallback(m.authResponse);
-  createMainWindow(new_user);
+  loginWindow.webContents.send('test', new_user)
 });
 
 // Global current user
@@ -33,7 +33,7 @@ var current_user = new User();
 let loginWindow;
 let mainWindow;
 
-function createMainWindow (user) {
+function createMainWindow (user, event) {
   loginWindow.hide();
   console.log(user);
   mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
@@ -51,11 +51,13 @@ function createMainWindow (user) {
     protocol: 'file:',
     slashes: true
   }));
-  mainWindow.webContents.send('init-main-window', user);
+  
 
   mainWindow.once('ready-to-show', () => {
     console.log("send the message");
+    
   });
+  event.sender.send('init-main-window', user);
 
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
@@ -135,6 +137,10 @@ app.on('activate', function () {
 ipcMain.on('get-user-data', (event) => {
   event.sender.send("init-user-data", current_user);
 });
+
+ipcMain.on('start-main-window', (event, user) => {
+  createMainWindow(user, event);
+})
 
 ipcMain.on("login-submission", async function(event, data) {
   

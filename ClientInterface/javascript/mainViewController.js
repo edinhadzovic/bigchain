@@ -5,8 +5,10 @@ const path = require('path');
 const {shell} = require('electron');
 const {ipcRenderer} = require('electron');
 const blockstack = require('blockstack');
+let user = null;
 
-$('.js-blockstack').click(()=>{
+$('.js-blockstack').click((e)=>{
+    e.preventDefault();
     const transitPrivateKey = blockstack.generateAndStoreTransitKey();
     const redirectURI = 'http://localhost:9876/callback';
     const manifestURI = 'http://localhost:9876/manifest.json';
@@ -16,9 +18,11 @@ $('.js-blockstack').click(()=>{
     blockstack.redirectToSignInWithAuthRequest(authRequest);
 });
 
-ipcRenderer.on('displayUsername', function(event, profile) {
-    console.log("Whaat????", profile);
-    new homeViewController('.js-homeView-box', profile);    
+ipcRenderer.on('test', function(event, profile) {
+    console.log("wow");
+    user = profile;
+    console.log(user);
+    ipcRenderer.send('start-main-window', user);    
 });
 
 const directory = path.join(__dirname, '../images/profile');
@@ -645,6 +649,7 @@ var homeViewController = function (params, user) {
 };
 
 ipcRenderer.on('init-main-window', (event, current_user) => {
+    console.log("why");
     console.log(current_user);
     new homeViewController($('.js-homeView-box'), current_user);     
 });
