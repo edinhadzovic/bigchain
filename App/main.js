@@ -22,7 +22,8 @@ let new_user = null;
 
 server.on('message', async (m) => {
   new_user = await authCallback(m.authResponse);
-  loginWindow.webContents.send('test', new_user)
+  current_user.saveBlockstack(new_user);
+  createMainWindow();
 });
 
 // Global current user
@@ -33,9 +34,9 @@ var current_user = new User();
 let loginWindow;
 let mainWindow;
 
-function createMainWindow (user, event) {
+function createMainWindow () {
   loginWindow.hide();
-  console.log(user);
+  
   mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
   width: 400,
   height: 600,
@@ -55,9 +56,8 @@ function createMainWindow (user, event) {
 
   mainWindow.once('ready-to-show', () => {
     console.log("send the message");
-    
+    event.sender.send('init-main-window', current_user);    
   });
-  event.sender.send('init-main-window', user);
 
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows

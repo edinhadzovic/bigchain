@@ -644,13 +644,9 @@ var homeViewController = function (params, user) {
         console.log('test' +  data.ltc_amount);
         ipcRenderer.send('send_ltc', data);
     });
-
-
 };
 
 ipcRenderer.on('init-main-window', (event, current_user) => {
-    console.log("why");
-    console.log(current_user);
     new homeViewController($('.js-homeView-box'), current_user);     
 });
 
