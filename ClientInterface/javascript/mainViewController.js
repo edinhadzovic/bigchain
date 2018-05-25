@@ -657,7 +657,6 @@ var homeViewController = function (params, user) {
         console.log('test' +  data.ltc_amount);
         ipcRenderer.send('send_ltc', data);
     });
-<<<<<<< HEAD
 
     $(homeViewController.exchange.exchange_button).click(function(event){
         event.preventDefault();
@@ -676,8 +675,6 @@ var homeViewController = function (params, user) {
         });
     });
 
-=======
->>>>>>> 5abb7f8672caca9966b4889bebda05bc30eafdf3
 };
 
 ipcRenderer.on('init-main-window', (event, current_user) => {

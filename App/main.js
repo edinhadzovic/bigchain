@@ -4,11 +4,8 @@ const url = require('url');
 const op = require('child_process');
 const digibyte = require('digibyte');
 const market_price = require('./wallets/market_price');
-<<<<<<< HEAD
 const ShapeShift = require('./lib/Shapeshift');
-=======
 const blockstack = require('blockstack');
->>>>>>> 5abb7f8672caca9966b4889bebda05bc30eafdf3
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -22,7 +19,6 @@ var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
 var message = require('./lib/Message');
 var DGB = require('./wallets/dgb');
-<<<<<<< HEAD
 let shapeshift = new ShapeShift();
 
 
@@ -50,9 +46,7 @@ shapeshift.getRecentTx().then((coinData) => {
   console.log(4, coinData);
 });
 
-=======
 let new_user = null;
->>>>>>> 5abb7f8672caca9966b4889bebda05bc30eafdf3
 
 server.on('message', async (m) => {
   new_user = await authCallback(m.authResponse);
@@ -326,7 +320,6 @@ ipcMain.on('send_ltc', async function(event, data) {
   current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
 });
 
-<<<<<<< HEAD
 ipcMain.on('exchange', async function(event,data){
   console.log("I received this data", data);
   shapeshift.shiftFixed(data).then((res) => {
@@ -334,7 +327,6 @@ ipcMain.on('exchange', async function(event,data){
   }).catch(e => console.log(e));
   event.sender.send('fee_exchange');
 })
-=======
 function authCallback(authResponse) {
   // Bring app window to front
   loginWindow.focus();
@@ -357,4 +349,3 @@ function authCallback(authResponse) {
     });
   });
 };
->>>>>>> 5abb7f8672caca9966b4889bebda05bc30eafdf3
