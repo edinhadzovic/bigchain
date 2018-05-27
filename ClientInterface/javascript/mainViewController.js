@@ -430,17 +430,17 @@ var homeViewController = function (params, user) {
             {
                 type: "btc",
                 body: $(params).find('.js-homeView-wallet-content[display="btc"]'),
-                class: 'btc-select'
+                class: 'open'
             },
             {
                 type: "dgb",
                 body: $(params).find('.js-homeView-wallet-content[display="dgb"]'),
-                class: 'dgb-select'
+                class: 'open'
             },
             {
                 type: "ltc",
                 body: $(params).find('.js-homeView-wallet-content[display="ltc"]'),
-                class: 'ltc-select'
+                class: 'open'
             },
             {
                 type: "eth",
@@ -451,19 +451,19 @@ var homeViewController = function (params, user) {
         views: [
             {
                 type: "Wallet",
-                body: $(params).find('.js-homeView-wallet')
+                body: $(params).find('.js-homeView-wallet.homeView-start-content')
             },
             {
                 type: "Startup",
-                body: $(params).find('.js-homeView-startup')
+                body: $(params).find('.js-homeView-startup.homeView-start-content')
             },
             {
                 type: 'File',
-                body: $(params).find('.js-homeView-file')
+                body: $(params).find('.js-homeView-file.homeView-start-content')
             },
             {
                 type: 'Manager',
-                body: $(params).find('.js-homeView-manager')
+                body: $(params).find('.js-homeView-manager.homeView-start-content')
             },
             {
                 type: 'Settings',
@@ -481,9 +481,13 @@ var homeViewController = function (params, user) {
             homeViewController.views.forEach(page => {
                 if(page.type === page_type) {
                     page.body.removeClass('hidden');
+                    setTimeout(function(){
+                    page.body.addClass('open');
+                    }, 200);
                 } else {
                     if(!page.body.hasClass('hidden')) {
                         page.body.addClass('hidden');
+                        page.body.removeClass('open');
                     }
                 }
             });
@@ -492,10 +496,18 @@ var homeViewController = function (params, user) {
             homeViewController.wallets.forEach(wallet => {
                 if(wallet.type === wallet_type) {
                     wallet.body.removeClass('hidden');
-                    $('.js-homeView-box').addClass(wallet.class);
+                    $('.overlay-homeView-wallet-nav').addClass('open');
+                    $('.js-homeView-wallet-nav-side').addClass('open');
+                    $('.js-homeView-wallet-nav').addClass('close');
+                        setTimeout(function() {
+                            $(wallet.body).addClass(wallet.class);
+                        }, 200);
+                        setTimeout(function() {
+                            $('.js-homeView-wallet-nav').hide();
+                        }, 400);
                 } else {
                     if(!wallet.body.hasClass('hidden')) {
-                        $('.js-homeView-box').removeClass(wallet.class);
+                        $(wallet.body).removeClass(wallet.class);
                         wallet.body.addClass('hidden');
                     }
                 }
