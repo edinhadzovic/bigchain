@@ -2,11 +2,6 @@ const litecore = require('litecore-lib');
 const request = require('request');
 
 const bigi = require('bigi');
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> f25cb66ccfdaaff77b2e9b6c7231c6b771f061e8
 var sb = require('satoshi-bitcoin');
 
 // balance
