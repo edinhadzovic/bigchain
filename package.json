@@ -36,7 +36,6 @@
     "jquery": "^3.3.1",
     "jsonwebtoken": "^8.2.1",
     "keythereum": "^1.0.4",
-    "litecore-explorers": "^1.0.1",
     "litecore-lib": "^0.13.22",
     "node-coinmarketcap": "^0.2.0",
     "request": "^2.85.0",

@@ -3,9 +3,6 @@ const request = require('request');
 
 const bigi = require('bigi');
 
-var explorers = require('litecore-explorers');
-var insight = new explorers.Insight();
- 
 var sb = require('satoshi-bitcoin');
 
 // balance
