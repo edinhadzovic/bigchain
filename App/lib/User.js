@@ -285,6 +285,8 @@ User.prototype.setBch = async function(data) {
 
   this._bch_wallet.address = data._bch_wallet.address;
   this._bch_wallet.private_key = data._bch_wallet.private_key;
+}
+
 User.prototype.setEth = async function(data) {
 
   this._eth_wallet._eth_address = data._eth_wallet._eth_address;

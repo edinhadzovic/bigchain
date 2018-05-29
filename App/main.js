@@ -282,13 +282,17 @@ ipcMain.on('send_ltc', async function(event, data) {
 });
 
 ipcMain.on('get-bch', async function(event) {
-  let data = {};
-  console.log(message.main, "get Bch");
-  
-  data.market_price = await market_price.getBchPrice(current_user._bch_wallet);
-  data.standing = await current_user._bch_wallet.readBalance(current_user._bch_wallet);
-  console.log(message.main, "send back to user");
-  event.sender.send('init-bch-info', data);
+  try {
+    let data = {};
+    console.log(message.main, "get Bch");
+    
+    data.market_price = await market_price.getBchPrice(current_user._bch_wallet);
+    data.standing = await current_user._bch_wallet.readBalance(current_user._bch_wallet);
+    console.log(message.main, "send back to user");
+    event.sender.send('init-bch-info', data); 
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 ipcMain.on('send_bch', async function(event, data) { 
