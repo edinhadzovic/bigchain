@@ -305,12 +305,9 @@ User.prototype.generate_wallets = async function() {
       this.setEth(this);
       console.log(this._btc_wallet);
       console.log(this._ltc_wallet);
-<<<<<<< HEAD
       console.log(this._bch_wallet);
-=======
       console.log(this._eth_wallet);
 
->>>>>>> master
       let res = store.update(this); 
       resolve(true);
     }
