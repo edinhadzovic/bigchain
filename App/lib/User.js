@@ -31,11 +31,8 @@ let User = function(){
   this._profile_image = null;
   this._btc_wallet = new btc();
   this._ltc_wallet = new ltc();
-<<<<<<< HEAD
   this._bch_wallet = new bch();
-=======
   this._eth_wallet = new eth();
->>>>>>> master
 };
 
 User.prototype.save = async function(user){
@@ -102,11 +99,8 @@ User.prototype.login = async function(data) {
     this.setImage(user.user);
     this.setBtc(user.user);
     this.setLtc(user.user);
-<<<<<<< HEAD
     this.setBch(user.user);
-=======
     this.setEth(user.user);
->>>>>>> master
     return true;
   } catch (err) {
     return err;
@@ -287,17 +281,14 @@ User.prototype.setLtc = async function(data) {
   this._ltc_wallet._ltc_privateKey = data._ltc_wallet._ltc_privateKey;
 };
 
-<<<<<<< HEAD
 User.prototype.setBch = async function(data) {
 
   this._bch_wallet.address = data._bch_wallet.address;
   this._bch_wallet.private_key = data._bch_wallet.private_key;
-=======
 User.prototype.setEth = async function(data) {
 
   this._eth_wallet._eth_address = data._eth_wallet._eth_address;
   this._eth_wallet._eth_privateKey = data._eth_wallet._eth_privateKey;
->>>>>>> master
 };
 
 User.prototype.generate_wallets = async function() {
@@ -306,12 +297,9 @@ User.prototype.generate_wallets = async function() {
       //generate address
       this._btc_wallet.generateAddress_and_PrivateKey(this);
       this._ltc_wallet.generateAddress_and_PrivateKey(this);
-<<<<<<< HEAD
       this._bch_wallet.generateAddress_and_PrivateKey(this);
       this.setBch(this);
-=======
       this._eth_wallet.generateAddress_and_PrivateKey(this);
->>>>>>> master
       this.setBtc(this);
       this.setLtc(this);
       this.setEth(this);
