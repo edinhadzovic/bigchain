@@ -8,9 +8,6 @@ var sb = require('satoshi-bitcoin');
 var bitcore_exp = require('bitcore-explorers').Insight;
 var insight = new bitcore_exp('testnet');
 
-// balance
-var balance = require('crypto-balances');
-
 class Bitcoin {
 
     // Change link to bitcoin info and price bitcoin

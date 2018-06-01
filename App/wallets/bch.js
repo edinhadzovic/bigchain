@@ -79,12 +79,12 @@ Bitcoincash.prototype.send = function(amount, address, wallet){
 Bitcoincash.prototype.readBalance = function(wallet) {
     return new Promise(async (resolve, reject) => {
        let utxos = await this.unspendUTXOS(wallet.address);
-       if(utxos.length === 0) {
-           reject({
-            succes: false,
-            msg: "utxos failed"
-        });
-       }
+    //    if(utxos.length === 0) {
+    //        reject({
+    //         succes: false,
+    //         msg: "utxos failed"
+    //     });
+    //    }
 
        let satoshis = 0;
        for(let transfer of utxos) {
