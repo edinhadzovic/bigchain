@@ -457,12 +457,12 @@ var homeViewController = function (params, user) {
                 type: "Startup",
                 body: $(params).find('.js-homeView-startup.homeView-start-content')
             },
+            // {
+            //     type: 'File',
+            //     body: $(params).find('.js-homeView-file.homeView-start-content')
+            // },
             {
-                type: 'File',
-                body: $(params).find('.js-homeView-file.homeView-start-content')
-            },
-            {
-                type: 'Manager',
+                type: 'Exchange',
                 body: $(params).find('.js-homeView-manager.homeView-start-content')
             },
             {

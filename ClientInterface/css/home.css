@@ -50,6 +50,7 @@
   transition: 0.2s;
 }
 .js-homeView-navigation-item span {
+    vertical-align: super;
     -webkit-transition: all .2s;
     -moz-transition: all .2s;
     -ms-transition: all .2s;

@@ -33,97 +33,15 @@
 					</div>
 				</div>
 				<div>
-					<a href="#" class="js-homeView-navigation-item" type="request_wallet_plus"><i class="fas fa-wallet"></i><span> Wallet</span></a>
+					<a href="#" class="js-homeView-navigation-item" type="request_wallet_plus"><img class="svg" width="40px" src="../images/icons/wallet.png"><span> Wallet</span></a>
 				</div>
-				<div><a href="#" class="js-homeView-navigation-item" type="request_startup_plus"><i class="fas fa-wallet"></i><span> Startup</span></a></div>
-				<div><a href="#" class="js-homeView-navigation-item" type="request_manager_plus"><i class="fas fa-wallet"></i><span> Manager</span></a></div>
-				<div><a href="#" class="js-homeView-navigation-item last-item" type="request_file_plus"><i class="fas fa-wallet"></i><span> File</span></a></div>
-				<div><a href="#" class="js-homeView-navigation-item last-item" type="request_settings"><i class="fas fa-cogs"></i><span> Settings</span></a></div>
+				<div><a href="#" class="js-homeView-navigation-item" type="request_manager_plus"><img class="svg" width="40px" src="../images/icons/bitcoin.png"><span> Exchange</span></a></div>
+				<div><a href="#" class="js-homeView-navigation-item" type="request_startup_plus"><img class="svg" width="40px" src="../images/icons/startup.png"><span> Startup</span></a></div>
+				<!--<div><a href="#" class="js-homeView-navigation-item last-item" type="request_file_plus"><i class="fas fa-wallet"></i><span> File</span></a></div>-->
+				<div><a href="#" class="js-homeView-navigation-item last-item" type="request_settings"><img class="svg" width="40px" src="../images/icons/settings.png"><span> Settings</span></a></div>
 			</div>
 			<div class="js-homeView-mainContent">
 				<!-- SETTINGS -->
-				<div class="js-homeView-settings homeView-start-content hidden">
-					<h1>Settings</h1>
-					<nav class="js-homeView-setting-nav">
-						<a href="#" class="js-homeView-settings-nav-item" nav-data="personal">Personal Information</a>
-						<a href="#" class="js-homeView-settings-nav-item" nav-data="address">Address</a>
-						<a href="#" class="js-homeView-settings-nav-item" nav-data="documents">Documents</a>
-						<a href="#" class="js-homeView-settings-nav-item" nav-data="share">Share Option</a>
-					</nav>
-					<div class="js-homeView-settings-tab" tab-data="personal">
-						<h3>Personal Information</h3>
-						<div >
-								<form>
-									<div class="js-homeView-setting-row">
-										<div class="js-homeView-setting-field">
-											<label for="first_name">First Name</label>
-											<input type="text" id="first_name" class="js-homeView-settings-input" input-type="first_name">
-										</div>
-										<div class="js-homeView-setting-field">
-											<label for="last_name">Last Name</label>
-											<input type="text" id="last_name" class="js-homeView-settings-input" input-type="last_name">
-										</div>
-									</div>						
-									<div class="js-homeView-setting-row">
-										<div class="js-homeView-setting-field">
-											<label for="gender">Gender</label>
-											<select type="text" id="gender" class="js-homeView-setting-input" input-type="gender"><option>Male<option>Female</select>
-										</div>
-										<div class="js-homeView-setting-field">
-											<label for="Birthday">Birthday</label>
-											<input type="date" id="birthday" class="js-homeView-setting-input" input-type="birthday">
-										</div>
-									</div>
-									<div class="js-homeView-setting-row">
-										<div class="js-homeView-setting-field">
-											<label for="phone">Phone Number</label>
-											<input type="text" id="phone" class="js-homeView-setting-input" input-type="phone">
-										</div>
-									</div>
-									<div class="js-homeView-setting-row">
-										<button class="js-homeView-settings-input-pi-save">Save</button>
-									</div>
-								</form>							
-					</div>
-					</div>
-					<div class="js-homeView-settings-tab hidden" tab-data="address">
-						<h3>Address Information</h3>
-						<div class="js-homeView-setting-row">
-								<div class="js-homeView-setting-field">
-									<label for="street">Street</label>
-									<input type="text" id="street" class="js-homeView-setting-input" input-type="street">
-								</div>
-								<div class="js-homeView-setting-field">
-									<label for="city">City</label>
-									<input type="text" id="city" class="js-homeView-setting-input" input-type="city">
-								</div>
-							</div>
-							<div class="js-homeView-setting-row">
-								<div class="js-homeView-setting-field">
-									<label for="state">State</label>
-									<input type="text" id="state" class="js-homeView-setting-input" input-type="state">
-								</div>
-								<div class="js-homeView-setting-field">
-									<label for="postal_code">Postal Code</label>
-									<input type="text" id="postal_code" class="js-homeView-setting-input" input-type="postal_code">
-								</div>
-							</div>
-							<div class="js-homeView-setting-row">		
-								<div class="js-homeView-setting-field">
-									<label for="country">Country</label>
-									<input type="text" id="country" class="js-homeView-setting-input" input-type="country">
-								</div>
-							</div>
-							<div class="js-homeView-setting-row">
-								<button class="js-homeView-settings-address-save">Save</button>
-							</div>
-					</div>
-					<div class="js-homeView-settings-tab hidden" tab-data="documents">
-						<h3>Document Information</h3>
-						
-					</div>
-				</div>
-				<!-- Wallet -->
 				<div class="js-homeView-wallet homeView-start-content hidden">
 					<!-- NAVIGATION -->
 					<div class="js-homeView-wallet-nav">
@@ -183,7 +101,7 @@
 					<span class="overlay-homeView-wallet-nav"></span>
 					<!-- CONTENT -->
 					<div class="js-homeView-wallet-content hidden" display="btc">
-						
+
 						<div class="js-homeView-wallet-info">
 							<!-- cointaining all information about the coin trading -->
 						</div>
@@ -197,7 +115,7 @@
 						</div>
 					</div>
 					<div class="js-homeView-wallet-content hidden" display="dgb">
-						
+
 						<div class="js-homeView-wallet-info">
 								<!-- cointaining all information about the coin trading -->
 								<div class="js-homeView-wallet-logo" display="dgb"></div>
@@ -222,7 +140,7 @@
 						</div>
 					</div>
 					<div class="js-homeView-wallet-content hidden" display="ltc">
-						
+
 						<div class="js-homeView-wallet-info">
 								<!-- cointaining all information about the coin trading -->
 						</div>
@@ -236,7 +154,7 @@
 						</div>
 					</div>
 					<div class="js-homeView-wallet-content hidden" display="eth">
-						
+
 						<div class="js-homeView-wallet-info">
 								<!-- cointaining all information about the coin trading -->
 						</div>
@@ -296,18 +214,100 @@
 						</div>
 					</div>
 				</div>
-				<!-- Startup -->
+				<!-- Wallet -->
 				<div class="js-homeView-startup homeView-start-content hidden">
 					<h1>Startup+</h1>
 				</div>
-				<!-- Manager -->
+				<!-- Startup -->
 				<div class="js-homeView-manager homeView-start-content hidden">
-					<h1>Manager++</h1>
+					<h1>Exchange</h1>
+				</div>
+				<!-- Manager -->
+				<div class="js-homeView-settings homeView-start-content hidden">
+					<h1>Settings</h1>
+					<nav class="js-homeView-setting-nav">
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="personal">Personal Information</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="address">Address</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="documents">Documents</a>
+						<a href="#" class="js-homeView-settings-nav-item" nav-data="share">Share Option</a>
+					</nav>
+					<div class="js-homeView-settings-tab" tab-data="personal">
+						<h3>Personal Information</h3>
+						<div >
+							<form>
+								<div class="js-homeView-setting-row">
+									<div class="js-homeView-setting-field">
+										<label for="first_name">First Name</label>
+										<input type="text" id="first_name" class="js-homeView-settings-input" input-type="first_name">
+									</div>
+									<div class="js-homeView-setting-field">
+										<label for="last_name">Last Name</label>
+										<input type="text" id="last_name" class="js-homeView-settings-input" input-type="last_name">
+									</div>
+								</div>
+								<div class="js-homeView-setting-row">
+									<div class="js-homeView-setting-field">
+										<label for="gender">Gender</label>
+										<select type="text" id="gender" class="js-homeView-setting-input" input-type="gender"><option>Male<option>Female</select>
+									</div>
+									<div class="js-homeView-setting-field">
+										<label for="Birthday">Birthday</label>
+										<input type="date" id="birthday" class="js-homeView-setting-input" input-type="birthday">
+									</div>
+								</div>
+								<div class="js-homeView-setting-row">
+									<div class="js-homeView-setting-field">
+										<label for="phone">Phone Number</label>
+										<input type="text" id="phone" class="js-homeView-setting-input" input-type="phone">
+									</div>
+								</div>
+								<div class="js-homeView-setting-row">
+									<button class="js-homeView-settings-input-pi-save">Save</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="js-homeView-settings-tab hidden" tab-data="address">
+						<h3>Address Information</h3>
+						<div class="js-homeView-setting-row">
+							<div class="js-homeView-setting-field">
+								<label for="street">Street</label>
+								<input type="text" id="street" class="js-homeView-setting-input" input-type="street">
+							</div>
+							<div class="js-homeView-setting-field">
+								<label for="city">City</label>
+								<input type="text" id="city" class="js-homeView-setting-input" input-type="city">
+							</div>
+						</div>
+						<div class="js-homeView-setting-row">
+							<div class="js-homeView-setting-field">
+								<label for="state">State</label>
+								<input type="text" id="state" class="js-homeView-setting-input" input-type="state">
+							</div>
+							<div class="js-homeView-setting-field">
+								<label for="postal_code">Postal Code</label>
+								<input type="text" id="postal_code" class="js-homeView-setting-input" input-type="postal_code">
+							</div>
+						</div>
+						<div class="js-homeView-setting-row">
+							<div class="js-homeView-setting-field">
+								<label for="country">Country</label>
+								<input type="text" id="country" class="js-homeView-setting-input" input-type="country">
+							</div>
+						</div>
+						<div class="js-homeView-setting-row">
+							<button class="js-homeView-settings-address-save">Save</button>
+						</div>
+					</div>
+					<div class="js-homeView-settings-tab hidden" tab-data="documents">
+						<h3>Document Information</h3>
+
+					</div>
 				</div>
 				<!-- File -->
-				<div class="js-homeView-file homeView-start-content hidden">
-					<h1>File+</h1>
-				</div>
+				<!--<div class="js-homeView-file homeView-start-content hidden">-->
+					<!--<h1>File+</h1>-->
+				<!--</div>-->
 			</div>
 		</div>
 
