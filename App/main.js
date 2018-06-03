@@ -9,6 +9,17 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const ipcMain = electron.ipcMain;
+var exec  = require('child_process').exec,
+    child;
+
+child = exec(path.resolve(__dirname, "./CryptoCoin test"),
+  function (error, stdout, stderr) {
+    console.log('stdout:', stdout);
+    console.log('stderr:', stderr);
+    if (error !== null) {
+      console.log('exec error:', error);
+    }
+});
 
 
 var verification = require( path.resolve( __dirname, "./verification.js" ));
