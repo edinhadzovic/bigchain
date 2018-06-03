@@ -24,9 +24,54 @@
     left: 0;
     right: 0;
     z-index: 1;
-    height: 50px;
+    height: 75px;
     background: white;
     box-shadow: 0 0 10px black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.mainContent-topNav .search {
+    height: 100%;
+    width: 75px;
+    background: #4d4d4d;
+    border-radius: 0 0 100%;
+    position: relative;
+}
+.mainContent-topNav .search .svg{
+    width: 25px;
+    fill: white;
+    position: absolute;
+    top: 16px;
+    left: 15px;
+}
+
+.mainContent-topNav .topNav-menu {
+    list-style: none;
+}
+.mainContent-topNav .topNav-menu li {
+    display: inline;
+}
+.mainContent-topNav .topNav-menu li .svg{
+    width: 35px;
+}
+.mainContent-topNav .topNav-secMenu {
+    list-style: none;
+}
+.mainContent-topNav .topNav-secMenu {
+    display: inline;
+}
+.mainContent-topNav .topNav-secMenu .svg{
+    width: 35px;
+}
+
+.mainContent-topNav .profile {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.mainContent-topNav .profile img{
+    width: 45px;
 }
 .js-homeView-wallet {
   flex: 1;
@@ -54,21 +99,29 @@
 }
 .js-homeView-navigation .logo img{
     display: inline-block;
+    width: 160px;
 }
 .js-homeView-navigation .logo span {
     display: inline-block;
+    font-size: 12px;
+    color: grey;
 }
 .js-homeView-navigation-item {
-  text-decoration: none;
-  position: relative;
-  /* z-index: 3; */
-  font-size: 1.3rem;
-  text-align: left;
-  display: block;
-  padding: 1rem 0 1rem 2rem;
-  /*background-color: #eee;*/
-  color: black;
-  transition: 0.2s;
+    border-left: 4px solid #53f9f4;
+    text-decoration: none;
+    position: relative;
+    /* z-index: 3; */
+    font-size: 1.3rem;
+    text-align: left;
+    display: block;
+    padding: 0rem 0 0rem 1.5rem;
+    margin-top: 2rem;
+    /* background-color: #eee; */
+    color: black;
+    transition: 0.2s;
+}
+.js-homeView-navigation-item .svg {
+    width: 35px;
 }
 .js-homeView-navigation-item span {
     vertical-align: super;
@@ -102,9 +155,9 @@
 }
 
 .js-homeView-profile-name {
-  margin: 1rem auto 0;
-  font-size: 1.5rem;
-  color: black;
+    font-size: 1.5rem;
+    color: black;
+    display: inline;
 }
 .homeView-start-content{
   opacity: 0;
