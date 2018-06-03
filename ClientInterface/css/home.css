@@ -15,6 +15,18 @@
   display: flex;
   flex-grow: 10;
   /* margin: 20px; */
+  background: #f0f0f0;
+  position: relative;
+}
+.mainContent-topNav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 50px;
+    background: white;
+    box-shadow: 0 0 10px black;
 }
 .js-homeView-wallet {
   flex: 1;
@@ -36,7 +48,16 @@
   z-index: 2;
   box-shadow:0 0 100px -20px black;
 }
-
+.js-homeView-navigation .logo{
+    padding:2rem 0 5rem;
+    text-align: center;
+}
+.js-homeView-navigation .logo img{
+    display: inline-block;
+}
+.js-homeView-navigation .logo span {
+    display: inline-block;
+}
 .js-homeView-navigation-item {
   text-decoration: none;
   position: relative;
