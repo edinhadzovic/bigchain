@@ -17,16 +17,17 @@
 
 .js-homeView-wallet-nav {
   opacity: 1;
-  display: flex;
-  height: 100%;
+  /*display: flex;*/
+   height: 100%;
   /* width: 100%; */
-  flex-direction: row;
-  flex-wrap: wrap;
+  /*flex-direction: row;*/
+  /*flex-wrap: wrap;*/
   -webkit-transition: opacity .4s;
   -moz-transition: opacity .4s;
   -ms-transition: opacity .4s;
   -o-transition: opacity .4s;
   transition: opacity .4s;
+  /*justify-content: space-between;*/
 }
 .js-homeView-wallet-nav.close {
   opacity: 0;
@@ -34,15 +35,22 @@
 
 .js-homeView-wallet-nav-item {
   position: relative;
-  display: inline-flex;
-  width: 33.33%;
-  /* height: 75px; */
+  /* display: inline-flex; */
+  /* width: 29.33%; */
+  height: 441px;
   /* margin: 20px; */
-  color: white;
-  flex-basis: 33.33%;
+  padding: 1rem;
+  /* color: white; */
+  margin-top: 2rem;
+  /* flex-basis: 29.33%; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.js-homeView-wallet-nav-item > div{
+  position: relative;
+  background: white;
+  height: 100%;
 }
 .js-homeView-wallet-nav-side .js-homeView-wallet-nav-item {
   width: unset;
@@ -116,10 +124,10 @@
   background-image: url("https://png.icons8.com/color/1600/ethereum.png");
 }
 
-.js-homeView-wallet-nav .js-homeView-wallet-nav-item.btc  {
-  background: #FF8E00;
-  box-shadow:inset 0 0 300px -60px black;
-}
+/*.js-homeView-wallet-nav .js-homeView-wallet-nav-item.btc  {*/
+  /*background: #FF8E00;*/
+  /*box-shadow:inset 0 0 300px -60px black;*/
+/*}*/
 
 /*.js-homeView-wallet-symbol[request="btc"]:hover {*/
   /*background-color: #FF8E00;*/
@@ -129,10 +137,10 @@
   /*box-shadow: inset 1px 2px 2px #cc7000;*/
 /*}*/
 
-.js-homeView-wallet-nav .js-homeView-wallet-nav-item.dgb {
-  background: #091E54;
-  box-shadow:inset 0px 0px 300px -60px black;
-}
+/*.js-homeView-wallet-nav .js-homeView-wallet-nav-item.dgb {*/
+  /*background: #091E54;*/
+  /*box-shadow:inset 0px 0px 300px -60px black;*/
+/*}*/
 
 /*.js-homeView-wallet-symbol[request="dgb"]:hover {*/
   /*background-color: #091E54;*/
@@ -142,10 +150,10 @@
   /*box-shadow: inset 1px 2px 2px #05112e;*/
 /*}*/
 
-.js-homeView-wallet-nav .js-homeView-wallet-nav-item.ltc {
-  background:#4d4d4d;
-  box-shadow:inset 0px 0px 300px -60px black;
-}
+/*.js-homeView-wallet-nav .js-homeView-wallet-nav-item.ltc {*/
+  /*background:#4d4d4d;*/
+  /*box-shadow:inset 0px 0px 300px -60px black;*/
+/*}*/
 
 /*.js-homeView-wallet-symbol[request="ltc"]:hover {*/
   /*background-color: #4d4d4d;*/
@@ -155,10 +163,10 @@
   /*box-shadow: inset 1px 2px 2px #333333;*/
 /*}*/
 
-.js-homeView-wallet-nav .js-homeView-wallet-nav-item.eth {
-  background: #C99D66;
-  box-shadow:inset 0px 0px 300px -60px black;
-}
+/*.js-homeView-wallet-nav .js-homeView-wallet-nav-item.eth {*/
+  /*background: #C99D66;*/
+  /*box-shadow:inset 0px 0px 300px -60px black;*/
+/*}*/
 
 /*.js-homeView-wallet-symbol[request="eth"]:hover {*/
   /*background-color: #C99D66;*/

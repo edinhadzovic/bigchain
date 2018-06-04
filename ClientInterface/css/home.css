@@ -30,13 +30,20 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+}
+.mainContent-topNav div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 .mainContent-topNav .search {
-    height: 100%;
+    height: 75px;
     width: 75px;
     background: #4d4d4d;
     border-radius: 0 0 100%;
     position: relative;
+    display: inline;
 }
 .mainContent-topNav .search .svg{
     width: 25px;
@@ -48,30 +55,48 @@
 
 .mainContent-topNav .topNav-menu {
     list-style: none;
+    display: inline-block;
+    margin-left: 2rem;
 }
 .mainContent-topNav .topNav-menu li {
     display: inline;
+    font-size: 1.2rem;
+    margin-right: 15px;
 }
-.mainContent-topNav .topNav-menu li .svg{
+.mainContent-topNav .mainContent-topNav-right > div {
+    padding: 0 2rem;
+}
+.mainContent-topNav .mainContent-topNav-right > div:first-child {
+    border-right: 1px solid lightgrey;
+}
+.mainContent-topNav .mainContent-topNav-right .mainContent-topNav-notification .svg{
     width: 35px;
-}
-.mainContent-topNav .topNav-secMenu {
-    list-style: none;
-}
-.mainContent-topNav .topNav-secMenu {
-    display: inline;
-}
-.mainContent-topNav .topNav-secMenu .svg{
-    width: 35px;
+    margin: 0 10px;
 }
 
-.mainContent-topNav .profile {
+.mainContent-topNav .mainContent-topNav-right .profile {
     display: flex;
     align-items: center;
     flex-direction: row;
 }
-.mainContent-topNav .profile img{
+.mainContent-topNav .mainContent-topNav-right .profile img{
     width: 45px;
+}
+.mainContent-topNav .mainContent-topNav-right .alert{
+    position: relative;
+}
+.mainContent-topNav .mainContent-topNav-right .alert .svg{
+    width: 40px;
+}
+.mainContent-topNav .mainContent-topNav-right .alert.note{
+    fill: red;
+    color: red;
+}
+.mainContent-topNav .mainContent-topNav-right .alert .notification{
+    position: absolute;
+    left: 26px;
+    font-size: 11px;
+    font-weight: bold;
 }
 .js-homeView-wallet {
   flex: 1;
@@ -160,12 +185,14 @@
     display: inline;
 }
 .homeView-start-content{
-  opacity: 0;
-  -webkit-transition: opacity .2s;
-  -moz-transition: opacity .2s;
-  -ms-transition: opacity .2s;
-  -o-transition: opacity .2s;
-  transition: opacity .2s;
+    padding: 100px;
+    overflow-x: auto;
+    opacity: 0;
+    -webkit-transition: opacity .2s;
+    -moz-transition: opacity .2s;
+    -ms-transition: opacity .2s;
+    -o-transition: opacity .2s;
+    transition: opacity .2s;
 }
 .homeView-start-content.open{
   opacity: 1;
