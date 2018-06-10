@@ -126,8 +126,8 @@ var loginViewController = function (params) {
     $(loginViewController.imageView.toSkip).click(function(event){
         event.preventDefault();
         loginViewController.registerView.body.fadeOut(200, () => {
-            $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                new homeViewController($('.js-homeView-box',));
+            $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                new homeViewController($('body',));
             });
         });
     });
@@ -146,8 +146,8 @@ var loginViewController = function (params) {
 
         ipcRenderer.on("login-success", (event, arg) => {
             loginViewController.reference.fadeOut(500, function(){
-                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    new homeViewController($('.js-homeView-box'), arg);
+                $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                    new homeViewController($('body'), arg);
                 });
             });
         });
@@ -371,8 +371,8 @@ var loginViewController = function (params) {
 
         ipcRenderer.on('image-submission-success', (event, current_user) => {
             loginViewController.reference.fadeOut(500, function(){
-                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    new homeViewController($('.js-homeView-box'), current_user);
+                $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                    new homeViewController($('body'), current_user);
                 });
             });
         });
@@ -403,8 +403,8 @@ var homeViewController = function (params, user) {
             wallet: $params.find('.js-homeView-navigation-item[type="request_wallet_plus"]'),
             settings: $params.find('.js-homeView-navigation-item[type="request_settings"]'),
             startup_plus: $params.find('.js-homeView-navigation-item[type="request_startup_plus"]'),
-            manager_plus: $params.find('.js-homeView-navigation-item[type="request_manager_plus"]'),
-            file_plus: $params.find('.js-homeView-navigation-item[type="request_file_plus"]'),
+            manager_plus: $params.find('.js-homeView-navigation-item[type="request_manager_plus"]')
+            // file_plus: $params.find('.js-homeView-navigation-item[type="request_file_plus"]'),
         },
         personalInformation: {
             body: $params.find('.js-homeView-setting-row'),
@@ -413,14 +413,14 @@ var homeViewController = function (params, user) {
             gender: $params.find('.js-homeView-setting-input[input-type="gender"]'),
             birthday: $params.find('.js-homeView-setting-input[input-type="birthday"]'),
             phone: $params.find('.js-homeView-setting-input[input-type="phone"]'),
-            personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
+            personal_submit: $params.find('.js-homeView-settings-input-pi-save')
         },
         wallet_navigation: {
             body: $params.find('.js-homeView-wallet-nav'),
             btc: $params.find('.js-homeView-wallet-symbol[request="btc"]'),
             dgb: $params.find('.js-homeView-wallet-symbol[request="dgb"]'),
             ltc: $params.find('.js-homeView-wallet-symbol[request="ltc"]'),
-            eth: $params.find('.js-homeView-wallet-symbol[request="eth"]'),
+            eth: $params.find('.js-homeView-wallet-symbol[request="eth"]')
         },
         dgb_wallet: {
             body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
@@ -555,11 +555,11 @@ var homeViewController = function (params, user) {
     $(homeViewController.navigaiton.startup_plus).click(function(){
         homeViewController.setPage("Startup");
     });
-    $(homeViewController.navigaiton.file_plus).click(function(){
-        homeViewController.setPage("File");
-    });
+    // $(homeViewController.navigaiton.file_plus).click(function(){
+    //     homeViewController.setPage("File");
+    // });
     $(homeViewController.navigaiton.manager_plus).click(function(){
-        homeViewController.setPage("Manager");
+        homeViewController.setPage("Exchange");
     });
 
     $(homeViewController.wallet_navigation.btc).click(function() {
@@ -592,11 +592,11 @@ var homeViewController = function (params, user) {
 
 ipcRenderer.on('init-main-window', (event, current_user) => {
     console.log(current_user);
-    new homeViewController($('.js-homeView-box'), current_user);
+    new homeViewController($('body'), current_user);
 });
 
 $('document').ready(function(){
-    $('.js-homeView-box').each(function () {
+    $('body').each(function () {
         new homeViewController(this);
     })
 });
@@ -688,5 +688,53 @@ jQuery('img.svg').each(function(){
         $img.replaceWith($svg);
 
     }, 'xml');
+
+});
+
+$('.mainContent-topNav .search').on('click',function(e) {
+    if (!$(this).hasClass('active')) {
+        $(this).toggleClass('active');
+        $('.mainContent-topNav .topNav-menu').fadeOut();
+        $('.mainContent-topNav .search .ui.input').removeClass('d-none');
+        setTimeout(function (a) {
+            $('.mainContent-topNav .search .ui.input').addClass('active');
+        }, 300)
+    } else {
+        $(this).toggleClass('active');
+        $('.mainContent-topNav .search .ui.input').addClass('d-none');
+        setTimeout(function (a) {
+            $('.mainContent-topNav .topNav-menu').fadeIn();
+            $('.mainContent-topNav .search .ui.input').removeClass('active');
+        }, 300)
+    }
+});
+$('.close-dropdown').on('click', function(){
+    if ($('.dropdown').hasClass('d-none')){
+    $('.dropdown').removeClass('d-none');
+    setTimeout(function () {
+        $('.dropdown').addClass('drop');
+    }, 200);
+    } else {
+        $('.dropdown').removeClass('drop');
+        setTimeout(function () {
+            $('.dropdown').addClass('d-none');
+        }, 200);
+    }
+});
+$('.burger-click-region').on('click', function () {
+
+    let sideNav = $('.js-homeView-navigation');
+
+    if (!sideNav.hasClass('close')) {
+        sideNav.children().not('.burger-click-region').fadeOut();
+        setTimeout(function () {
+            sideNav.addClass('close');
+        }, 300);
+    } else {
+        sideNav.removeClass('close');
+        setTimeout(function () {
+            sideNav.children().not('.burger-click-region').fadeIn();
+        }, 300);
+    }
 
 });

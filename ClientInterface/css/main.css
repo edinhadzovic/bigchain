@@ -14,16 +14,13 @@ body,html {
     height: 100%;
     padding: 0;
     margin: 0;
+    min-width: 650px;
 }
 
 body {
     font-family: 'Roboto Mono', monospace;
-    font-weight: 200;
-    background-image: url("../images/bg.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     color: black;
+    display: flex;
 }
 
 * {

@@ -84,8 +84,8 @@
   position: absolute;
   left: 1rem;
   top: 1rem;
-  height: 50px;
-  width: 50px;
+  height: 35px;
+  width: 35px;
   background: no-repeat center / contain;
   /*width: 75px;*/
   /*display: flex;*/
@@ -105,7 +105,7 @@
 }
 .js-homeView-wallet-symbol span {
   position: absolute;
-  left: 60px;
+  left: 40px;
 }
 .js-homeView-wallet-nav-side .js-homeView-wallet-nav-item span {
 
@@ -198,7 +198,7 @@
 
 .js-homeView-wallet-fiat {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 .js-homeView-wallet-fiat i.up {
   color: #28b600;
@@ -207,7 +207,7 @@
   color: #b60005;
 }
 .js-homeView-wallet-satoshis {
-  /*color: #b1b1b1;*/
+  color: #b1b1b1;
   font-size: 14px;
 }
 
