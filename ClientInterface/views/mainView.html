@@ -180,8 +180,8 @@
 							<h1>BTC</h1>
 							<!-- cointaining all function for sending / recieving coins -->
 							<div class="js-homeView-wallet-balance" balance="btc">
-								<div class="js-homeView-wallet-fiat-btc"> &euro;</div>
-								<div class="js-homeView-wallet-standing-btc"> BTC</div>
+								<div class="js-homeView-wallet-fiat-btc"> $ </div>
+								<div class="js-homeView-wallet-standing-btc"> BTC </div>
 							</div>
 							<div class="js-homeView-wallet-send-to" send="btc">
 								<form class="js-homeView-wallet-send-form">
@@ -203,14 +203,15 @@
 								<!-- cointaining all function for sending / recieving coins -->
 								<h1>DGB</h1>
 								<div class="js-homeView-wallet-balance" balance="dgb">
-									<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
-									<div class="js-homeView-wallet-satoshis">0.00000000 DGB</div>
+									<div class="js-homeView-wallet-fiat-bch"></div>
+									<div class="js-homeView-wallet-satoshis-bch"></div>
 								</div>
 								<div class="js-homeView-wallet-send-to" send="dgb">
-									<h3>Send</h3>
 									<form class="js-homeView-wallet-send-form">
-										<input type="text">
-										<input type="text">
+										<h3>Send</h3>
+										<input type="text"  placeholder="Receiver BCH address" name= "ltc_add" class="js-homeView-wallet-send-bch-to-address">
+										<input type="number" placeholder="Enter the amount" name = "ltc_amount" class="js-homeView-wallet-send-bch-amount">
+										<button class="js-homeView-wallet-bch-send" > send</button>
 									</form>
 								</div>
 								<div class="js-homeView-wallet-generate-address-button">
@@ -227,8 +228,8 @@
 							<h1>LTC</h1>
 							<!-- cointaining all function for sending / recieving coins -->
 							<div class="js-homeView-wallet-balance" balance="ltc">
-								<div class="js-homeView-wallet-fiat-ltc"> &dollar;</div>
-								<div class="js-homeView-wallet-standing-ltc"> LTC</div>
+								<div class="js-homeView-wallet-fiat-ltc"> $ </div>
+								<div class="js-homeView-wallet-standing-ltc"> LTC </div>
 							</div>
 							<div class="js-homeView-wallet-send-to" send="ltc">
 								<form class="js-homeView-wallet-send-form">
@@ -253,10 +254,20 @@
 								<!-- cointaining all function for sending / recieving coins -->
 								<h1>ETH</h1>
 								<div class="js-homeView-wallet-balance" balance="eth">
-									<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
-									<div class="js-homeView-wallet-satoshis">0.00000000 ETH</div>
+									<div class="js-homeView-wallet-fiat-eth"> $ </div>
+									<div class="js-homeView-wallet-standing-eth"> ETH </div>
 								</div>
+								<div class="js-homeView-wallet-send-to" send="eth">
+									<form class="js-homeView-wallet-send-form">
+										<h3>Send</h3>
+										<input type="text"  placeholder="Receiver Eth address" name= "eth_add" class="js-homeView-wallet-send-eth-to-address">
+										<input type="number" placeholder="Enter the amount" name = "eth_amount" class="js-homeView-wallet-send-eth-amount"> 
+										<button class="js-homeView-wallet-eth-send" > send</button>
+									</form>
+								</div>
+
 						</div>
+
 					</div>
 				</div>
 				<!-- Startup -->
