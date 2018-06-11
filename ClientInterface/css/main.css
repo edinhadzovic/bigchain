@@ -4,6 +4,7 @@
 @import 'settings.css';
 @import 'social-media.css';
 @import 'wallet.css';
+@import 'color.css';
 
 * {
     padding: 0;
