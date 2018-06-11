@@ -17,9 +17,9 @@ Bitcoincash.prototype.generateAddress_and_PrivateKey = async function(user){
     const hash = bch.crypto.Hash.sha256(buffer);
     const bn = bch.crypto.BN.fromBuffer(hash);
     var testnet = bch.Networks.testnet;
-    var private_key = new bch.PrivateKey(bn, 'testnet');
+    var private_key = new bch.PrivateKey(bn, 'mainnet');
     this.private_key = private_key.toWIF();
-    this.address = private_key.toAddress('testnet').toString();
+    this.address = private_key.toAddress('mainnet').toString();
     // const privateKey = new bch.PrivateKey('L1uyy5qTuGrVXrmrsvHWHgVzW9kKdrp27wBC7Vs6nZDTF2BRUVwy');
 };
 

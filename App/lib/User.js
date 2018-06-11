@@ -95,7 +95,7 @@ User.prototype.login = async function(data) {
     this.setPersonalInfo(user.user);
     this.setAdress(user.user);
     // TODO set address and profile image
-    console.log(user.user);
+    //console.log(user.user);
     this.setImage(user.user);
     this.setBtc(user.user);
     this.setLtc(user.user);

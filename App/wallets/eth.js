@@ -8,7 +8,7 @@ var ethers = require('ethers');
 var Wallet = ethers.Wallet;
 var utils = ethers.utils;
 var providers = ethers.providers;
-console.log(providers.networks);
+//console.log(providers.networks);
 
 class Ethereum {
 
@@ -31,7 +31,7 @@ class Ethereum {
         console.log(wallet);
         // let data = providers.getDefaultProvider(true);
         // console.log(data);
-        let new_wallet = new Wallet(wallet._eth_privateKey, 'testnet');
+        let new_wallet = new Wallet(wallet._eth_privateKey, 'mainnet');
         // new_wallet.provider
         // var gasPrice = (new_wallet.provider.testnet ? 0x4a817c800: 0xba43b7400);
         new_wallet.provider = providers.getDefaultProvider({ chainId: 3,

@@ -26,7 +26,7 @@ let shapeshift = new ShapeShift();
 // shapeshift.getCoinsManuel().then((coinData) => {
 //   console.log(coinData);
 // });
-
+/*
 shapeshift.getPairRate('btc_ltc').then((coinData) => {
   console.log("1", coinData);
 });
@@ -37,13 +37,13 @@ shapeshift.getPairLimit('btc_ltc').then((coinData) => {
 
 shapeshift.getMarketInfo('btc_ltc').then((coinData) => {
   console.log(3, coinData);
-});
+}); 
 
 shapeshift.getRecentTx().then((coinData) => {
-  console.log(4, coinData);
+  //console.log(4, coinData);
 });
 
-
+*/
 
 // Global current user
 var current_user = new User();
@@ -323,13 +323,7 @@ ipcMain.on('get-bch', async function(event) {
   }
 });
 
-ipcMain.on('exchange', async function(event,data){
-  console.log("I received this data", data);
-  shapeshift.shiftFixed(data).then((res) => {
-    console.log(res);
-  }).catch(e => console.log(e));
-  event.sender.send('fee_exchange');
-})
+
 ipcMain.on('send_bch', async function(event, data) { 
   console.log(message.main, data);
   current_user._bch_wallet.send(data.bch_amount, data.bch_address, current_user._bch_wallet);
@@ -349,4 +343,19 @@ ipcMain.on('get-eth', async function(event) {
   data.standing = await current_user._eth_wallet.readStandingFromAddress(current_user._eth_wallet);
   event.sender.send('init-eth-info', data);
 });
+
+
+
+ipcMain.on('exchange', async function(event,data){
+  console.log("I received this data", data);
+  shapeshift.shiftFixed(data).then((res) => {
+    console.log(res);
+  }).catch(e => console.log(e));
+  event.sender.send('fee_exchange');
+})
+
+shapeshift.getCoins().then((coinData) => {
+  console.log(message.main,'\n', coinData);
+});
+
 

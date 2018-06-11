@@ -1,5 +1,5 @@
 const bitcoin = require('bitcoinjs-lib');
-const bitcore = require('bitcore-explorers/node_modules/bitcore-lib');
+const bitcore = require('bitcore-lib');
 
 const bigi = require('bigi');
 
@@ -30,7 +30,7 @@ class Bitcoin {
         // Normal address var keyPair = new bitcoin.ECPair(bigNum);
         var testnet = bitcoin.networks.testnet;
         // We are doing the same thing just we are using testnet network instead of real one
-        var keyPair = new bitcoin.ECPair(bigNum, null, {network: testnet});
+        var keyPair = new bitcoin.ECPair(bigNum, null, {network: bitcoin.networks.mainnet});
         // WIF is a representation of private key !!!!!!!!!!!!!!!!
         var btc_privateKey = keyPair.toWIF();
         var btc_address = keyPair.getAddress();

@@ -34,8 +34,8 @@ class Litecoin {
         // -------------------------------------------
         // We are doing the same thing just we are using testnet network instead of real one
 
-        var ltc_privateKey = new litecore.PrivateKey(bigNum, 'testnet');
-        var ltc_address = ltc_privateKey.toAddress('testnet');
+        var ltc_privateKey = new litecore.PrivateKey(bigNum, 'livenet');
+        var ltc_address = ltc_privateKey.toAddress('livenet');
         console.log(ltc_address);
         console.log(ltc_privateKey);
         this._ltc_address = ltc_address.toString();
