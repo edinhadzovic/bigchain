@@ -78,6 +78,11 @@
   /* top: 0; */
   bottom: 5rem;
 }
+
+.js-homeView-wallet-symbol[request="btc"] {
+  border: 1px solid #0d4dc4;
+  box-shadow: 1px 2px 2px #0d4dc4;
+}
 .js-homeView-wallet-symbol {
   font-weight: 600;
   font-size: 1rem;
@@ -107,8 +112,13 @@
   position: absolute;
   left: 40px;
 }
-.js-homeView-wallet-nav-side .js-homeView-wallet-nav-item span {
 
+.js-homeView-wallet-symbol[request="btc"]:hover {
+  background-color: #0d4dc4;
+  color: #0d4dc4;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px black;
+  box-shadow: inset 1px 2px 2px #0d4dc4;
 }
 
 .js-homeView-wallet-symbol[request="btc"] {
@@ -244,7 +254,7 @@
 }
 
 .js-homeView-wallet-content[display="btc"] * {
-  color: whitesmoke;
+  color: #0d4dc4;
 }
 
 .js-homeView-wallet-content[display="dgb"] {
@@ -310,6 +320,12 @@
   font-size: 32px;
   margin: 10px 0;
 }
+.js-homeView-wallet-send-to h3 {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+
 
 .js-homeView-wallet-send-form input {
   width: 300px;
@@ -409,4 +425,18 @@
 .overlay-homeView-wallet-nav.open{
   display: block;
   opacity: 1;
+
+.js-homeView-wallet-btc-send {
+  width: 120px;
+  height: 30px;
+  margin: 10px auto;
+  color: #05112e;
+}
+
+.js-homeView-wallet-send-btc-to-address {
+  color: #05112e;
+} 
+
+.js-homeView-wallet-send-btc-amount{
+  color: #05112e;
 }

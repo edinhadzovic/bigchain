@@ -137,13 +137,13 @@ var loginViewController = function (params) {
         let data = {};
         data.email = $(loginViewController.loginView.username).val();
         data.password = $(loginViewController.loginView.password).val();
-
-        data.email = "edinfuad.hadzovic@gmail.com";
-        data.password = "Manchester99!";
-
+        
+        let temp_data = {};
+        temp_data.email = 'Danilo@yahoo.com';
+        temp_data.password = 'Profi?danac321';
         // send username to main.js 
-        ipcRenderer.send('login-submission', data );
-
+        ipcRenderer.send('login-submission', temp_data );
+        
         ipcRenderer.on("login-success", (event, arg) => {
             loginViewController.reference.fadeOut(500, function(){
                 $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
@@ -171,14 +171,14 @@ var loginViewController = function (params) {
         data.email = $(loginViewController.registerView.email).val();
         data.password = $(loginViewController.registerView.password).val();
         data.password_rep = $(loginViewController.registerView.repassword).val();
-
-
-        data.email = "edinfuad.hadzovic@gmail.com";
-        data.password = "Manchester99!";
-        data.password_rep = "Manchester99!";
+        
+        let temp_data = {};
+        temp_data.email = 'Danilo@yahoo.com';
+        temp_data.password = 'Profi?danac321';
+        temp_data.password_rep = 'Profi?danac321';
         // send username to main.js 
-        ipcRenderer.send('register-submission', data );
-
+        ipcRenderer.send('register-submission', temp_data );
+        
         ipcRenderer.on('register-success', (event, user) => {
             //event.preventDefault();
             loginViewController.registerView.body.fadeOut(200, () => {
@@ -422,6 +422,38 @@ var homeViewController = function (params, user) {
             ltc: $params.find('.js-homeView-wallet-symbol[request="ltc"]'),
             eth: $params.find('.js-homeView-wallet-symbol[request="eth"]')
         },
+        btc_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="btc"]'),
+            address: $params.find('.js-homeView-wallet-send-btc-to-address'),
+            amount: $params.find('.js-homeView-wallet-send-btc-amount'),
+            send_button: $params.find('.js-homeView-wallet-btc-send'),
+            market_price: $params.find('.js-homeView-wallet-fiat-btc'),
+            personal_standing: $params.find('.js-homeView-wallet-standing-btc'),
+        },
+        ltc_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="ltc"]'),
+            address: $params.find('.js-homeView-wallet-send-ltc-to-address'),
+            amount: $params.find('.js-homeView-wallet-send-ltc-amount'),
+            send_button: $params.find('.js-homeView-wallet-ltc-send'),
+            market_price: $params.find('.js-homeView-wallet-fiat-ltc'),
+            personal_standing: $params.find('.js-homeView-wallet-standing-ltc'),
+        },
+        bch_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
+            address: $params.find('.js-homeView-wallet-send-bch-to-address'),
+            amount: $params.find('.js-homeView-wallet-send-bch-amount'),
+            send_button: $params.find('.js-homeView-wallet-bch-send'),
+            market_price: $params.find('.js-homeView-wallet-fiat-bch'),
+            personal_standing: $params.find('.js-homeView-wallet-standing-bch'),
+        },
+        eth_wallet: {
+            body: $params.find('.js-homeView-wallet-content[display="eth"]'),
+            address: $params.find('.js-homeView-wallet-send-eth-to-address'),
+            amount: $params.find('.js-homeView-wallet-send-eth-amount'),
+            send_button: $params.find('.js-homeView-wallet-eth-send'),
+            market_price: $params.find('.js-homeView-wallet-fiat-eth'),
+            personal_standing: $params.find('.js-homeView-wallet-standing-eth'),
+        },
         dgb_wallet: {
             body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
             generateAddress: $params.find('.js-homeView-wallet-generate-address[for="dgb"]')
@@ -564,18 +596,44 @@ var homeViewController = function (params, user) {
 
     $(homeViewController.wallet_navigation.btc).click(function() {
         homeViewController.setWallet('btc');
+        ipcRenderer.send('get-btc');
+        
+        ipcRenderer.on('init-btc-info', (event, data) => {
+            $('.js-homeView-wallet-fiat-btc').text('Price ' + data.market_price + '$');
+            $('.js-homeView-wallet-standing-btc').text('BTC personal konto ' + data.standing);
+        });
     });
 
     $(homeViewController.wallet_navigation.dgb).click(function() {
         homeViewController.setWallet('dgb');
+        console.log("bch is active");
+        ipcRenderer.send('get-bch');
+        ipcRenderer.on('init-bch-info', (event, data) => {
+            $('.js-homeView-wallet-fiat-bch').text('Price ' + data.market_price + '\u20AC');
+            $('.js-homeView-wallet-satoshis-bch').text('BCH personal konto ' + data.standing);
+        });
     });
 
     $(homeViewController.wallet_navigation.ltc).click(function() {
         homeViewController.setWallet('ltc');
+        ipcRenderer.send('get-ltc');
+        
+        ipcRenderer.on('init-ltc-info', (event, data) => {
+            $('.js-homeView-wallet-fiat-ltc').text('Price ' + data.market_price + '$');
+            $('.js-homeView-wallet-standing-ltc').text('LTC personal konto ' + data.standing);
+        });
     });
 
     $(homeViewController.wallet_navigation.eth).click(function() {
         homeViewController.setWallet('eth');
+
+        ipcRenderer.send('get-eth');
+        
+        ipcRenderer.on('init-eth-info', (event, data) => {
+           console.log(data);
+            $('.js-homeView-wallet-fiat-eth').text('Price ' + data.market_price + '$');
+            $('.js-homeView-wallet-standing-eth').text('ETH personal konto ' + data.standing);
+        });
     });
 
     $(homeViewController.dgb_wallet.generateAddress).click(function(event) {
@@ -588,6 +646,50 @@ var homeViewController = function (params, user) {
             console.log(private_key);
         });
     });
+
+    $(homeViewController.btc_wallet.send_button).click(function(event){
+        event.preventDefault();
+   
+        let data = {};
+        data.btc_address = $(homeViewController.btc_wallet.address).val();
+        data.btc_amount = $(homeViewController.btc_wallet.amount).val();
+        console.log('test' +  data.btc_amount);
+        ipcRenderer.send('send_btc', data);
+    });
+
+
+    $(homeViewController.ltc_wallet.send_button).click(function(event){
+        event.preventDefault();
+   
+        let data = {};
+        data.ltc_address = $(homeViewController.ltc_wallet.address).val();
+        data.ltc_amount = $(homeViewController.ltc_wallet.amount).val();
+        console.log('test' +  data.ltc_amount);
+        ipcRenderer.send('send_ltc', data);
+    });
+
+    homeViewController.bch_wallet.send_button.click(function(evt) {
+        evt.preventDefault();
+
+        let data = {};
+        data.bch_address = homeViewController.bch_wallet.address.val();
+        data.bch_amount = homeViewController.bch_wallet.amount.val();
+        console.log("test", data);
+        ipcRenderer.send('send_bch', data);
+    });
+
+
+    $(homeViewController.eth_wallet.send_button).click(function(event){
+        event.preventDefault();
+   
+        let data = {};
+        data.eth_address = $(homeViewController.eth_wallet.address).val();
+        data.eth_amount = $(homeViewController.eth_wallet.amount).val();
+        console.log('test' +  data.eth_amount);
+        ipcRenderer.send('send_eth', data);
+    });
+
+
 };
 
 ipcRenderer.on('init-main-window', (event, current_user) => {

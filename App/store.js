@@ -19,7 +19,7 @@ var user_count;
 
 module.exports = {
 	formatData: function(user) {
-		console.log(message.store, user);
+		// console.log(message.store, user);
 		return {
 			unique_id: user._unique_id,
 			email: user._email,
@@ -38,7 +38,23 @@ module.exports = {
 				postal_code: user._address.postal_code,
 				country: user._address.country,
 			},
-			profile_image: user._profile_image
+			profile_image: user._profile_image,
+			_btc_wallet: {
+				_btc_address: user._btc_wallet._btc_address,
+				_btc_privateKey: user._btc_wallet._btc_privateKey
+			},
+			_ltc_wallet: {
+				_ltc_address: user._ltc_wallet._ltc_address,
+				_ltc_privateKey: user._ltc_wallet._ltc_privateKey
+			},
+			_bch_wallet: {
+				address: user._bch_wallet.address,
+				private_key: user._bch_wallet.private_key
+			},
+			_eth_wallet: {
+				_eth_address: user._eth_wallet._eth_address,
+				_eth_privateKey: user._eth_wallet._eth_privateKey
+			},
 		};
 	},
 
@@ -58,7 +74,7 @@ module.exports = {
 						let data = {};
 						data.success = found;
 						data.user = this.formatData(result);
-						console.log(message.store, data);
+						// console.log(message.store, data);
 						resolve(data);
 					}
 				});
@@ -98,7 +114,7 @@ module.exports = {
 	update: function(current_user) {
 		return new Promise((resolve, reject) => {
 			message.print(message.store, "updating data");
-			console.log(current_user);
+			// console.log(current_user);
 			let found = false;
 			fs.readdir(directory, (err, files) => {
 				if(err) reject(error.ERR_DB_READING);
@@ -106,9 +122,9 @@ module.exports = {
 				files.forEach(element => {
 					let file = fs.readFileSync(directory + '/' + element, 'utf8');
 					var result = JSON.parse(file);
-					console.log(result);
+					// console.log(result);
 					if(current_user._email === result._email){
-						console.log("hollllaaaaa");
+						// console.log("hollllaaaaa");
 						found = true;
 						try {
 							fs.writeFileSync(directory + '/' + element, JSON.stringify(current_user));

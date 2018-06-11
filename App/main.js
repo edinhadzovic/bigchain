@@ -2,6 +2,7 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 const digibyte = require('digibyte');
+const market_price = require('./wallets/market_price');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -81,7 +82,7 @@ function createWindow () {
   }))
 
   loginWindow.once('ready-to-show', () => {
-    loginWindow.show()
+    loginWindow.show();
 });
 
   // and load the index.html of the app.
@@ -109,7 +110,7 @@ app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 });
 
@@ -171,7 +172,6 @@ ipcMain.on("personal-info-submission", async function(event, data) {
   }
 });
 
-
 ipcMain.on("personal-info-change", async function(event, data) {
   console.log(message.main, 'Personal information changing!');
   console.log(message.main, 'New user data provided!');
@@ -181,7 +181,7 @@ ipcMain.on("personal-info-change", async function(event, data) {
   console.log(message.main, 'Gender: ', data.gender);
   console.log(message.main, 'Phone: ', data.phone);
 
-  let result = await current_user.personal_info_restore(current_user, data);
+  let result = await current_user.personal_info_change(current_user, data);
   if (result === true) {
     console.log(message.main, 'Restoring successfully done.');
     console.log(' ');
@@ -192,7 +192,6 @@ ipcMain.on("personal-info-change", async function(event, data) {
     event.sender.send('store-failed', result);
   }
 });
-
 
 ipcMain.on("address-info-submission", async function(event, data) {
   console.log(message.main, 'Personal information provided!');
@@ -207,9 +206,6 @@ ipcMain.on("address-info-submission", async function(event, data) {
     event.sender.send('store-address-info-failed', result);
   }
 });
-
-
-// USE IT WHEN CHANGE IS CREATED IN SETTINGS
 
 ipcMain.on("address-info-change", async function(event, data) {
   console.log(message.main, 'Personal information provided!');
@@ -229,9 +225,9 @@ ipcMain.on('form-submission-image', async function(event, data){
   console.log(message.main, data);
   let result = await current_user.save_image(current_user, data);
   if(result === true) {
+    let generate_address = await current_user.generate_wallets();
     console.log(message.main, 'Storing');
     createMainWindow(current_user, event);
-    //event.sender.send('image-submission-success', current_user);
   } else {
     console.log("false");
   }
@@ -253,3 +249,69 @@ ipcMain.on('generate-dgb-address', async function(event) {
   }
   console.log(message.main, "generate new private key");
 });
+
+ipcMain.on('send_btc', async function(event, data) { 
+  current_user._btc_wallet.send(data.btc_amount, data.btc_address, current_user._btc_wallet);
+
+});
+
+ipcMain.on('get-btc', async function(event) {
+  let data = {};
+  
+  data.market_price = await market_price.getBtcPrice(current_user._btc_wallet);
+  data.standing = await current_user._btc_wallet.readStandingFromAddress(current_user._btc_wallet);
+  event.sender.send('init-btc-info', data);
+});
+
+ipcMain.on('send_ltc', async function(event, data) { 
+  current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
+
+});
+
+
+ipcMain.on('get-ltc', async function(event) {
+  let data = {};
+  
+  data.market_price = await market_price.getLtcPrice(current_user._ltc_wallet);
+  data.standing = await current_user._ltc_wallet.readStandingFromAddress(current_user._ltc_wallet);
+  event.sender.send('init-ltc-info', data);
+});
+
+ipcMain.on('send_ltc', async function(event, data) { 
+  current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
+});
+
+ipcMain.on('get-bch', async function(event) {
+  try {
+    let data = {};
+    console.log(message.main, "get Bch");
+    
+    data.market_price = await market_price.getBchPrice(current_user._bch_wallet);
+    data.standing = await current_user._bch_wallet.readBalance(current_user._bch_wallet);
+    console.log(message.main, "send back to user");
+    event.sender.send('init-bch-info', data); 
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+ipcMain.on('send_bch', async function(event, data) { 
+  console.log(message.main, data);
+  current_user._bch_wallet.send(data.bch_amount, data.bch_address, current_user._bch_wallet);
+});
+
+ipcMain.on('send_eth', async function(event, data) { 
+  console.log(data);
+  current_user._eth_wallet.send(data.eth_amount, data.eth_address, current_user._eth_wallet);
+  //console.log('DIDNT IMPLEMENTED SEND YET');
+});
+
+
+ipcMain.on('get-eth', async function(event) {
+  let data = {};
+  
+  data.market_price = await market_price.getEthPrice(current_user._eth_wallet);
+  data.standing = await current_user._eth_wallet.readStandingFromAddress(current_user._eth_wallet);
+  event.sender.send('init-eth-info', data);
+});
+
