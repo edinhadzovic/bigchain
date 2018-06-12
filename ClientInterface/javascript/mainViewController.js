@@ -593,6 +593,11 @@ var homeViewController = function (params, user) {
     });
     $(homeViewController.navigaiton.manager_plus).click(function(){
         homeViewController.setPage("Manager");
+        ipcRenderer.send('get-supported-coins');
+        ipcRenderer.on('resolve-supported-coins', (event, data) => {
+            new coinMenu('.js-coin-menu-showcase', data);
+            console.log(data);
+        });
     });
 
     $(homeViewController.wallet_navigation.btc).click(function() {
@@ -717,3 +722,46 @@ $('document').ready(function(){
         new homeViewController(this);
     })
 });
+
+
+$('.js-coin-select').on('click', (event) => {
+    console.log("hallo");
+    $('.js-coin-menu').addClass('active');
+    setTimeout(()=>{
+        $('.js-coin-menu-content').removeClass('hidden');
+    }, 500);
+    
+})
+
+$('.js-coin-menu-close').on('click', (event) => {
+    $('.js-coin-menu').removeClass('active');
+    $('.js-coin-menu-content').addClass('hidden');
+});
+
+
+var coinMenu = function(param, data) {
+    var $body = $(param);
+    for(let i = 0; i < data.length; i++) {
+        let coin = data[i];
+        let content = '<div class="coin-item js-select-coin" coin_type="'+ coin.symbol +'">' + 
+        '<div class="coin-image"><img src="' + coin.image + '" heigh="100" width="100"></div>' +
+        '<div class="coin-info">' + 
+        '<h4>' + coin.name + ' ' + coin.symbol + '</h4>' +
+        '<p class="font-medium">Miner Fee: '+ coin.minerFee +'</p>' + 
+        '</div>' +
+        '</div>'
+        $body.append(content);
+    }
+
+    $('.js-select-coin').each((el) => {
+        new coinMenuItem($('.js-select-coin')[el]);
+    });
+}
+
+var coinMenuItem = function(param) {
+    let $body = $(param);
+    let attr = $body.attr('coin_type');
+    $body.click(() => {
+        console.log(attr);
+    })
+}

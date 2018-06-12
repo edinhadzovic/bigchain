@@ -14,7 +14,7 @@
 .js-homeView-mainContent{
   display: flex;
   flex-grow: 10;
-  margin: 20px;
+  /* margin: 20px; */
 }
 
 .js-homeView-navigation {

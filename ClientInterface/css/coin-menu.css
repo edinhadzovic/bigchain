@@ -1,0 +1,33 @@
+.coin-menu {
+  position: absolute;
+  z-index: 5;
+  background-color: white;
+  height: 100%;
+  width: 0px;
+  transition: all 0.5s ease-in;
+}
+
+.coin-menu.active {
+  width: 88.2%;
+}
+
+
+.js-coin-menu-showcase {
+  width: 800px;
+  margin: 20px auto;
+}
+
+.coin-item {
+  width: 200px;
+  display: inline-block;
+  text-align: center;
+  margin: 5px;
+  padding: 15px;
+  border: 2px solid gray;
+}
+
+.coin-item:hover {
+  box-shadow: 1px 1px 2px gray;
+  border: 2px solid aqua;
+  cursor: pointer;
+}

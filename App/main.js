@@ -354,6 +354,13 @@ ipcMain.on('exchange', async function(event,data){
   event.sender.send('fee_exchange');
 })
 
+ipcMain.on('get-supported-coins', async (event, data) => {
+  let coins = await shapeshift.getCoins();
+  if(coins.length > 0) {
+    return event.sender.send('resolve-supported-coins', coins);
+  }
+});
+
 shapeshift.getCoins().then((coinData) => {
   console.log(message.main,'\n', coinData);
 });

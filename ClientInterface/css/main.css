@@ -4,6 +4,8 @@
 @import 'settings.css';
 @import 'social-media.css';
 @import 'wallet.css';
+@import 'exchange.css';
+@import 'coin-menu.css';
 
 * {
     padding: 0;
@@ -36,4 +38,8 @@ body {
 
 .display-inline {
     display: inline-block;
+}
+
+.font-medium {
+    font-size: 12px;
 }
