@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const {shell} = require('electron');
 const {ipcRenderer} = require('electron');
+const exchange = require('./../../App/client/Exchange');
 
 
 const directory = path.join(__dirname, '../images/profile');
@@ -595,8 +596,10 @@ var homeViewController = function (params, user) {
         homeViewController.setPage("Manager");
         ipcRenderer.send('get-supported-coins');
         ipcRenderer.on('resolve-supported-coins', (event, data) => {
-            new coinMenu('.js-coin-menu-showcase', data);
-            console.log(data);
+            const ex = new exchange('.js-exchange', data);
+            ex.log();
+            // new coinMenu('.js-coin-menu-showcase', data);
+            // console.log(data);
         });
     });
 
@@ -724,19 +727,19 @@ $('document').ready(function(){
 });
 
 
-$('.js-coin-select').on('click', (event) => {
-    console.log("hallo");
-    $('.js-coin-menu').addClass('active');
-    setTimeout(()=>{
-        $('.js-coin-menu-content').removeClass('hidden');
-    }, 500);
+// $('.js-coin-select').on('click', (event) => {
+//     console.log("hallo");
+//     $('.js-coin-menu').addClass('active');
+//     setTimeout(()=>{
+//         $('.js-coin-menu-content').removeClass('hidden');
+//     }, 500);
     
-})
+// })
 
-$('.js-coin-menu-close').on('click', (event) => {
-    $('.js-coin-menu').removeClass('active');
-    $('.js-coin-menu-content').addClass('hidden');
-});
+// $('.js-coin-menu-close').on('click', (event) => {
+//     $('.js-coin-menu').removeClass('active');
+//     $('.js-coin-menu-content').addClass('hidden');
+// });
 
 
 var coinMenu = function(param, data) {

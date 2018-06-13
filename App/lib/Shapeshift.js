@@ -59,6 +59,10 @@ class Shapeshift {
     });
   }
 
+  /**
+   * 
+   * @param {String} pair example btc_bch
+   */
   getPairRate(pair){
     let url = `${basicUrl}/rate/${pair}`;
     return new Promise((resolve, reject) => {
@@ -108,7 +112,7 @@ class Shapeshift {
     body.apiKey = '342ae1849ae05e1dcc801bae4925197139da819bd2e92e2fdad6dda89e94018e2ef33192409168e9dc3ce8e36af406c85ffbde508225e9c1ead30ed3daf6bcb5';
     body.returnAddress = data.address_from;
     body.withdrawal = data.address_to;
-    body.pair = `${data.what_from}_${data.what_to}`;
+    body.pair = data.pair;
     body.depositAmount = data.amount_of;
     console.log(body);
     let url = `${basicUrl}/sendamount`;

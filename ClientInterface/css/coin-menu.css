@@ -5,6 +5,7 @@
   height: 100%;
   width: 0px;
   transition: all 0.5s ease-in;
+  overflow-x: hidden;
 }
 
 .coin-menu.active {
@@ -30,4 +31,9 @@
   box-shadow: 1px 1px 2px gray;
   border: 2px solid aqua;
   cursor: pointer;
+}
+
+.js-exchange-submit {
+  width: 50px;
+  height: 50px;
 }
