@@ -278,33 +278,81 @@
 				<div class="js-homeView-manager js-exchange hidden">
 					<div class="js-coin-menu coin-menu">
 						<div class="js-coin-menu-content hidden">
-							<a href="#" class="js-coin-menu-close">X</a>
+							<div class="menu-header">
+									<a href="#" class="js-coin-menu-close"></a>
+									<input type="text" placeholder="Search" class="js-menu-search">
+							</div>
+							
 							<div class="js-coin-menu-showcase"></div>
 						</div>
 					</div>
 					<div class="container">
 						<div class="">
-							<div class="js-exchange-from exchange-box">
-								<div class="js-coin-select-from drop-down-coin">
-									<img src="" class="js-coin-select-image-from" width="150" height="150">
+							<div class="js-exchange-info">
+								<div class="js-exchange-info-deposit-min info-box border-right-thin">
+									<h3>Deposit Min</h3>
+									<p>0.004847876 <span>ETH</span></p>
 								</div>
-								<div class="exchange-form">
-									<input type="text" class="js-exchange-amount-from" tradeFrom="null">
+								<div class="js-exchange-info-deposit-max info-box border-right-thin">
+										<h3>Deposit Max</h3>
+										<p>10.004847876 <span>ETH</span></p>
+								</div>
+								<div class="js-exchange-info-miner-fee info-box">
+										<h3>Miner Fee</h3>
+										<p>0.0015 <span>BTC</span></p>
 								</div>
 							</div>
-							<div class="exchange-box">
-								<div class="right-arrow"></div>
-								<div class="exchange-form">
-									<button class="js-exchange-submit"></button>
+							<div class="exchange-container">
+									<div class="js-exchange-from exchange-box">
+											<div class="js-coin-select-from drop-down-coin">
+												<img src="./../images/coins/digibyte.svg" class="js-coin-select-image-from" width="150" height="150">
+											</div>
+											<div class="exchange-form">
+												<input type="text" class="js-exchange-amount-from exchange-input" tradeFrom="null" placeholder="Deposit Amount">
+											</div>
+										</div>
+										<!-- <div class="exchange-box">
+											<div class="right-arrow"></div>
+											<div class="exchange-form">
+												<button class="js-exchange-submit"></button>
+											</div>
+										</div> -->
+										<div class="js-exchange-to exchange-box">
+											<div class="js-coin-select-to drop-down-coin">
+												<img src="./../images/coins/digibyte.svg" class="js-coin-select-image-to" width="150" height="150">
+											</div>
+											<div class="exchange-form">
+												<input type="text" class="js-exchange-amount-to exchange-input" tradeTo="null" placeholder="Receive Amount">
+											</div>
+										</div>
+							</div>
+							<div class="exchange-container">
+								<div class="js-exchange-submit">
+									<div class="icon"></div>
+									<div class="text">
+										Start Transaction
+									</div>
 								</div>
 							</div>
-							<div class="js-exchange-to exchange-box">
-								<div class="js-coin-select-to drop-down-coin">
-									<img src="" class="js-coin-select-image-to" width="150" height="150">
-								</div>
-								<div class="exchange-form">
-									<input type="text" class="js-exchange-amount-to" tradeTo="null">
-								</div>
+							<div class="exchange-container">
+								<table style="width: 100%;">
+									<tr class="exchange-table-header-row">
+										<th class="exchange-table-header">N.</th>
+										<th class="exchange-table-header">Transaction type</th>
+										<th class="exchange-table-header">Deposit Amount</th>
+										<th class="exchange-table-header">Receive Amount</th>
+										<th class="exchange-table-header">Complete</th>
+										<th class="exchange-table-header">Information</th>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>Bitcoin to Ethereum</td>
+										<td>1 BTC</td>
+										<td>0.234123213 Eth</td>
+										<td>Completed</td>
+										<td>Info</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 
@@ -331,5 +379,6 @@
 		</div>
 
 		<script src='../javascript/mainViewController.js'></script>
+		<script src='../javascript/utils.js'></script>
 	</body>
 </html>

@@ -1,11 +1,5 @@
 .container {
-  width: 80%;
-  margin: 0 auto;
-}
-
-.exchange-box {
-  width: 150px;
-  margin: 0 20px;
+  width: 100%;
 }
 
 .right-arrow {
@@ -22,6 +16,7 @@
   /* border: 2px solid #C7C7C7;
   background-color: white; */
   transition: opacity 0.5s ease-in;
+  display: inline-block;
 }
 
 .drop-down-coin:hover {
@@ -37,8 +32,10 @@
 }
 
 .js-exchange {
+  background-color: #f7f7f7;
   display: flex;
   flex-direction: row;
+  overflow-x: hidden;
 }
 
 .js-exchange-amount {
@@ -51,6 +48,28 @@
 }
 
 .js-exchange-submit {
-  background: url('../images/icons/exchange_icon.png') no-repeat center;
-  background-size: 40px;
+  display: inline-block;
+  width: 250px;
+  height: 40px;
+}
+
+.exchange-input {
+  height: 40px;
+  border: 1px solid #c4c4c4;
+  text-align: center;
+}
+
+.exchange-input:focus {
+  outline: none;
+}
+
+.exchange-container table {}
+
+.exchange-table-header {
+  padding: 10px;
+  background-color: white;
+}
+
+.exchange-table-header-row {
+  background-color: white;
 }

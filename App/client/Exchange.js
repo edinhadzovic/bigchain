@@ -7,7 +7,8 @@ var Exchange = function(container, coins) {
   
   //data
   const data = coins;
-  
+  let input = null;
+  let search = body.find('.js-menu-search');
 
   //coin menu logic
   let menu = {
@@ -30,7 +31,7 @@ var Exchange = function(container, coins) {
       if(menu.coins.length === 0) {
         for(let i = 0; i < data.length; i++) {
           let coin = data[i];
-          let content = '<div class="coin-item js-select-coin" coin_type="'+ coin.symbol +'">' + 
+          let content = '<div class="coin-item js-select-coin" coin_type="'+ coin.symbol +'" coin_name="' + coin.name + '">' + 
             '<div class="coin-image"><img src="' + coin.image + '" heigh="100" width="100"></div>' +
             '<div class="coin-info">' + 
             '<h4>' + coin.name + ' ' + coin.symbol + '</h4>' +
@@ -43,7 +44,6 @@ var Exchange = function(container, coins) {
     }
   };
   
-  console.log(menu.coins.length);
   menu.generateShowCase();
 
   menu.close.on('click', () => {
@@ -127,8 +127,9 @@ var Exchange = function(container, coins) {
     });
   };
 
+  var coin_array;
   $('.js-select-coin').each((el) => {
-    new coinMenuItem($('.js-select-coin')[el]);
+    coin_array = new coinMenuItem($('.js-select-coin')[el]);
   });
 
   this.log = function() {
