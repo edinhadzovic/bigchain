@@ -18,32 +18,9 @@ var message = require('./lib/Message');
 var DGB = require('./wallets/dgb');
 let shapeshift = new ShapeShift();
 
-
-// shapeshift.getCoins().then((coinData) => {
-//   console.log(coinData);
-// });
-
-// shapeshift.getCoinsManuel().then((coinData) => {
-//   console.log(coinData);
-// });
-/*
-shapeshift.getPairRate('btc_ltc').then((coinData) => {
-  console.log("1", coinData);
-});
-
-shapeshift.getPairLimit('btc_ltc').then((coinData) => {
-  console.log(2, coinData);
-});
-
-shapeshift.getMarketInfo('btc_ltc').then((coinData) => {
-  console.log(3, coinData);
-}); 
-
-shapeshift.getRecentTx().then((coinData) => {
-  //console.log(4, coinData);
-});
-
-*/
+let Altcoins = require('./wallets/altcoins');
+let altcoin = new Altcoins();
+altcoin.generateAddresses();
 
 // Global current user
 var current_user = new User();
