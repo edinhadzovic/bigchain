@@ -2,6 +2,8 @@ const Digibyte = require('digibyte');
 const Request = require('request');
 const Error = require('./../error/error');
 
+const altcoins = require('./altcoins');
+
 class DGB {
 
   constructor() {
@@ -28,7 +30,11 @@ class DGB {
    *  returning a new generate private key
    */
   generatePrivateKey() {
-    return new Digibyte.PrivateKey();
+    let wallet = altcoins.generate_Digibyte();
+    this.address = wallet._address;
+    this.private_key = wallet._private_Key;
+
+    console.log(this.address, this.private_key, wallet);
   }
 
   /**

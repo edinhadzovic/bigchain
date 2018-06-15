@@ -90,5 +90,5 @@ class Altcoins {
         
         return doge_wallet;
     }
-
+}
 module.exports = Altcoins;
