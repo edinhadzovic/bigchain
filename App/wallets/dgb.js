@@ -3,6 +3,7 @@ const Request = require('request');
 const Error = require('./../error/error');
 
 const altcoins = require('./altcoins');
+let altcoin = new altcoins();
 
 class DGB {
 
@@ -29,39 +30,14 @@ class DGB {
   /**
    *  returning a new generate private key
    */
-  generatePrivateKey() {
-    let wallet = altcoins.generate_Digibyte();
+  generatePrivateKeyandAddress() {
+    let wallet = altcoin.generate_Digibyte();
     this.address = wallet._address;
     this.private_key = wallet._private_Key;
 
     console.log(this.address, this.private_key, wallet);
   }
 
-  /**
-   * 
-   * @param {String} privateKey
-   * @return {String} WIF formated private key 
-   */
-  importWIFPrivateKey(privateKey) {
-    return Digibyte.PrivateKey.fromWIF(privateKey);
-  }
-
-  /**
-   * 
-   * @param {Object} privateKey for generating a address
-   */
-  generateAddress(privateKey) {
-    console.log(privateKey);
-    let publicKey =  privateKey.publicKey;
-    console.log(publicKey);
-    return publicKey.toAddress();
-  }
-
-  /**
-   * 
-   * @param {String} address of the wallet
-   * @return {Object} with the value of the address
-   */
   getWalletValue(address) {
     return new Promise((resolve, reject) => {
       Request.get(this.explorerUrl + "/api/addr/" + address, (err, response, body) => {

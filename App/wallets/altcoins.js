@@ -24,9 +24,9 @@ class Altcoins {
     generate_Digibyte(){
         var digibyte = CoinKey.createRandom(coininfo('DGB'));
 
-        digi_wallet = {}
+        let digi_wallet = {}
         digi_wallet._address = digibyte.publicAddress;
-        digi_wallet._private_Key = digibyte.private_key.toString('hex');
+        digi_wallet._private_Key = digibyte.privateKey.toString('hex');
         
         return digi_wallet;
     }
@@ -34,9 +34,9 @@ class Altcoins {
     generate_Namecoin(){
         var namecoin = CoinKey.createRandom(coininfo('NMC'));
 
-        namecoin_wallet = {}
+        let namecoin_wallet = {}
         namecoin_wallet._address = namecoin.publicAddress;
-        namecoin_wallet._private_Key = namecoin.private_key.toString('hex');
+        namecoin_wallet._private_Key = namecoin.privateKey.toString('hex');
         
         return namecoin_wallet;
     }
@@ -44,9 +44,9 @@ class Altcoins {
     generate_Monacoin(){
         var monacoin = CoinKey.createRandom(coininfo('MONA'));
 
-        monacoin_wallet = {}
+        let monacoin_wallet = {}
         monacoin_wallet._address = monacoin.publicAddress;
-        monacoin_wallet._private_Key = monacoin.private_key.toString('hex');
+        monacoin_wallet._private_Key = monacoin.privateKey.toString('hex');
         
         return monacoin_wallet;
     }
@@ -54,9 +54,9 @@ class Altcoins {
     generate_Blackcoin(){
         var blackcoin = CoinKey.createRandom(coininfo('BLK'));
 
-        blackcoin_wallet = {}
+        let blackcoin_wallet = {}
         blackcoin_wallet._address = blackcoin.publicAddress;
-        blackcoin_wallet._private_Key = blackcoin.private_key.toString('hex');
+        blackcoin_wallet._private_Key = blackcoin.privateKey.toString('hex');
         
         return blackcoin_wallet;
     }
@@ -64,9 +64,9 @@ class Altcoins {
     generate_BitcoinGold(){
         var bitcoin_gold = CoinKey.createRandom(coininfo('BTG'));
 
-        bitcoinGold_wallet = {}
+        let bitcoinGold_wallet = {}
         bitcoinGold_wallet._address = bitcoin_gold.publicAddress;
-        bitcoinGold_wallet._private_Key = bitcoin_gold.private_key.toString('hex');
+        bitcoinGold_wallet._private_Key = bitcoin_gold.privateKey.toString('hex');
         
         return bitcoinGold_wallet;
     }
@@ -74,9 +74,9 @@ class Altcoins {
     generate_Dash(){
         var dash = CoinKey.createRandom(coininfo('DASH'));
 
-        dash_wallet = {}
+        let dash_wallet = {}
         dash_wallet._address = dash.publicAddress;
-        dash_wallet._private_Key = dash.private_key.toString('hex');
+        dash_wallet._private_Key = dash.privateKey.toString('hex');
         
         return dash_wallet;
     }
@@ -84,9 +84,9 @@ class Altcoins {
     generate_Doge(){
         var doge = CoinKey.createRandom(coininfo('DOGE'));
 
-        doge_wallet = {}
+        let doge_wallet = {}
         doge_wallet._address = doge.publicAddress;
-        doge_wallet._private_Key = doge.private_key.toString('hex');
+        doge_wallet._private_Key = doge.privateKey.toString('hex');
         
         return doge_wallet;
     }
