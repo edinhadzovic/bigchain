@@ -5,8 +5,9 @@ const Error = require('./../error/error');
 class DGB {
 
   constructor() {
-    this.explorerUrl = "https://digiexplorer.info";
-    this.marketUrl = "https://api.coinmarketcap.com/v1/ticker";
+    this.private_key = null;
+    this.address = null; 
+    this.standing = null;
   }
 
   /**
