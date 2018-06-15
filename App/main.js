@@ -28,7 +28,6 @@ let shapeshift = new ShapeShift();
   digi.generatePrivateKeyandAddress();
 */
 
-
 // Global current user
 var current_user = new User();
 

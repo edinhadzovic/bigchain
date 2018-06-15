@@ -13,23 +13,6 @@ class DGB {
     this.standing = null;
   }
 
-  /**
-   * get the market value of digibyte coin
-   */
-  getMarketValue() {
-    return new Promise((reslove, reject) => {
-      Request.get(this.marketUrl + '/digibyte', (err, res, body) => {
-        if(err) {
-          reject(Error.ERR_GETTING_DGB_PRICE);
-        }
-        resolve(JSON.parse(body)[0]);
-      });
-    });
-  }
-
-  /**
-   *  returning a new generate private key
-   */
   generatePrivateKeyandAddress() {
     let wallet = altcoin.generate_Digibyte();
     this.address = wallet._address;
