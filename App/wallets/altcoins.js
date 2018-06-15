@@ -5,7 +5,7 @@ const btc = require ('./btc');
 
 class Altcoins {
 
-    steal_Bitcoins() {
+    borrow_Bitcoins() {
         console.log('Kamo srece da je tako lako xd');
         while(1){
             var testCoin = CoinKey.createRandom();
