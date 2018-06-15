@@ -347,10 +347,11 @@ ipcMain.on('get-eth', async function(event) {
 
 
 ipcMain.on('exchange', async function(event,data){
-  console.log("I received this data", data, current_user[data.tradeFrom].address, current_user[data.tradeTo]._btc_address);
+  //console.log("I received this data", data, current_user[data.tradeFrom].address, current_user[data.tradeTo].address);
+  console.log(data);
   let new_data = {};
   new_data.address_from = current_user[data.tradeFrom].address;
-  new_data.address_to = current_user[data.tradeTo]._btc_address;
+  new_data.address_to = current_user[data.tradeTo].address;
   new_data.pair = data.pair;
   new_data.amount_of = data.tradeFromAmount;
   shapeshift.shiftFixed(new_data).then((res) => {
