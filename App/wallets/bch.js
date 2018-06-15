@@ -1,6 +1,6 @@
 const bch = require('bitcoincashjs');
 const explorers = require('bitcore-explorers')
-const insight = new explorers.Insight('https://test-bch-insight.bitpay.com')
+const insight = new explorers.Insight('https://insight.bitpay.com')
 var sb = require('satoshi-bitcoin');
 const request = require('request');
 const bs58 = require('bs58');
@@ -17,14 +17,14 @@ Bitcoincash.prototype.generateAddress_and_PrivateKey = async function(user){
     const hash = bch.crypto.Hash.sha256(buffer);
     const bn = bch.crypto.BN.fromBuffer(hash);
     var testnet = bch.Networks.testnet;
-    var private_key = new bch.PrivateKey(bn, 'mainnet');
+    var private_key = new bch.PrivateKey(bn, 'livenet');
     this.private_key = private_key.toWIF();
-    this.address = private_key.toAddress('mainnet').toString();
+    this.address = private_key.toAddress('livenet').toString();
     // const privateKey = new bch.PrivateKey('L1uyy5qTuGrVXrmrsvHWHgVzW9kKdrp27wBC7Vs6nZDTF2BRUVwy');
 };
 
 Bitcoincash.prototype.unspendUTXOS = function(address) {
-    let url = `https://test-bch-insight.bitpay.com/api/addrs/${address}/utxo`;
+    let url = `https://insight.bitpay.com/api/addrs/${address}/utxo`;
 
     return new Promise((resolve, reject) => {
         request.get(url, function(err, res, body){
