@@ -49,6 +49,26 @@ var Exchange = function(container, coins) {
   menu.close.on('click', () => {
     menu.hide();
   });
+
+  let exchange_info = {
+    body: body.find('.js-exchange-info'),
+    depo_min_amount: body.find('.js-exchange-deposit-min-amount'),
+    depo_min_symbol: body.find('.js-exchange-deposit-min-symbol'),
+    depo_max_amount: body.find('.js-exchange-deposit-max-amount'),
+    depo_max_symbol: body.find('.js-exchange-deposit-max-symbol'),
+    miner_fee_amount: body.find('.js-exchange-miner-fee-amount'),
+    miner_fee_symbol: body.find('.js-exchange-miner-fee-symbol'),
+    clearTable: function() {
+      exchange_info.depo_min_symbol.text("");
+      exchange_info.depo_min_amount.text("");
+      exchange_info.depo_max_symbol.text("");
+      exchange_info.depo_max_amount.text("");
+      exchange_info.miner_fee_symbol.text("");
+      exchange_info.miner_fee_amount.text("");
+    }
+  };
+
+  exchange_info.clearTable();
   
   //coin left side selector
   var coin_from = {
@@ -89,6 +109,7 @@ var Exchange = function(container, coins) {
 
   //submit request to shapeshift
   let submit = body.find('.js-exchange-submit');
+  let pair = `${coin_from.input.attr('tradeFrom')}_${coin_to.input.attr('tradeTo')}`;
 
   submit.on('click', function(){
     let data = {};
@@ -109,6 +130,8 @@ var Exchange = function(container, coins) {
             if(coin.symbol === attr) {
               coin_from.image.attr('src', coin.image);
               coin_from.input.attr('tradeFrom', coin.symbol.toLowerCase());
+              pair = `${coin_from.input.attr('tradeFrom')}_${coin_to.input.attr('tradeTo')}`;
+              ipcRenderer.send('exchange-market-info', pair);  
               coin_from.active = false;
               menu.hide();
             }
@@ -118,6 +141,8 @@ var Exchange = function(container, coins) {
             if(coin.symbol === attr) {
               coin_to.image.attr('src', coin.image);
               coin_to.input.attr('tradeTo', coin.symbol.toLowerCase());
+              pair = `${coin_from.input.attr('tradeFrom')}_${coin_to.input.attr('tradeTo')}`;
+              ipcRenderer.send('exchange-market-info', pair);               
               coin_to.active = false;
               menu.hide();
             }
@@ -132,11 +157,20 @@ var Exchange = function(container, coins) {
     coin_array = new coinMenuItem($('.js-select-coin')[el]);
   });
 
+  ipcRenderer.send('exchange-market-info', pair);
+
+  ipcRenderer.on('market-info-result', (event, market_info) => {
+    exchange_info.depo_max_amount.html(`${market_info.maxLimit} ${coin_from.input.attr('tradeFrom').toUpperCase()}`);
+    exchange_info.depo_min_amount.html(`${market_info.minimum} ${coin_from.input.attr('tradeFrom').toUpperCase()}`);
+    exchange_info.miner_fee_amount.html(`${market_info.minerFee} ${coin_to.input.attr('tradeTo').toUpperCase()}`);
+  });
+
   this.log = function() {
     console.log(body);
     console.log(coin_from);
     console.log(submit);
     console.log(data);
+    console.log(exchange_info);
   };
 };
 

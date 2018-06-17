@@ -373,6 +373,12 @@ ipcMain.on('getPair', async (event, pair) => {
   event.sender.send('returnPair', pairs);
 })
 
+ipcMain.on('exchange-market-info', async(event, pair) => {
+  let market_info = await shapeshift.getMarketInfo(pair);
+  console.log("Market Info", market_info);
+  event.sender.send('market-info-result', market_info);
+});
+
 shapeshift.getCoins().then((coinData) => {
   console.log(message.main,'\n', coinData);
 });
