@@ -4,9 +4,6 @@ const request = require('request');
 const bigi = require('bigi');
 var sb = require('satoshi-bitcoin');
 
-// balance
-var balance = require('crypto-balances');
-
 // --------------------------
 // Creating of Litecoin address
 // Tested on https://live.blockcypher.com/ -- working...

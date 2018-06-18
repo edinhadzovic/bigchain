@@ -28,10 +28,10 @@ let mainWindow;
 function createMainWindow (user, event) {
   loginWindow.hide();
   mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
-  width: 400,
+  width: 750,
   height: 600,
   minWidth: 400,
-  minHeight: 600,
+  minHeight: 350,
   backgroundColor: '#d1d1d1',
   show: false });
 
