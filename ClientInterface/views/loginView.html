@@ -15,31 +15,33 @@
 	<script src="../javascript/lib/jquery-3.3.1.min.js"></script>
 	<script src="../javascript/lib/croppie.min.js"></script>
     <!-- <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/croppie.css">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+	<link rel="stylesheet" href="../css/input.min.css">
+	<link rel="stylesheet" href="../css/button.min.css">
+	<link rel="stylesheet" href="../css/main.css">
+	<link rel="stylesheet" href="../css/croppie.css">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
 </head>
 <body>		
 <div class="js-loginView-form form_section">
 		<div class="js-loginView-logo"></div>
 		<div class="js-loginView-login js-loginView-container" id="js_loginView_login">
 			<form>
-				<div class="js-loginVeiw-group">
+				<div class="js-loginVeiw-group ui input">
 					<input type="text" id="username" class="js-loginView-input js-loginView-login-username" required>
 					<label for="username">Username</label>
 				</div>
-				<div class="js-loginVeiw-group">
+				<div class="js-loginVeiw-group ui input">
 					<input type="password" id="password" class="js-loginView-input js-loginView-login-password" required>
 					<label for="password">Password</label>
 				</div>
 				<div class="js-loginView-button">
-					<button id="login" class="js-loginView-login-submit">Login</button>
+					<button id="login" class="js-loginView-login-submit ui button">Login</button>
 				</div>
 			</form>
 				
 			<div class="login_footer">
-				<p>Don't have an account: <a href="#" class="js-loginView-form-register js-loginView-new-account	" id="js-loginView-form-register"> Create one </a></p>
+				<a href="#" class="js-loginView-form-register js-loginView-new-account" id="js-loginView-form-register">Create account</a>
 				<div class="footer_social_media">
 						<a href="https://www.facebook.com/BigChainSolutions/" class="face_book" target="_blank"></a>
 						<a href="https://t.me/joinchat/AAAAAEaujt2dzq20lzKgRg" class="telegram" target="_blank"></a>
@@ -68,7 +70,7 @@
 					</div>
 				</form>
 				<div class="login_footer">
-					<p>Have an account: <a href="#" class="js-loginView-go-to-login" id="js-loginView-form-register"> Login </a></p>
+					<a href="#" class="js-loginView-go-to-login" id="js-loginView-form-register">Login</a>
 				</div>
 		</div>
 

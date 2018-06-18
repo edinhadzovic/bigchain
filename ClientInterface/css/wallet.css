@@ -1,45 +1,116 @@
-.btc-select {
-  background-color: white;  
-}
+/*.btc-select {*/
+  /*background-color: #FF8E00;  */
+/*}*/
 
-.dgb-select {
-  background-color: #091E54;
-}
+/*.dgb-select {*/
+  /*background-color: #091E54;*/
+/*}*/
 
-.ltc-select {
-  background-color: #4d4d4d;
-}
+/*.ltc-select {*/
+  /*background-color: #4d4d4d;*/
+/*}*/
 
-.eth-select {
-  background-color: #3C3C3D;
-}
+/*.eth-select {*/
+  /*background-color: #3C3C3D;*/
+  /*left: 0;*/
+/*}*/
 
 .js-homeView-wallet-nav {
-  display: flex;
+  opacity: 1;
+  /*display: flex;*/
+   height: 100%;
+  /* width: 100%; */
+  /*flex-direction: row;*/
+  /*flex-wrap: wrap;*/
+  -webkit-transition: opacity .4s;
+  -moz-transition: opacity .4s;
+  -ms-transition: opacity .4s;
+  -o-transition: opacity .4s;
+  transition: opacity .4s;
+  /*justify-content: space-between;*/
+}
+.js-homeView-wallet-nav.close {
+  opacity: 0;
 }
 
 .js-homeView-wallet-nav-item {
-  display: flex;
-  width: 250px;
-  height: 75px;
-  margin: 20px;
+  position: relative;
+  /* display: inline-flex; */
+  /* width: 29.33%; */
+  height: 441px;
+  /* margin: 20px; */
+  padding: 1rem;
+  /* color: white; */
+  /*margin-top: 2rem;*/
+  /* flex-basis: 29.33%; */
+  /*flex-direction: column;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+}
+.js-homeView-wallet-nav-item > div{
+  position: relative;
+  background: white;
+  height: 100%;
+}
+.js-homeView-wallet-nav-side .js-homeView-wallet-nav-item {
+  width: unset;
+  flex-basis: 100%;
+  color: black;
+  font-weight: 400;
+  padding: 10px;
+  cursor: pointer;
+  -webkit-transition:  .2s;
+  -moz-transition:  .2s;
+  -ms-transition:  .2s;
+  -o-transition:  .2s;
+  transition:  .2s;
+  /*border-bottom: 2px solid grey;*/
 }
 
-.js-homeView-wallet-symbol {
-  width: 75px;
-  display: flex;
-  text-align: center;
-  vertical-align: middle;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 100px;
-  background-color: #eee;
-  transition: all, 0.5s ease;
+.js-homeView-wallet-nav-side .js-homeView-wallet-nav-item:hover {
+  box-shadow: inset 0 0 50px -10px black;
+}
+
+#myChart{
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* top: 0; */
+  bottom: 5rem;
 }
 
 .js-homeView-wallet-symbol[request="btc"] {
   border: 1px solid #0d4dc4;
   box-shadow: 1px 2px 2px #0d4dc4;
+}
+.js-homeView-wallet-symbol {
+  font-weight: 600;
+  font-size: 1rem;
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  height: 35px;
+  width: 35px;
+  background: no-repeat center / contain;
+  /*width: 75px;*/
+  /*display: flex;*/
+  /*text-align: center;*/
+  /*vertical-align: middle;*/
+  /*justify-content: center;*/
+  /*flex-direction: column;*/
+  /*border-radius: 100px;*/
+  /*background-color: #eee;*/
+  /*transition: all, 0.5s ease;*/
+}
+
+.js-homeView-wallet-nav-side .js-homeView-wallet-symbol{
+  position: relative;
+  left: unset;
+  top: unset;
+}
+.js-homeView-wallet-symbol span {
+  position: absolute;
+  left: 40px;
 }
 
 .js-homeView-wallet-symbol[request="btc"]:hover {
@@ -50,79 +121,124 @@
   box-shadow: inset 1px 2px 2px #0d4dc4;
 }
 
+.js-homeView-wallet-symbol[request="btc"] {
+  background-image: url("https://www.freeiconspng.com/uploads/currency-digital-payment-sign-icon-29.png");
+}
 .js-homeView-wallet-symbol[request="dgb"] {
-  border: 1px solid #091E54;
-  box-shadow: 1px 2px 2px #071945;
+  background-image: url("http://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/DigiByte-DGB-icon.png");
 }
-
-.js-homeView-wallet-symbol[request="dgb"]:hover {
-  background-color: #091E54;
-  color: white;
-  font-weight: 700;
-  text-shadow: 1px 1px 2px black;
-  box-shadow: inset 1px 2px 2px #05112e;
-}
-
 .js-homeView-wallet-symbol[request="ltc"] {
-  border: 1px solid #4d4d4d;
-  box-shadow: 1px 2px 2px #333333;
+  background-image: url("https://cdn.iconscout.com/public/images/icon/free/png-512/litecoin-386c0ef8cda50168-512x512.png");
 }
-
-.js-homeView-wallet-symbol[request="ltc"]:hover {
-  background-color: #4d4d4d;
-  color: white;
-  font-weight: 700;
-  text-shadow: 1px 1px 2px black;
-  box-shadow: inset 1px 2px 2px #333333;
-}
-
 .js-homeView-wallet-symbol[request="eth"] {
-  border: 1px solid #C99D66;
-  box-shadow: 1px 2px 2px #3C3C3D;
+  background-image: url("https://png.icons8.com/color/1600/ethereum.png");
 }
 
-.js-homeView-wallet-symbol[request="eth"]:hover {
-  background-color: #C99D66;
-  color: white;
-  font-weight: 700;
-  text-shadow: 1px 1px 2px black;
-  box-shadow: inset 1px 2px 2px #3C3C3D;
-}
+/*.js-homeView-wallet-nav .js-homeView-wallet-nav-item.btc  {*/
+  /*background: #FF8E00;*/
+  /*box-shadow:inset 0 0 300px -60px black;*/
+/*}*/
 
-.js-homeView-wallet-symbol:hover {
-  cursor: pointer;
-}
+/*.js-homeView-wallet-symbol[request="btc"]:hover {*/
+  /*background-color: #FF8E00;*/
+  /*color: white;*/
+  /*font-weight: 700;*/
+  /*text-shadow: 1px 1px 2px black;*/
+  /*box-shadow: inset 1px 2px 2px #cc7000;*/
+/*}*/
+
+/*.js-homeView-wallet-nav .js-homeView-wallet-nav-item.dgb {*/
+  /*background: #091E54;*/
+  /*box-shadow:inset 0px 0px 300px -60px black;*/
+/*}*/
+
+/*.js-homeView-wallet-symbol[request="dgb"]:hover {*/
+  /*background-color: #091E54;*/
+  /*color: white;*/
+  /*font-weight: 700;*/
+  /*text-shadow: 1px 1px 2px black;*/
+  /*box-shadow: inset 1px 2px 2px #05112e;*/
+/*}*/
+
+/*.js-homeView-wallet-nav .js-homeView-wallet-nav-item.ltc {*/
+  /*background:#4d4d4d;*/
+  /*box-shadow:inset 0px 0px 300px -60px black;*/
+/*}*/
+
+/*.js-homeView-wallet-symbol[request="ltc"]:hover {*/
+  /*background-color: #4d4d4d;*/
+  /*color: white;*/
+  /*font-weight: 700;*/
+  /*text-shadow: 1px 1px 2px black;*/
+  /*box-shadow: inset 1px 2px 2px #333333;*/
+/*}*/
+
+/*.js-homeView-wallet-nav .js-homeView-wallet-nav-item.eth {*/
+  /*background: #C99D66;*/
+  /*box-shadow:inset 0px 0px 300px -60px black;*/
+/*}*/
+
+/*.js-homeView-wallet-symbol[request="eth"]:hover {*/
+  /*background-color: #C99D66;*/
+  /*color: white;*/
+  /*font-weight: 700;*/
+  /*text-shadow: 1px 1px 2px black;*/
+  /*box-shadow: inset 1px 2px 2px #3C3C3D;*/
+/*}*/
+
+/*.js-homeView-wallet-symbol:hover {*/
+  /*cursor: pointer;*/
+/*}*/
 
 .js-homeView-wallet-status {
-  display: flex;
-  vertical-align: middle;
-  justify-content: center;
-  flex-direction: column;
-  text-align: right
+  text-align: right;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
-
-.js-homeView-wallet-status {
-  padding-left: 40px;
+.js-homeView-wallet-nav-side .js-homeView-wallet-status {
+  text-align: center;
+  position: relative;
+  right: unset;
+  top: unset;
 }
-
 .js-homeView-wallet-status ul li {
   list-style-type: none;
 }
 
 .js-homeView-wallet-fiat {
-  color: black;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 1rem;
 }
-
+.js-homeView-wallet-fiat i.up {
+  color: #28b600;
+}
+.js-homeView-wallet-fiat i.down {
+  color: #b60005;
+}
 .js-homeView-wallet-satoshis {
   color: #b1b1b1;
   font-size: 14px;
 }
 
 .js-homeView-wallet-content {
+  position: absolute;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  width: calc(100% - 130px);
+  height: 100%;
+  left: -100%;
+  top: 0;
+  bottom: 0;
+  -webkit-transition: ease .4s;
+  -moz-transition: ease .4s;
+  -ms-transition: ease .4s;
+  -o-transition: ease .4s;
+  transition: ease .4s;
+}
+
+.js-homeView-wallet-content.open{
+  left: 0;
 }
 
 .js-homeView-wallet-logo[display="dgb"] {
@@ -133,7 +249,8 @@
 }
 
 .js-homeView-wallet-content[display="btc"] {
-  background-color: white;  
+  background-color: #FF8E00;
+  /*left: 0;*/
 }
 
 .js-homeView-wallet-content[display="btc"] * {
@@ -141,8 +258,9 @@
 }
 
 .js-homeView-wallet-content[display="dgb"] {
-  height: 500px;
+  /*height: 500px;*/
   background-color: #091E54;
+  /*left: 0;*/
 }
 
 .js-homeView-wallet-content[display="dgb"] * {
@@ -150,7 +268,8 @@
 }
 
 .js-homeView-wallet-content[display="ltc"] {
-  background-color: #4d4d4d;  
+  background-color: #4d4d4d;
+  /*left: 0;*/
 }
 
 .js-homeView-wallet-content[display="ltc"] * {
@@ -158,7 +277,8 @@
 }
 
 .js-homeView-wallet-content[display="eth"] {
-  background-color: #3C3C3D;  
+  background-color: #3C3C3D;
+  /*left: 0;*/
 }
 
 .js-homeView-wallet-content[display="eth"] * {
@@ -215,6 +335,96 @@
   border-radius: 25px;
   padding: 15px 5px 15px 10px;
 }
+.js-homeView-wallet-menu {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+}
+.js-homeView-wallet-menu-btn {
+  background: rgba(255, 255, 255, 0.8);
+  border-width: 2px;
+  border-color: white;
+  border-radius: 3px;
+  border-style: solid;
+  padding: 1rem;
+  line-height: 3px;
+  cursor: pointer;
+  -webkit-transition: border-color .2s, background .2s;
+  -moz-transition: border-color .2s, background .2s;
+  -ms-transition: border-color .2s, background .2s;
+  -o-transition: border-color .2s, background .2s;
+  transition: border-color .2s, background .2s;
+}
+.js-homeView-wallet-menu-btn:hover {
+  background: transparent;
+  color: white;
+  border-color: white;
+}
+.js-homeView-wallet-menu > input{
+  flex: 1;
+  background: transparent;
+  color: white;
+  border-color: white;
+}
+.js-homeView-wallet-menu > input:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+}
+.js-homeView-wallet-menu > div {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+
+}
+.js-homeView-wallet-menu > div > input:first-child {
+  border-radius: 3px 0 0 3px;
+  border-right: 1px solid rgb(241, 225, 204);
+}
+.js-homeView-wallet-menu > div > input:last-child {
+  border-radius: 0 3px 3px 0;
+  border-left: 1px solid rgb(241, 225, 204);
+}
+
+.js-homeView-wallet-nav-side {
+  position: fixed;
+  right: -130px;
+  top: 0;
+  bottom: 0;
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  box-shadow: 0 0 100px -30px black;
+  -webkit-transition:  .5s;
+  -moz-transition:  .5s;
+  -ms-transition:  .5s;
+  -o-transition:  .5s;
+  transition:  .5s;
+}
+
+.js-homeView-wallet-nav-side.open {
+  right: 0;
+}
+.overlay-homeView-wallet-nav{
+  display: none;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255,255,255,0.7);
+  -webkit-transition: opacity .4s;
+  -moz-transition: opacity .4s;
+  -ms-transition: opacity .4s;
+  -o-transition: opacity .4s;
+  transition: opacity .4s;
+}
+.overlay-homeView-wallet-nav.open{
+  display: block;
+  opacity: 1;
 
 .js-homeView-wallet-btc-send {
   width: 120px;

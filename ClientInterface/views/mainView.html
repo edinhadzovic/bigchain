@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
 	<script>window.$ = window.jQuery = require('jquery');</script>
 
 	<!-- <script>
@@ -14,268 +14,330 @@
 	
 	<script src="../javascript/lib/jquery-3.3.1.min.js"></script>
 	<script src="../javascript/lib/croppie.min.js"></script>
-    <!-- <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css"> -->
+	<script src="../javascript/lib/chart.js"></script>
+	<link rel="stylesheet" href="../css/button.min.css">
+    <link rel="stylesheet" href="../css/input.min.css">
+    <link rel="stylesheet" href="../css/menu.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/croppie.css">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>		
-		<div class="js-homeView-box">
-			<div class="js-homeView-navigation">
-				<div class="js-homeView-profile">
-					<div class="js-homeView-profile-image">
-						<img src="../images/profile/user_profile.jpg" alt="user profile image" class="js-home-profile-image-tag">
-					</div>
-					<div class="js-homeView-profile-name" style="color: black; margin-top: 10px">
-					</div>
-				</div>
-				<div>
-					<a href="#" class="js-homeView-navigation-item" type="request_wallet_plus">Wallet<span>+</span></a>
-				</div>
-				<div><a href="#" class="js-homeView-navigation-item" type="request_startup_plus">Startup<span>+</span></a></div>
-				<div><a href="#" class="js-homeView-navigation-item" type="request_manager_plus">Manager<span>+</span></a></div>
-				<div><a href="#" class="js-homeView-navigation-item last-item" type="request_file_plus">File<span>+</span></a></div>
-				<div><a href="#" class="js-homeView-navigation-item last-item" type="request_settings">Settings</a></div>
+<body>
+		<!--<div class="js-homeView-box">-->
+		<div class="js-homeView-navigation push">
+			<div class="burger-click-region">
+				<span class="burger-menu-piece"></span>
+				<span class="burger-menu-piece"></span>
+				<span class="burger-menu-piece"></span>
 			</div>
-			<div class="js-homeView-mainContent">
-				<!-- SETTINGS -->
-				<div class="js-homeView-settings hidden">
-					<h1>Settings</h1>
-					<nav class="js-homeView-setting-nav">
-						<a href="#" class="js-homeView-settings-nav-item" nav-data="personal">Personal Information</a>
-						<a href="#" class="js-homeView-settings-nav-item" nav-data="address">Address</a>
-						<a href="#" class="js-homeView-settings-nav-item" nav-data="documents">Documents</a>
-						<a href="#" class="js-homeView-settings-nav-item" nav-data="share">Share Option</a>
-					</nav>
-					<div class="js-homeView-settings-tab" tab-data="personal">
-						<h3>Personal Information</h3>
-						<div >
-								<form>
-									<div class="js-homeView-setting-row">
-										<div class="js-homeView-setting-field">
-											<label for="first_name">First Name</label>
-											<input type="text" id="first_name" class="js-homeView-settings-input" input-type="first_name">
-										</div>
-										<div class="js-homeView-setting-field">
-											<label for="last_name">Last Name</label>
-											<input type="text" id="last_name" class="js-homeView-settings-input" input-type="last_name">
-										</div>
-									</div>						
-									<div class="js-homeView-setting-row">
-										<div class="js-homeView-setting-field">
-											<label for="gender">Gender</label>
-											<select type="text" id="gender" class="js-homeView-setting-input" input-type="gender"><option>Male<option>Female</select>
-										</div>
-										<div class="js-homeView-setting-field">
-											<label for="Birthday">Birthday</label>
-											<input type="date" id="birthday" class="js-homeView-setting-input" input-type="birthday">
-										</div>
-									</div>
-									<div class="js-homeView-setting-row">
-										<div class="js-homeView-setting-field">
-											<label for="phone">Phone Number</label>
-											<input type="text" id="phone" class="js-homeView-setting-input" input-type="phone">
-										</div>
-									</div>
-									<div class="js-homeView-setting-row">
-										<button class="js-homeView-settings-input-pi-save">Save</button>
-									</div>
-								</form>							
+			<div class="logo">
+				<img src="../images/logo/walletplus.png">
+				<span>beta 0.0.1</span>
+			</div>
+			<div>
+				<a href="#" class="js-homeView-navigation-item" type="request_wallet_plus"><img class="svg"
+																								src="../images/icons/wallet.svg"><span> Wallet</span><span class="aqua">+</span></a>
+			</div>
+			<div><a href="#" class="js-homeView-navigation-item" type="request_manager_plus"><img class="svg"
+																								  src="../images/icons/exhaust.svg"><span> Exchange</span><span class="aqua">+</span></a>
+			</div>
+			<div><a href="#" class="js-homeView-navigation-item" type="request_startup_plus"><img class="svg"
+																								  src="../images/icons/startup.svg"><span> Startup</span><span class="aqua">+</span></a>
+			</div>
+			<!--<div><a href="#" class="js-homeView-navigation-item last-item" type="request_file_plus"><i class="fas fa-wallet"></i><span> File</span></a></div>-->
+			<div><a href="#" class="js-homeView-navigation-item" type="request_settings"><img class="svg"
+																							  src="../images/icons/system.svg"><span> Settings</span><span class="aqua">+</span></a>
+			</div>
+		</div>
+		<div class="js-homeView-mainContent">
+			<div class="mainContent-topNav ui menu">
+				<div class="left menu">
+					<div class="search">
+						<img class="svg" src="../images/icons/magnifier.svg">
+						<div class="ui input d-none">
+							<input type="search" placeholder="search...">
+						</div>
 					</div>
+					<ul class="topNav-menu">
+                        <span class="close-dropdown ui button"></span>
+						<div class="dropdown d-none">
+							<li>Market Cap</li>
+							<li>Price</li>
+							<li>Volume(24h)</li>
+							<li>Change</li>
+						</div>
+					</ul>
+				</div>
+				<div class="right menu">
+					<img class="svg" src="../images/icons/filter-results-button.png">
+					<div class="alert note">
+						<img class="svg" src="../images/icons/alert.svg">
+						<span class="notification">1</span>
 					</div>
-					<div class="js-homeView-settings-tab hidden" tab-data="address">
-						<h3>Address Information</h3>
-						<div class="js-homeView-setting-row">
-								<div class="js-homeView-setting-field">
-									<label for="street">Street</label>
-									<input type="text" id="street" class="js-homeView-setting-input" input-type="street">
-								</div>
-								<div class="js-homeView-setting-field">
-									<label for="city">City</label>
-									<input type="text" id="city" class="js-homeView-setting-input" input-type="city">
-								</div>
-							</div>
-							<div class="js-homeView-setting-row">
-								<div class="js-homeView-setting-field">
-									<label for="state">State</label>
-									<input type="text" id="state" class="js-homeView-setting-input" input-type="state">
-								</div>
-								<div class="js-homeView-setting-field">
-									<label for="postal_code">Postal Code</label>
-									<input type="text" id="postal_code" class="js-homeView-setting-input" input-type="postal_code">
-								</div>
-							</div>
-							<div class="js-homeView-setting-row">		
-								<div class="js-homeView-setting-field">
-									<label for="country">Country</label>
-									<input type="text" id="country" class="js-homeView-setting-input" input-type="country">
-								</div>
-							</div>
-							<div class="js-homeView-setting-row">
-								<button class="js-homeView-settings-address-save">Save</button>
-							</div>
-					</div>
-					<div class="js-homeView-settings-tab hidden" tab-data="documents">
-						<h3>Document Information</h3>
-						
+					<div class="profile">
+						<!--<div class="js-homeView-profile-image">-->
+						<img src="../images/profile/user_profile.jpg" alt="user profile image"
+							 class="js-home-profile-image-tag">
+						<!--</div>-->
+						<div class="js-homeView-profile-name">
+						</div>
 					</div>
 				</div>
-				<!-- Wallet -->
-				<div class="js-homeView-wallet hidden">
-					<!-- NAVIGATION -->
-					<div class="js-homeView-wallet-nav">
-						<div class="js-homeView-wallet-nav-item">
+			</div>
+
+			<!-- Wallet -->
+			<div class="js-homeView-wallet homeView-start-content hidden">
+				<!-- NAVIGATION -->
+				<div class="js-homeView-wallet-nav row">
+					<div class="js-homeView-wallet-nav-item btc col-xl-4 col-lg-6 col-12">
+						<div>
+							<canvas id="myChart"></canvas>
 							<div class="js-homeView-wallet-symbol" request="btc">
-								BTC
+								<span>Bitcoin</span>
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
-									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
+									<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300
+										&euro;
+									</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 BTC</li>
 								</ul>
 							</div>
+							<div class="js-homeView-wallet-menu">
+								<input class="js-homeView-wallet-menu-btn" type="button" value="Go to">
+								<div>
+									<input class="js-homeView-wallet-menu-btn" type="button" value="Pai in">
+									<input class="js-homeView-wallet-menu-btn" type="button" value="Pay out">
+								</div>
+							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item">
+					</div>
+					<div class="js-homeView-wallet-nav-item eth col-xl-4 col-lg-6 col-12">
+						<div>
 							<div class="js-homeView-wallet-symbol" request="dgb">
-								DGB
+								<span>Digibytes</span>
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
-									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
+									<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-down down"></i> 1.300
+										&euro;
+									</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 DGB</li>
 								</ul>
 							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item">
+					</div>
+					<div class="js-homeView-wallet-nav-item ltc col-lg-6 col-xl-4 col-12">
+						<div>
 							<div class="js-homeView-wallet-symbol" request="ltc">
-								LTC
+								<span>Litecoin</span>
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
-									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
+									<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300
+										&euro;
+									</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 LTC</li>
 								</ul>
 							</div>
 						</div>
-						<div class="js-homeView-wallet-nav-item">
+					</div>
+					<div class="js-homeView-wallet-nav-item eth col-xl-4 col-lg-6 col-12">
+						<div>
 							<div class="js-homeView-wallet-symbol" request="eth">
-								ETH
+								<span>Etherium</span>
 							</div>
 							<div class="js-homeView-wallet-status">
 								<ul>
-									<li class="js-homeView-wallet-fiat">1.300 &euro;</li>
+									<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300
+										&euro;
+									</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 ETH</li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<!-- CONTENT -->
-					<div class="js-homeView-wallet-content hidden" display="btc">
-						
-						<div class="js-homeView-wallet-info">
-							<!-- cointaining all information about the coin trading -->
-						</div>
-						<div class="js-homeView-wallet-send">
-							<h1>BTC</h1>
-							<!-- cointaining all function for sending / recieving coins -->
-							<div class="js-homeView-wallet-balance" balance="btc">
-								<div class="js-homeView-wallet-fiat-btc"> $ </div>
-								<div class="js-homeView-wallet-standing-btc"> BTC </div>
-							</div>
-							<div class="js-homeView-wallet-send-to" send="btc">
-								<form class="js-homeView-wallet-send-form">
-									<h3>Send</h3>
-									<input type="text"  placeholder="Receiver BTC address" name= "btc_add" class="js-homeView-wallet-send-btc-to-address">
-									<input type="number" placeholder="Enter the amount" name = "btc_amount" class="js-homeView-wallet-send-btc-amount">
-									<button class="js-homeView-wallet-btc-send" > send</button>
-								</form>
-							</div>
+				</div>
+				<span class="overlay-homeView-wallet-nav"></span>
+				<!-- CONTENT -->
+				<div class="js-homeView-wallet-content hidden" display="btc">
+
+					<div class="js-homeView-wallet-info">
+						<!-- cointaining all information about the coin trading -->
+					</div>
+					<div class="js-homeView-wallet-send">
+						<h1>BTC</h1>
+						<!-- cointaining all function for sending / recieving coins -->
+						<div class="js-homeView-wallet-balance" balance="btc">
+							<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
+							<div class="js-homeView-wallet-satoshis">0.00000000 BTC</div>
 						</div>
 					</div>
-					<div class="js-homeView-wallet-content hidden" display="dgb">
-						
-						<div class="js-homeView-wallet-info">
-								<!-- cointaining all information about the coin trading -->
-								<div class="js-homeView-wallet-logo" display="dgb"></div>
+				</div>
+				<div class="js-homeView-wallet-content hidden" display="dgb">
+
+					<div class="js-homeView-wallet-info">
+						<!-- cointaining all information about the coin trading -->
+						<div class="js-homeView-wallet-logo" display="dgb"></div>
+					</div>
+					<div class="js-homeView-wallet-send">
+						<!-- cointaining all function for sending / recieving coins -->
+						<h1>DGB</h1>
+						<div class="js-homeView-wallet-balance" balance="dgb">
+							<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
+							<div class="js-homeView-wallet-satoshis">0.00000000 DGB</div>
 						</div>
-						<div class="js-homeView-wallet-send">
-								<!-- cointaining all function for sending / recieving coins -->
-								<h1>DGB</h1>
-								<div class="js-homeView-wallet-balance" balance="dgb">
-									<div class="js-homeView-wallet-fiat-bch"></div>
-									<div class="js-homeView-wallet-satoshis-bch"></div>
-								</div>
-								<div class="js-homeView-wallet-send-to" send="dgb">
-									<form class="js-homeView-wallet-send-form">
-										<h3>Send</h3>
-										<input type="text"  placeholder="Receiver BCH address" name= "ltc_add" class="js-homeView-wallet-send-bch-to-address">
-										<input type="number" placeholder="Enter the amount" name = "ltc_amount" class="js-homeView-wallet-send-bch-amount">
-										<button class="js-homeView-wallet-bch-send" > send</button>
-									</form>
-								</div>
-								<div class="js-homeView-wallet-generate-address-button">
-									<button class="js-homeView-wallet-generate-address" for="dgb">DGB</button>
-								</div>
+						<div class="js-homeView-wallet-send-to" send="dgb">
+							<h3>Send</h3>
+							<form class="js-homeView-wallet-send-form">
+								<input type="text">
+								<input type="text">
+							</form>
+						</div>
+						<div class="js-homeView-wallet-generate-address-button">
+							<button class="js-homeView-wallet-generate-address" for="dgb">DGB</button>
 						</div>
 					</div>
-					<div class="js-homeView-wallet-content hidden" display="ltc">
-						
-						<div class="js-homeView-wallet-info">
-							<!-- cointaining all information about the coin trading -->
+				</div>
+				<div class="js-homeView-wallet-content hidden" display="ltc">
+
+					<div class="js-homeView-wallet-info">
+						<!-- cointaining all information about the coin trading -->
+					</div>
+					<div class="js-homeView-wallet-send">
+						<!-- cointaining all function for sending / recieving coins -->
+						<h1>LTC</h1>
+						<div class="js-homeView-wallet-balance" balance="ltc">
+							<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
+							<div class="js-homeView-wallet-satoshis">0.00000000 LTC</div>
 						</div>
-						<div class="js-homeView-wallet-send">
-							<h1>LTC</h1>
-							<!-- cointaining all function for sending / recieving coins -->
-							<div class="js-homeView-wallet-balance" balance="ltc">
-								<div class="js-homeView-wallet-fiat-ltc"> $ </div>
-								<div class="js-homeView-wallet-standing-ltc"> LTC </div>
-							</div>
-							<div class="js-homeView-wallet-send-to" send="ltc">
-								<form class="js-homeView-wallet-send-form">
-									<h3>Send</h3>
-									<input type="text"  placeholder="Receiver LTC address" name= "ltc_add" class="js-homeView-wallet-send-ltc-to-address">
-									<input type="number" placeholder="Enter the amount" name = "ltc_amount" class="js-homeView-wallet-send-ltc-amount">
-									<button class="js-homeView-wallet-ltc-send" > send</button>
-								</form>
-							</div>
+					</div>
+				</div>
+				<div class="js-homeView-wallet-content hidden" display="eth">
+
+					<div class="js-homeView-wallet-info">
+						<!-- cointaining all information about the coin trading -->
+					</div>
+					<div class="js-homeView-wallet-send">
+						<!-- cointaining all function for sending / recieving coins -->
+						<h1>ETH</h1>
+						<div class="js-homeView-wallet-balance" balance="eth">
+							<div class="js-homeView-wallet-fiat">1.300 &euro;</div>
+							<div class="js-homeView-wallet-satoshis">0.00000000 ETH</div>
+						</div>
+					</div>
+				</div>
+				<div class="js-homeView-wallet-nav-side">
+					<div class="js-homeView-wallet-nav-item btc">
+						<!--<canvas id="myChart"></canvas>-->
+						<div class="js-homeView-wallet-symbol" request="btc">
+						</div>
+						<span>Bitcoin</span>
+						<div class="js-homeView-wallet-status">
+							<ul>
+								<!--<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300 &euro;</li>-->
+								<li class="js-homeView-wallet-satoshis">0.00000000 BTC</li>
+							</ul>
 						</div>
 
 
 
 
 					</div>
-					<div class="js-homeView-wallet-content hidden" display="eth">
-						
-						<div class="js-homeView-wallet-info">
-								<!-- cointaining all information about the coin trading -->
+					<div class="js-homeView-wallet-nav-item eth">
+						<div class="js-homeView-wallet-symbol" request="dgb">
 						</div>
-						<div class="js-homeView-wallet-send">
-								<!-- cointaining all function for sending / recieving coins -->
-								<h1>ETH</h1>
-								<div class="js-homeView-wallet-balance" balance="eth">
-									<div class="js-homeView-wallet-fiat-eth"> $ </div>
-									<div class="js-homeView-wallet-standing-eth"> ETH </div>
-								</div>
-								<div class="js-homeView-wallet-send-to" send="eth">
-									<form class="js-homeView-wallet-send-form">
-										<h3>Send</h3>
-										<input type="text"  placeholder="Receiver Eth address" name= "eth_add" class="js-homeView-wallet-send-eth-to-address">
-										<input type="number" placeholder="Enter the amount" name = "eth_amount" class="js-homeView-wallet-send-eth-amount"> 
-										<button class="js-homeView-wallet-eth-send" > send</button>
-									</form>
-								</div>
-
+						<span>Digibytes</span>
+						<div class="js-homeView-wallet-status">
+							<ul>
+								<li class="js-homeView-wallet-satoshis">0.00000000 DGB</li>
+							</ul>
+						</div>
+					</div>
+					<div class="js-homeView-wallet-nav-item ltc">
+						<div class="js-homeView-wallet-symbol" request="ltc">
+						</div>
+						<span>Litecoin</span>
+						<div class="js-homeView-wallet-status">
+							<ul>
+								<!--<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300 &euro;</li>-->
+								<li class="js-homeView-wallet-satoshis">0.00000000 LTC</li>
+							</ul>
+						</div>
+					</div>
+					<div class="js-homeView-wallet-nav-item eth">
+						<div class="js-homeView-wallet-symbol" request="eth">
+						</div>
+						<span>Etherium</span>
+						<div class="js-homeView-wallet-status">
+							<ul>
+								<!--<li class="js-homeView-wallet-fiat"><i class="fas fa-arrow-up up"></i> 1.300 &euro;</li>-->
+								<li class="js-homeView-wallet-satoshis">0.00000000 ETH</li>
+							</ul>
 						</div>
 
 					</div>
 				</div>
-				<!-- Startup -->
-				<div class="js-homeView-startup hidden">
-					<h1>Startup+</h1>
+			</div>
+			<!-- Wallet -->
+			<div class="js-homeView-startup homeView-start-content hidden">
+				<h1>Startup</h1>
+			</div>
+			<!-- Manager -->
+			<div class="js-homeView-settings homeView-start-content hidden">
+				<h1>Settings</h1>
+				<nav class="js-homeView-setting-nav">
+					<a href="#" class="js-homeView-settings-nav-item ui button" nav-data="personal">Personal
+						Information</a>
+					<a href="#" class="js-homeView-settings-nav-item ui button" nav-data="address">Address</a>
+					<a href="#" class="js-homeView-settings-nav-item ui button" nav-data="documents">Documents</a>
+					<a href="#" class="js-homeView-settings-nav-item ui button" nav-data="share">Share Option</a>
+				</nav>
+				<div class="js-homeView-settings-tab" tab-data="personal">
+					<h3>Personal Information</h3>
+					<div>
+						<form style="max-width: 740px; width: 100%;">
+							<div class="row">
+								<div class="js-homeView-setting-field ui input col-md-6 col-12">
+									<label for="first_name">First Name</label>
+									<input type="text" id="first_name" class="js-homeView-settings-input"
+										   input-type="first_name">
+								</div>
+								<div class="js-homeView-setting-field ui input col-md-6 col-12">
+									<label for="last_name">Last Name</label>
+									<input type="text" id="last_name" class="js-homeView-settings-input"
+										   input-type="last_name">
+								</div>
+								<div class="js-homeView-setting-field ui input col-md-6 col-12">
+									<label for="gender">Gender</label>
+									<select id="gender" class="js-homeView-setting-input" input-type="gender">
+										<option>Male
+										<option>Female
+									</select>
+								</div>
+								<div class="js-homeView-setting-field ui input col-md-6 col-12">
+									<label for="Birthday">Birthday</label>
+									<input type="date" id="birthday" class="js-homeView-setting-input"
+										   input-type="birthday">
+								</div>
+								<div class="js-homeView-setting-field ui input col-md-6 col-12">
+									<label for="phone">Phone Number</label>
+									<input type="number" id="phone" class="js-homeView-setting-input"
+										   input-type="phone">
+								</div>
+							</div>
+							<button class="js-homeView-settings-input-pi-save ui button" style="margin-top: 15px;">
+								Save
+							</button>
+						</form>
+					</div>
 				</div>
+			</div>
 				<!-- Exchange -->
-				<div class="js-homeView-manager js-exchange hidden">
+				<div class="js-homeView-manager homeView-start-content js-exchange hidden">
 					<div class="js-coin-menu coin-menu">
 						<div class="js-coin-menu-content hidden">
 							<div class="menu-header">
@@ -291,15 +353,15 @@
 							<div class="js-exchange-info">
 								<div class="js-exchange-info-deposit-min info-box border-right-thin">
 									<h3>Deposit Min</h3>
-									<p>0.004847876 <span>ETH</span></p>
+									<p class="js-exchange-deposit-min-amount">0.004847876 <span class="js-exchange-deposit-min-symbol">ETH</span></p>
 								</div>
 								<div class="js-exchange-info-deposit-max info-box border-right-thin">
 										<h3>Deposit Max</h3>
-										<p>10.004847876 <span>ETH</span></p>
+										<p class="js-exchange-deposit-max-amount">10.004847876 <span class="js-exchange-deposit-max-symbol">ETH</span></p>
 								</div>
 								<div class="js-exchange-info-miner-fee info-box">
 										<h3>Miner Fee</h3>
-										<p>0.0015 <span>BTC</span></p>
+										<p class="js-exchange-miner-fee-amount">0.0015 <span class="js-exchange-miner-fee-symbol">BTC</span></p>
 								</div>
 							</div>
 							<div class="exchange-container">
@@ -308,7 +370,7 @@
 												<img src="./../images/coins/digibyte.svg" class="js-coin-select-image-from" width="150" height="150">
 											</div>
 											<div class="exchange-form">
-												<input type="text" class="js-exchange-amount-from exchange-input" tradeFrom="null" placeholder="Deposit Amount">
+												<input type="text" class="js-exchange-amount-from exchange-input" tradeFrom="btc" placeholder="Deposit Amount">
 											</div>
 										</div>
 										<!-- <div class="exchange-box">
@@ -322,7 +384,7 @@
 												<img src="./../images/coins/digibyte.svg" class="js-coin-select-image-to" width="150" height="150">
 											</div>
 											<div class="exchange-form">
-												<input type="text" class="js-exchange-amount-to exchange-input" tradeTo="null" placeholder="Receive Amount">
+												<input type="text" class="js-exchange-amount-to exchange-input" tradeTo="dgb" placeholder="Receive Amount">
 											</div>
 										</div>
 							</div>
@@ -371,13 +433,50 @@
 							<button class="js-homeView-exchange-button" > Exchange</button>
 						</form>
 					</div> -->
+				<div class="js-homeView-settings-tab hidden" tab-data="address">
+					<h3>Address Information</h3>
+					<div class="js-homeView-setting-row">
+						<div class="js-homeView-setting-field">
+							<label for="street">Street</label>
+							<input type="text" id="street" class="js-homeView-setting-input" input-type="street">
+						</div>
+						<div class="js-homeView-setting-field">
+							<label for="city">City</label>
+							<input type="text" id="city" class="js-homeView-setting-input" input-type="city">
+						</div>
+					</div>
+					<div class="js-homeView-setting-row">
+						<div class="js-homeView-setting-field">
+							<label for="state">State</label>
+							<input type="text" id="state" class="js-homeView-setting-input" input-type="state">
+						</div>
+						<div class="js-homeView-setting-field">
+							<label for="postal_code">Postal Code</label>
+							<input type="text" id="postal_code" class="js-homeView-setting-input"
+								   input-type="postal_code">
+						</div>
+					</div>
+					<div class="js-homeView-setting-row">
+						<div class="js-homeView-setting-field">
+							<label for="country">Country</label>
+							<input type="text" id="country" class="js-homeView-setting-input" input-type="country">
+						</div>
+					</div>
+					<div class="js-homeView-setting-row">
+						<button class="js-homeView-settings-address-save">Save</button>
+					</div>
 				</div>
-				<!-- File -->
-				<div class="js-homeView-file hidden">
-					<h1>File+</h1>
+				<div class="js-homeView-settings-tab hidden" tab-data="documents">
+					<h3>Document Information</h3>
+
 				</div>
 			</div>
-		</div>
+			<!-- File -->
+			<!--<div class="js-homeView-file homeView-start-content hidden">-->
+			<!--<h1>File+</h1>-->
+			<!--</div>-->
+		</div>		
+		<!--</div>-->
 
 		<script src='../javascript/mainViewController.js'></script>
 		<script src='../javascript/utils.js'></script>
