@@ -5,6 +5,7 @@ const path = require('path');
 const {shell} = require('electron');
 const {ipcRenderer} = require('electron');
 const exchange = require('./../../App/client/Exchange');
+const Transaction = require('./../../App/client/Transaction');
 
 
 const directory = path.join(__dirname, '../images/profile');
@@ -677,6 +678,8 @@ var homeViewController = function (params, user) {
         console.log('test' +  data.eth_amount);
         ipcRenderer.send('send_eth', data);
     });
+
+    homeViewController.setPage("Wallet");   
 };
 
 ipcRenderer.on('init-main-window', (event, current_user) => {
@@ -692,10 +695,7 @@ $('document').ready(function(){
 
 ipcRenderer.send('get-supported-coins');
 ipcRenderer.on('resolve-supported-coins', (event, data) => {
-    const ex = new exchange('.js-exchange', data);
-    ex.log();
-    // new coinMenu('.js-coin-menu-showcase', data);
-    // console.log(data);
+    new exchange('.js-exchange', data);
 });
 
 
@@ -832,6 +832,8 @@ $('.close-dropdown').on('click', function(){
         }, 200);
     }
 });
+
+
 $('.burger-click-region').on('click', function () {
 
     let sideNav = $('.js-homeView-navigation');
@@ -847,5 +849,8 @@ $('.burger-click-region').on('click', function () {
             sideNav.children().not('.burger-click-region').fadeIn();
         }, 300);
     }
+});
 
+$('.js-transactions').each((i, el) => {
+    new Transaction(el);
 });

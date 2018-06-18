@@ -165,13 +165,6 @@ var Exchange = function(container, coins) {
     exchange_info.miner_fee_amount.html(`${market_info.minerFee} ${coin_to.input.attr('tradeTo').toUpperCase()}`);
   });
 
-  this.log = function() {
-    console.log(body);
-    console.log(coin_from);
-    console.log(submit);
-    console.log(data);
-    console.log(exchange_info);
-  };
 };
 
 module.exports = Exchange;

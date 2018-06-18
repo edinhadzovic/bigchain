@@ -34,13 +34,14 @@ class Ethereum {
         let new_wallet = new Wallet(wallet.private_key, 'mainnet');
         // new_wallet.provider
         // var gasPrice = (new_wallet.provider.testnet ? 0x4a817c800: 0xba43b7400);
-        new_wallet.provider = providers.getDefaultProvider({ chainId: 3,
-            ensAddress: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+        console.log(amount, address, wallet);
+        new_wallet.provider = providers.getDefaultProvider({ chainId: 1,
+            ensAddress: wallet.address,
             name: 'mainnet' });
        
         // console.log(new_wallet.provider);
 
-        new_wallet.send("0x9dfdaC421E18A89d26b4AE7C88f4d4f97bDCf435", utils.parseEther("0.05"), {
+        new_wallet.send(address, utils.parseEther(amount), {
             gasPrice: 0x4a817c800,
             gasLimit: 21000
         }).then((txId) => {

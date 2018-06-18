@@ -296,7 +296,7 @@ ipcMain.on('send_bch', async function(event, data) {
 
 ipcMain.on('send_eth', async function(event, data) { 
   console.log(data);
-  current_user._eth_wallet.send(data.eth_amount, data.eth_address, current_user._eth_wallet);
+  current_user._eth_wallet.send(data.amount, data.address, current_user._eth_wallet);
   //console.log('DIDNT IMPLEMENTED SEND YET');
 });
 

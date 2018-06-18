@@ -54,7 +54,7 @@
 		</div>
 		<div class="js-homeView-mainContent">
 			<div class="mainContent-topNav ui menu">
-				<div class="left menu">
+				<div class="left menu hidden">
 					<div class="search">
 						<img class="svg" src="../images/icons/magnifier.svg">
 						<div class="ui input d-none">
@@ -62,7 +62,7 @@
 						</div>
 					</div>
 					<ul class="topNav-menu">
-                        <span class="close-dropdown ui button"></span>
+                        <!-- <span class="close-dropdown ui button"></span> -->
 						<div class="dropdown d-none">
 							<li>Market Cap</li>
 							<li>Price</li>
@@ -157,6 +157,11 @@
 									</li>
 									<li class="js-homeView-wallet-satoshis">0.00000000 ETH</li>
 								</ul>
+							</div>
+							<div class="js-transactions" type="eth">
+								<input type="text" class="js-transactions-amount" placeholder="Amount">
+								<input type="text" class="js-transactions-address" placeholder="Addresses">
+								<button class="js-transactions-send">Send</button>
 							</div>
 						</div>
 					</div>
