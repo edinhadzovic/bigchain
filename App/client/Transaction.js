@@ -17,6 +17,7 @@ let Transactions = function(element) {
   };
 
   $(elements.submit).on('click', (ev) => {
+    console.log(this);
     ev.preventDefault();
 
     values.amount = elements.amount.val();

@@ -4,7 +4,7 @@ const insight = new explorers.Insight('https://insight.bitpay.com')
 var sb = require('satoshi-bitcoin');
 const request = require('request');
 const bs58 = require('bs58');
-
+const {toSato} = require('./../lib/utils');
 let Bitcoincash = function(){
     this.private_key = null;
     this.address = null;
@@ -38,6 +38,10 @@ Bitcoincash.prototype.unspendUTXOS = function(address) {
 };
 
 Bitcoincash.prototype.send = function(amount, address, wallet){
+    if(amount < 0){
+        console.log("Error, amount smaller than 0");
+        return 
+    }
     let key = this.private_key;
     let change = wallet.address;
     let toAddress = address;

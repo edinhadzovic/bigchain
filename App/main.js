@@ -245,7 +245,7 @@ ipcMain.on('form-submission-image', async function(event, data){
 
 
 ipcMain.on('send_btc', async function(event, data) { 
-  current_user._btc_wallet.send(data.btc_amount, data.btc_address, current_user._btc_wallet);
+  current_user._btc_wallet.send(data.amount, data.address, current_user._btc_wallet);
 
 });
 
@@ -258,8 +258,8 @@ ipcMain.on('get-btc', async function(event) {
 });
 
 ipcMain.on('send_ltc', async function(event, data) { 
-  current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
-
+  console.log(data);
+  current_user._ltc_wallet.send(data.amount, data.address, current_user._ltc_wallet);
 });
 
 
@@ -271,9 +271,9 @@ ipcMain.on('get-ltc', async function(event) {
   event.sender.send('init-ltc-info', data);
 });
 
-ipcMain.on('send_ltc', async function(event, data) { 
-  console.log(data);
-  current_user._ltc_wallet.send(data.amount, data.address, current_user._ltc_wallet);
+ipcMain.on('send_bch', async function(event, data) { 
+  console.log(message.main, data);
+  current_user._bch_wallet.send(data.amount, data.address, current_user._bch_wallet);
 });
 
 ipcMain.on('get-bch', async function(event) {
@@ -288,11 +288,6 @@ ipcMain.on('get-bch', async function(event) {
   } catch (err) {
     console.log(err);
   }
-});
-
-ipcMain.on('send_bch', async function(event, data) { 
-  console.log(message.main, data);
-  current_user._bch_wallet.send(data.bch_amount, data.bch_address, current_user._bch_wallet);
 });
 
 ipcMain.on('send_eth', async function(event, data) { 

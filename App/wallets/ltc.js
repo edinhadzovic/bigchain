@@ -2,6 +2,7 @@ const litecore = require('litecore-lib');
 const request = require('request');
 
 const bigi = require('bigi');
+const {toSato} = require('./../lib/utils');
 var sb = require('satoshi-bitcoin');
 
 // --------------------------
@@ -33,9 +34,10 @@ class Litecoin {
         // var litecoin = bitcoin.networks.litecoin
         // -------------------------------------------
         // We are doing the same thing just we are using testnet network instead of real one
-
-        var ltc_privateKey = new litecore.PrivateKey(bigNum, 'livenet');
-        var ltc_address = ltc_privateKey.toAddress('livenet');
+        
+        let testnet = litecore.Networks.testnet;
+        var ltc_privateKey = new litecore.PrivateKey(bigNum,'mainnet');
+        var ltc_address = ltc_privateKey.toAddress('mainnet');
         console.log(ltc_address);
         console.log(ltc_privateKey);
         this.address = ltc_address.toString();
@@ -49,7 +51,7 @@ class Litecoin {
      * @returns {Array}  
      */
     getUTXOs(addr) {
-        let address = `https://testnet.litecore.io/api/addr/${addr}/utxo`;
+        let address = `https://insight.litecore.io/api/addr/${addr}/utxo`;
 
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {
@@ -78,11 +80,15 @@ class Litecoin {
     }
 
     send(amount, address, wallet) {
-        console.log(amount, address, wallet);
-
-        let amountSatoshi = sb.toSatoshi(amount);
-        console.log(amountSatoshi);
-        this.getUTXOs('mg571T82SdtqLC96EsMyPkkTCBdpS3Z6id').then((utxos) => {
+        if(amount < 0){
+            console.log("Error, amount smaller than 0");
+            return 0;
+        }
+        //console.log(amount, address, wallet);
+        this.readStandingFromAddress(wallet);
+        let amountSatoshi = toSato(amount);
+        //console.log(amountSatoshi);
+        this.getUTXOs(wallet.address).then((utxos) => {
             let tx = litecore.Transaction()
                 .from(utxos)
                 .to(address, amountSatoshi)
@@ -91,7 +97,7 @@ class Litecoin {
                 .serialize();
             console.log(tx);
             this.broadcastTransaction(tx).then((result) => {
-                console.log(result, " sfafasgasga");
+                console.log(result, " Transaction Id");
             }).catch(e => console.log(e)); 
 
         }).catch(e => console.log(e)); 

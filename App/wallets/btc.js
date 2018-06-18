@@ -2,7 +2,7 @@ const bitcoin = require('bitcoinjs-lib');
 const bitcore = require('bitcore-lib');
 
 const bigi = require('bigi');
-
+const {toSato} = require('./../lib/utils');
 var sb = require('satoshi-bitcoin');
 
 var bitcore_exp = require('bitcore-explorers').Insight;
@@ -41,12 +41,15 @@ class Bitcoin {
 
     send(amount, address, wallet)
     {
+        if(amount < 0){
+            console.log("Error, amount smaller than 0");
+            return 0;
+        }
         insight.getUnspentUtxos(wallet.address, (err, utxos) => {
             if (err) {
                 // Handle errors
             } else {
-    
-                var amountSatoshi = sb.toSatoshi(amount);
+                var amountSatoshi = toSato(amount);
                 var tx = bitcore.Transaction();
                 tx.from(utxos);
                 tx.to(address, amountSatoshi); // .0001 BTC
@@ -61,7 +64,7 @@ class Bitcoin {
                     if (err) {
                         // Handle err
                     } else {
-                        console.log('succesfully  sent bla bla ' + returnTxt);                    
+                        console.log('succesfully Transaction Id ' + returnTxt);                    
                     }
                 });
             }
