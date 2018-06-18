@@ -27,7 +27,8 @@ let Transactions = function(element) {
       return;
     }
 
-    ipcRenderer.send('send_eth', values);
+    console.log(elements, values);
+    ipcRenderer.send(`send_${elements.type}`, values);
 
   });
 };

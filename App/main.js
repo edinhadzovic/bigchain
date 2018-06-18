@@ -272,7 +272,8 @@ ipcMain.on('get-ltc', async function(event) {
 });
 
 ipcMain.on('send_ltc', async function(event, data) { 
-  current_user._ltc_wallet.send(data.ltc_amount, data.ltc_address, current_user._ltc_wallet);
+  console.log(data);
+  current_user._ltc_wallet.send(data.amount, data.address, current_user._ltc_wallet);
 });
 
 ipcMain.on('get-bch', async function(event) {

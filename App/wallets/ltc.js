@@ -49,11 +49,12 @@ class Litecoin {
      * @returns {Array}  
      */
     getUTXOs(addr) {
-        let address = `https://litecore.io/api/addr/${addr}/utxo`;
+        let address = `https://testnet.litecore.io/api/addr/${addr}/utxo`;
 
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {
                 if(err) reject(err);
+                console.log("getUTXOs", body);
                 resolve(body);
             })
         });
@@ -62,7 +63,7 @@ class Litecoin {
     broadcastTransaction(rawtx) {
         return new Promise((resolve, reject) => {
                 request({
-                  url: 'https://litecore.io/api/tx/send',
+                  url: 'https://insight.litecore.io/api/tx/send',
                   method: 'POST',
                   json: {
                     rawtx
@@ -77,9 +78,11 @@ class Litecoin {
     }
 
     send(amount, address, wallet) {
-            
+        console.log(amount, address, wallet);
+
         let amountSatoshi = sb.toSatoshi(amount);
-        this.getUTXOs(wallet.address).then((utxos) => {
+        console.log(amountSatoshi);
+        this.getUTXOs('mg571T82SdtqLC96EsMyPkkTCBdpS3Z6id').then((utxos) => {
             let tx = litecore.Transaction()
                 .from(utxos)
                 .to(address, amountSatoshi)
@@ -92,39 +95,11 @@ class Litecoin {
             }).catch(e => console.log(e)); 
 
         }).catch(e => console.log(e)); 
-
-       /* insight.getUnspentUtxos(wallet.address, (err, utxos) => {
-            if (err) {
-                // Handle errors
-            } else {
-    
-                var amountSatoshi = exc.convertLTC(amount,'ltc','satoshi');
-                console.log(amountSatoshi);
-                var tx = bitcore.Transaction();
-                tx.from(utxos);
-                tx.to(address, amountSatoshi); // .0001 BTC
-                tx.change(wallet.ltc_address);
-                tx.fee(10000);
-                tx.sign(wallet.private_key);
-                
-                tx.serialize();
-                console.log(tx.toObject());
-    
-                insight.broadcast(tx, (err, returnTxt)=> {
-                    if (err) {
-                        // Handle err
-                    } else {
-                        console.log('succesfully  sent bla bla ' + returnTxt);                    
-                    }
-                });
-
-            }
-        });*/
     }
     
 
     readStandingFromAddress(wallet){
-        let address = `https://testnet.litecore.io/api/addr/${wallet.address}/utxo`    
+        let address = `https://insight.litecore.io/api/addr/${wallet.address}/utxo`    
         let litecoin = 0;
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {
