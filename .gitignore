@@ -1,3 +1,5 @@
 /node_modules
-/temp/*
+/release-builds
+/temp
 /package-lock.json
+/ClientInterface/images/profile/*

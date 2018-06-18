@@ -1,0 +1,75 @@
+.container {
+  width: 100%;
+}
+
+.right-arrow {
+  width: 150px;
+  height: 150px;
+  background-color: aquamarine;
+  background: url('../images/icons/exchange_icon.png') no-repeat center;
+  background-size: 40px;
+}
+
+.drop-down-coin {
+  width: 150px;
+  height: 150px;
+  /* border: 2px solid #C7C7C7;
+  background-color: white; */
+  transition: opacity 0.5s ease-in;
+  display: inline-block;
+}
+
+.drop-down-coin:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.js-coin-select {
+  background-image: url('../images/coins/digibyte.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.js-exchange {
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+}
+
+.js-exchange-amount {
+  width: 120px;
+  padding: 5px 10px;
+}
+
+.exchange-form {
+  margin: 10px 0;
+}
+
+.js-exchange-submit {
+  display: inline-block;
+  width: 250px;
+  height: 40px;
+}
+
+.exchange-input {
+  height: 40px;
+  border: 1px solid #c4c4c4;
+  text-align: center;
+}
+
+.exchange-input:focus {
+  outline: none;
+}
+
+.exchange-container table {}
+
+.exchange-table-header {
+  padding: 10px;
+  background-color: white;
+}
+
+.exchange-table-header-row {
+  background-color: white;
+}

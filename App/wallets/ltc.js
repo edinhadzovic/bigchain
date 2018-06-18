@@ -15,9 +15,9 @@ class Litecoin {
     // Change link to bitcoin info and price bitcoin
     constructor() 
     {
-        this._ltc_privateKey = null;
-        this._ltc_address = null; 
-        this._ltc_standing = null;
+        this.private_key = null;
+        this.address = null; 
+        this.standing = null;
     }
 
     generateAddress_and_PrivateKey(user) 
@@ -34,12 +34,12 @@ class Litecoin {
         // -------------------------------------------
         // We are doing the same thing just we are using testnet network instead of real one
 
-        var ltc_privateKey = new litecore.PrivateKey(bigNum, 'testnet');
-        var ltc_address = ltc_privateKey.toAddress('testnet');
+        var ltc_privateKey = new litecore.PrivateKey(bigNum, 'livenet');
+        var ltc_address = ltc_privateKey.toAddress('livenet');
         console.log(ltc_address);
         console.log(ltc_privateKey);
-        this._ltc_address = ltc_address.toString();
-        this._ltc_privateKey = ltc_privateKey.toString();
+        this.address = ltc_address.toString();
+        this.private_key = ltc_privateKey.toString();
  
     }
 
@@ -49,7 +49,7 @@ class Litecoin {
      * @returns {Array}  
      */
     getUTXOs(addr) {
-        let address = `https://testnet.litecore.io/api/addr/${addr}/utxo`;
+        let address = `https://litecore.io/api/addr/${addr}/utxo`;
 
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {
@@ -62,7 +62,7 @@ class Litecoin {
     broadcastTransaction(rawtx) {
         return new Promise((resolve, reject) => {
                 request({
-                  url: 'https://testnet.litecore.io/api/tx/send',
+                  url: 'https://litecore.io/api/tx/send',
                   method: 'POST',
                   json: {
                     rawtx
@@ -79,12 +79,12 @@ class Litecoin {
     send(amount, address, wallet) {
             
         let amountSatoshi = sb.toSatoshi(amount);
-        this.getUTXOs(wallet._ltc_address).then((utxos) => {
+        this.getUTXOs(wallet.address).then((utxos) => {
             let tx = litecore.Transaction()
                 .from(utxos)
                 .to(address, amountSatoshi)
-                .change(wallet._ltc_address)
-                .sign(wallet._ltc_privateKey)
+                .change(wallet.address)
+                .sign(wallet.private_key)
                 .serialize();
             console.log(tx);
             this.broadcastTransaction(tx).then((result) => {
@@ -93,7 +93,7 @@ class Litecoin {
 
         }).catch(e => console.log(e)); 
 
-       /* insight.getUnspentUtxos(wallet._ltc_address, (err, utxos) => {
+       /* insight.getUnspentUtxos(wallet.address, (err, utxos) => {
             if (err) {
                 // Handle errors
             } else {
@@ -105,7 +105,7 @@ class Litecoin {
                 tx.to(address, amountSatoshi); // .0001 BTC
                 tx.change(wallet.ltc_address);
                 tx.fee(10000);
-                tx.sign(wallet._ltc_privateKey);
+                tx.sign(wallet.private_key);
                 
                 tx.serialize();
                 console.log(tx.toObject());
@@ -124,7 +124,7 @@ class Litecoin {
     
 
     readStandingFromAddress(wallet){
-        let address = `https://testnet.litecore.io/api/addr/${wallet._ltc_address}/utxo`    
+        let address = `https://testnet.litecore.io/api/addr/${wallet.address}/utxo`    
         let litecoin = 0;
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {

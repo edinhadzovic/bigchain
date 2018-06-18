@@ -1,5 +1,5 @@
 const bitcoin = require('bitcoinjs-lib');
-const bitcore = require('bitcore-explorers/node_modules/bitcore-lib');
+const bitcore = require('bitcore-lib');
 
 const bigi = require('bigi');
 
@@ -13,9 +13,9 @@ class Bitcoin {
     // Change link to bitcoin info and price bitcoin
     constructor() 
     {
-        this._btc_privateKey = null;
-        this._btc_address = null; 
-        this._btc_standing = null;
+        this.private_key = null;
+        this.address = null; 
+        this.standing = null;
     }
 
     generateAddress_and_PrivateKey(user) 
@@ -30,18 +30,18 @@ class Bitcoin {
         // Normal address var keyPair = new bitcoin.ECPair(bigNum);
         var testnet = bitcoin.networks.testnet;
         // We are doing the same thing just we are using testnet network instead of real one
-        var keyPair = new bitcoin.ECPair(bigNum, null, {network: testnet});
+        var keyPair = new bitcoin.ECPair(bigNum, null, {network: bitcoin.networks.mainnet});
         // WIF is a representation of private key !!!!!!!!!!!!!!!!
         var btc_privateKey = keyPair.toWIF();
         var btc_address = keyPair.getAddress();
-        this._btc_address = btc_address;
-        this._btc_privateKey = btc_privateKey;
+        this.address = btc_address;
+        this.private_key = btc_privateKey;
         
     }
 
     send(amount, address, wallet)
     {
-        insight.getUnspentUtxos(wallet._btc_address, (err, utxos) => {
+        insight.getUnspentUtxos(wallet.address, (err, utxos) => {
             if (err) {
                 // Handle errors
             } else {
@@ -50,9 +50,9 @@ class Bitcoin {
                 var tx = bitcore.Transaction();
                 tx.from(utxos);
                 tx.to(address, amountSatoshi); // .0001 BTC
-                tx.change(wallet._btc_address);
+                tx.change(wallet.address);
                 tx.fee(10000);
-                tx.sign(wallet._btc_privateKey);
+                tx.sign(wallet.private_key);
                 
                 tx.serialize();
                 console.log(tx.toObject());
@@ -70,7 +70,7 @@ class Bitcoin {
 
     readStandingFromAddress(wallet){
         return new Promise((resolve, reject) => {
-            insight.getUnspentUtxos(wallet._btc_address, function(err, utxos) {
+            insight.getUnspentUtxos(wallet.address, function(err, utxos) {
                 let satoshis = 0;
                 // Complete object
                 // console.log("btc", utxos);

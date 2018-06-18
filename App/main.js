@@ -3,6 +3,7 @@ const path = require('path');
 const url = require('url');
 const digibyte = require('digibyte');
 const market_price = require('./wallets/market_price');
+const ShapeShift = require('./lib/Shapeshift');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -15,7 +16,34 @@ var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
 var message = require('./lib/Message');
 var DGB = require('./wallets/dgb');
+let shapeshift = new ShapeShift();
 
+
+// shapeshift.getCoins().then((coinData) => {
+//   console.log(coinData);
+// });
+
+// shapeshift.getCoinsManuel().then((coinData) => {
+//   console.log(coinData);
+// });
+/*
+shapeshift.getPairRate('btc_ltc').then((coinData) => {
+  console.log("1", coinData);
+});
+
+shapeshift.getPairLimit('btc_ltc').then((coinData) => {
+  console.log(2, coinData);
+});
+
+shapeshift.getMarketInfo('btc_ltc').then((coinData) => {
+  console.log(3, coinData);
+}); 
+
+shapeshift.getRecentTx().then((coinData) => {
+  //console.log(4, coinData);
+});
+
+*/
 
 // Global current user
 var current_user = new User();
@@ -295,6 +323,7 @@ ipcMain.on('get-bch', async function(event) {
   }
 });
 
+
 ipcMain.on('send_bch', async function(event, data) { 
   console.log(message.main, data);
   current_user._bch_wallet.send(data.bch_amount, data.bch_address, current_user._bch_wallet);
@@ -314,4 +343,44 @@ ipcMain.on('get-eth', async function(event) {
   data.standing = await current_user._eth_wallet.readStandingFromAddress(current_user._eth_wallet);
   event.sender.send('init-eth-info', data);
 });
+
+
+
+ipcMain.on('exchange', async function(event,data){
+  //console.log("I received this data", data, current_user[data.tradeFrom].address, current_user[data.tradeTo].address);
+  console.log(data);
+  let new_data = {};
+  new_data.address_from = current_user[data.tradeFrom].address;
+  new_data.address_to = current_user[data.tradeTo].address;
+  new_data.pair = data.pair;
+  new_data.amount_of = data.tradeFromAmount;
+  shapeshift.shiftFixed(new_data).then((res) => {
+    console.log(res);
+  }).catch(e => console.log(e));
+  event.sender.send('fee_exchange');
+})
+
+ipcMain.on('get-supported-coins', async (event, data) => {
+  let coins = await shapeshift.getCoins();
+  if(coins.length > 0) {
+    return event.sender.send('resolve-supported-coins', coins);
+  }
+});
+
+ipcMain.on('getPair', async (event, pair) => {
+  let pairs = await shapeshift.getPairRate(pair);
+  console.log(pairs);
+  event.sender.send('returnPair', pairs);
+})
+
+ipcMain.on('exchange-market-info', async(event, pair) => {
+  let market_info = await shapeshift.getMarketInfo(pair);
+  console.log("Market Info", market_info);
+  event.sender.send('market-info-result', market_info);
+});
+
+shapeshift.getCoins().then((coinData) => {
+  console.log(message.main,'\n', coinData);
+});
+
 

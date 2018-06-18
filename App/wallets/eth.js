@@ -8,30 +8,30 @@ var ethers = require('ethers');
 var Wallet = ethers.Wallet;
 var utils = ethers.utils;
 var providers = ethers.providers;
-console.log(providers.networks);
+//console.log(providers.networks);
 
 class Ethereum {
 
     // Change link to bitcoin info and price bitcoin
     constructor() 
     {
-        this._eth_privateKey = null;
-        this._eth_address = null; 
-        this._eth_standing = null;
+        this.private_key = null;
+        this.address = null; 
+        this.standing = null;
     }
 
     generateAddress_and_PrivateKey(user) 
     {
         let wallet = Wallet.createRandom();
-        this._eth_privateKey = wallet.privateKey;
-        this._eth_address = wallet.address;
+        this.private_key = wallet.privateKey;
+        this.address = wallet.address;
     }
 
     send(amount, address, wallet) {
         console.log(wallet);
         // let data = providers.getDefaultProvider(true);
         // console.log(data);
-        let new_wallet = new Wallet(wallet._eth_privateKey, 'testnet');
+        let new_wallet = new Wallet(wallet.private_key, 'mainnet');
         // new_wallet.provider
         // var gasPrice = (new_wallet.provider.testnet ? 0x4a817c800: 0xba43b7400);
         new_wallet.provider = providers.getDefaultProvider({ chainId: 3,
@@ -72,7 +72,7 @@ class Ethereum {
     }
 
     readStandingFromAddress(wallet){
-        let address = `https://api.blockcypher.com/v1/eth/main/addrs/${wallet._eth_address}/balance`; 
+        let address = `https://api.blockcypher.com/v1/eth/main/addrs/${wallet.address}/balance`; 
         let ethereum;
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {

@@ -95,7 +95,7 @@ User.prototype.login = async function(data) {
     this.setPersonalInfo(user.user);
     this.setAdress(user.user);
     // TODO set address and profile image
-    console.log(user.user);
+    //console.log(user.user);
     this.setImage(user.user);
     this.setBtc(user.user);
     this.setLtc(user.user);
@@ -271,14 +271,14 @@ User.prototype.setImage = function(data) {
 
 User.prototype.setBtc = async function(data) {
 
-  this._btc_wallet._btc_address = data._btc_wallet._btc_address;
-  this._btc_wallet._btc_privateKey = data._btc_wallet._btc_privateKey;
+  this._btc_wallet.address = data._btc_wallet.address;
+  this._btc_wallet.private_key = data._btc_wallet.private_key;
 };
 
 User.prototype.setLtc = async function(data) {
 
-  this._ltc_wallet._ltc_address = data._ltc_wallet._ltc_address;
-  this._ltc_wallet._ltc_privateKey = data._ltc_wallet._ltc_privateKey;
+  this._ltc_wallet.address = data._ltc_wallet.address;
+  this._ltc_wallet.private_key = data._ltc_wallet.private_key;
 };
 
 User.prototype.setBch = async function(data) {
@@ -289,13 +289,13 @@ User.prototype.setBch = async function(data) {
 
 User.prototype.setEth = async function(data) {
 
-  this._eth_wallet._eth_address = data._eth_wallet._eth_address;
-  this._eth_wallet._eth_privateKey = data._eth_wallet._eth_privateKey;
+  this._eth_wallet.address = data._eth_wallet.address;
+  this._eth_wallet.private_key = data._eth_wallet.private_key;
 };
 
 User.prototype.generate_wallets = async function() {
   return new Promise((resolve, reject) => {
-    if(this._btc_wallet._btc_privateKey === null) {
+    if(this._btc_wallet.private_key === null) {
       //generate address
       this._btc_wallet.generateAddress_and_PrivateKey(this);
       this._ltc_wallet.generateAddress_and_PrivateKey(this);

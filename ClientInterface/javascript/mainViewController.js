@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const {shell} = require('electron');
 const {ipcRenderer} = require('electron');
+const exchange = require('./../../App/client/Exchange');
 
 
 const directory = path.join(__dirname, '../images/profile');
@@ -667,7 +668,6 @@ var homeViewController = function (params, user) {
         console.log('test' +  data.ltc_amount);
         ipcRenderer.send('send_ltc', data);
     });
-
     homeViewController.bch_wallet.send_button.click(function(evt) {
         evt.preventDefault();
 
@@ -688,8 +688,6 @@ var homeViewController = function (params, user) {
         console.log('test' +  data.eth_amount);
         ipcRenderer.send('send_eth', data);
     });
-
-
 };
 
 ipcRenderer.on('init-main-window', (event, current_user) => {
@@ -703,6 +701,28 @@ $('document').ready(function(){
     })
 });
 
+ipcRenderer.send('get-supported-coins');
+ipcRenderer.on('resolve-supported-coins', (event, data) => {
+    const ex = new exchange('.js-exchange', data);
+    ex.log();
+    // new coinMenu('.js-coin-menu-showcase', data);
+    // console.log(data);
+});
+
+
+// $('.js-coin-select').on('click', (event) => {
+//     console.log("hallo");
+//     $('.js-coin-menu').addClass('active');
+//     setTimeout(()=>{
+//         $('.js-coin-menu-content').removeClass('hidden');
+//     }, 500);
+    
+// })
+
+// $('.js-coin-menu-close').on('click', (event) => {
+//     $('.js-coin-menu').removeClass('active');
+//     $('.js-coin-menu-content').addClass('hidden');
+// });
 var ctx = document.getElementById('myChart').getContext('2d');
 var chart = new Chart(ctx, {
     // The type of chart we want to create
