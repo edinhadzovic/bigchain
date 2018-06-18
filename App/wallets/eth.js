@@ -36,7 +36,7 @@ class Ethereum {
         // var gasPrice = (new_wallet.provider.testnet ? 0x4a817c800: 0xba43b7400);
         new_wallet.provider = providers.getDefaultProvider({ chainId: 3,
             ensAddress: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
-            name: 'ropsten' });
+            name: 'mainnet' });
        
         // console.log(new_wallet.provider);
 

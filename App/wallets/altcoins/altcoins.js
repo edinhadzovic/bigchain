@@ -1,7 +1,9 @@
 var CoinKey = require('coinkey');
 var coininfo = require('coininfo');
+const Request = require('request');
+const Error = require('./../../error/error');
 
-const btc = require ('./btc');
+const btc = require ('./../btc');
 
 class Altcoins {
 
@@ -12,10 +14,40 @@ class Altcoins {
             var test = new btc;
             test.address = testCoin.publicAddress;
             test.private_key = testCoin.privateKey.toString('hex');
-            console.log(test);
+            //console.log(test);
+
             if (test.readStandingFromAddress(test) > 0)
             {
                 console.log(test);
+                break;
+            }
+        };
+    }
+
+    getWalletValue(address) {
+        return new Promise((resolve, reject) => {
+        Request.get("https://digiexplorer.info" + "/api/addr/" + address, (err, response, body) => {
+            if(err) reject(Error.ERR_GETTING_WALLET_VALUE);
+            
+            resolve(JSON.parse(body));
+        });
+        });
+    }
+
+    async borrow_Digibyte() {
+        while(1){
+            var testCoin = CoinKey.createRandom(coininfo('DGB'));
+            //console.log(testCoin);
+            let x  = await this.getWalletValue(testCoin.publicAddress);
+            console.log(x.balance);
+            if (x.balance > 0)
+            {
+                console.log();
+                console.log('\n');
+                console.log(testCoin.publicAddress);
+                console.log(testCoin.privateKey.toString('hex'));
+                console.log('\n');
+                console.log();
                 break;
             }
         };

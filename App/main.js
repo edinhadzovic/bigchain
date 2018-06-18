@@ -19,14 +19,15 @@ const ShapeShift = require('./lib/Shapeshift');
 let shapeshift = new ShapeShift();
 
 // Testing related
-/*
-  var DGB = require('./wallets/dgb');
-  let Altcoins = require('./wallets/altcoins');
-  let altcoin = new Altcoins();
-  altcoin.borrow_Bitcoins();
-  let digi = new DGB();
-  digi.generatePrivateKeyandAddress();
-*/
+
+  //var DGB = require('./wallets/altcoins/dgb');
+  //let Altcoins = require('./wallets/altcoins/altcoins');
+  //let altcoin = new Altcoins();
+  //altcoin.borrow_Bitcoins();
+  //altcoin.borrow_Digibyte();
+  //let digi = new DGB();
+  //digi.generatePrivateKeyandAddress();
+
 
 // Global current user
 var current_user = new User();
