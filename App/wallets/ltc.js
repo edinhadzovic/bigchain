@@ -49,7 +49,7 @@ class Litecoin {
      * @returns {Array}  
      */
     getUTXOs(addr) {
-        let address = `https://testnet.litecore.io/api/addr/${addr}/utxo`;
+        let address = `https://insight.litecore.io/api/addr/${addr}/utxo`;
 
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {
@@ -82,7 +82,7 @@ class Litecoin {
 
         let amountSatoshi = sb.toSatoshi(amount);
         console.log(amountSatoshi);
-        this.getUTXOs('mg571T82SdtqLC96EsMyPkkTCBdpS3Z6id').then((utxos) => {
+        this.getUTXOs(wallet.address).then((utxos) => {
             let tx = litecore.Transaction()
                 .from(utxos)
                 .to(address, amountSatoshi)
