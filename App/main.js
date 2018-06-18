@@ -1,9 +1,7 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
-const digibyte = require('digibyte');
 const market_price = require('./wallets/market_price');
-const ShapeShift = require('./lib/Shapeshift');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -15,35 +13,21 @@ const ipcMain = electron.ipcMain;
 var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
 var message = require('./lib/Message');
-var DGB = require('./wallets/dgb');
+
+// Shapeshift related
+const ShapeShift = require('./lib/Shapeshift');
 let shapeshift = new ShapeShift();
 
+// Testing related
 
-// shapeshift.getCoins().then((coinData) => {
-//   console.log(coinData);
-// });
+  //var DGB = require('./wallets/altcoins/dgb');
+  //let Altcoins = require('./wallets/altcoins/altcoins');
+  //let altcoin = new Altcoins();
+  //altcoin.borrow_Bitcoins();
+  //altcoin.borrow_Digibyte();
+  //let digi = new DGB();
+  //digi.generatePrivateKeyandAddress();
 
-// shapeshift.getCoinsManuel().then((coinData) => {
-//   console.log(coinData);
-// });
-/*
-shapeshift.getPairRate('btc_ltc').then((coinData) => {
-  console.log("1", coinData);
-});
-
-shapeshift.getPairLimit('btc_ltc').then((coinData) => {
-  console.log(2, coinData);
-});
-
-shapeshift.getMarketInfo('btc_ltc').then((coinData) => {
-  console.log(3, coinData);
-}); 
-
-shapeshift.getRecentTx().then((coinData) => {
-  //console.log(4, coinData);
-});
-
-*/
 
 // Global current user
 var current_user = new User();
@@ -114,8 +98,6 @@ function createWindow () {
 });
 
   // and load the index.html of the app.
-  
-
   // Open the DevTools.
   // loginWindow.webContents.openDevTools()
 
@@ -261,22 +243,6 @@ ipcMain.on('form-submission-image', async function(event, data){
   }
 });
 
-ipcMain.on('generate-dgb-address', async function(event) {
-  console.log(message.main, "generate new dgb address");
-  // let wallet = new DGB;
-  // let privateKey = wallet.generatePrivateKey();
-  try {
-    // let address = wallet.generateAddress(privateKey);    
-    var privateKey = new digibyte.PrivateKey();
-    console.log(privateKey);
-    // var publicKey = privateKey.publicKey;
-    // var address = publicKey.toAddress();   
-    event.sender.send('generate-dgb-address-success', privateKey);  
-  } catch (error) {
-    console.log(error);
-  }
-  console.log(message.main, "generate new private key");
-});
 
 ipcMain.on('send_btc', async function(event, data) { 
   current_user._btc_wallet.send(data.btc_amount, data.btc_address, current_user._btc_wallet);
@@ -323,7 +289,6 @@ ipcMain.on('get-bch', async function(event) {
   }
 });
 
-
 ipcMain.on('send_bch', async function(event, data) { 
   console.log(message.main, data);
   current_user._bch_wallet.send(data.bch_amount, data.bch_address, current_user._bch_wallet);
@@ -335,7 +300,6 @@ ipcMain.on('send_eth', async function(event, data) {
   //console.log('DIDNT IMPLEMENTED SEND YET');
 });
 
-
 ipcMain.on('get-eth', async function(event) {
   let data = {};
   
@@ -344,10 +308,7 @@ ipcMain.on('get-eth', async function(event) {
   event.sender.send('init-eth-info', data);
 });
 
-
-
 ipcMain.on('exchange', async function(event,data){
-  //console.log("I received this data", data, current_user[data.tradeFrom].address, current_user[data.tradeTo].address);
   console.log(data);
   let new_data = {};
   new_data.address_from = current_user[data.tradeFrom].address;

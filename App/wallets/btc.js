@@ -6,7 +6,7 @@ const bigi = require('bigi');
 var sb = require('satoshi-bitcoin');
 
 var bitcore_exp = require('bitcore-explorers').Insight;
-var insight = new bitcore_exp('testnet');
+var insight = new bitcore_exp('mainnet');
 
 class Bitcoin {
 

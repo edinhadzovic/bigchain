@@ -637,17 +637,6 @@ var homeViewController = function (params, user) {
         });
     });
 
-    $(homeViewController.dgb_wallet.generateAddress).click(function(event) {
-        console.log("test");
-
-        event.preventDefault();
-        ipcRenderer.send('generate-dgb-address');
-
-        ipcRenderer.on('generate-dgb-address-success', (event, private_key) => {
-            console.log(private_key);
-        });
-    });
-
     $(homeViewController.btc_wallet.send_button).click(function(event){
         event.preventDefault();
    
