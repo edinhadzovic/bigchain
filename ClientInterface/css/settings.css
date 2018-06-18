@@ -18,10 +18,14 @@
 .js-homeView-setting-field {
   display: flex;
   flex-direction: column;
-  flex-grow: 2;
-  margin: 20px 10px;
+  margin: 5px 0;
+  color: black;
 }
-
+.js-homeView-setting-field select {
+  padding: 8.5px 5px 8.5px 10px;
+  border-radius: 3px;
+  border: 1px solid #dedede;
+}
 .js-homeView-setting-field label {
   margin-bottom: 10px;
 }
@@ -31,13 +35,6 @@
   max-width: 310px;
   border: 2px solid #d1d1d1;
 }
-
-.js-homeView-setting-field select {
-  padding: 10px 5px 10px 10px;
-  max-width: 310px;
-  border: 2px solid #d1d1d1;
-}
-
 
 .js-homeView-setting-nav {
   padding: 20px 10px;
@@ -52,19 +49,19 @@
   transition: all 0.5s ease-in;
 }
 
-.js-homeView-settings-nav-item:hover{
-  color: aqua;
-  border: 2px solid aqua;
-}
+/*.js-homeView-settings-nav-item:hover{*/
+  /*color: aqua;*/
+  /*border: 2px solid aqua;*/
+/*}*/
 
-.js-homeView-setting-row button {
-  padding: 15px;
-  border: 2px solid aqua;
-  color: black;
-  margin: 0px 10px;
-  background-color: aqua;
-}
+/*.js-homeView-setting-row button {*/
+/*padding: 15px;*/
+/*border: 2px solid aqua;*/
+/*color: black;*/
+/*margin: 0px 10px;*/
+/*background-color: aqua;*/
+/*}*/
 
-.js-homeView-setting-row button:hover {
-  cursor: pointer;
-}
+/*.js-homeView-setting-row button:hover {*/
+  /*cursor: pointer;*/
+/*}*/
