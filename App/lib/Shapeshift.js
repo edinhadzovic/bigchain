@@ -1,5 +1,5 @@
 const shapeshift = require('shapeshift.io');
-const requst = require('request');
+const request = require('request');
 const http = require('./http-node');
 
 let basicUrl = 'https://shapeshift.io';
@@ -38,6 +38,56 @@ class Shapeshift {
           {
             usableCoins.push(coinData[elem]);
           }
+          if (coinData[elem].symbol == 'BTG')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'BLK')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'DASH') 
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'DOGE')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'MONA')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'NMC')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'DCR')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'PPC')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'RDD') 
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'QTUM')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'VTC')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          if (coinData[elem].symbol == 'ZEC')
+          {
+            usableCoins.push(coinData[elem]);
+          }
+          
+
         }
         // add more coins if implemented
         resolve(usableCoins);
@@ -51,7 +101,7 @@ class Shapeshift {
   getCoinsManuel(){
     let url = basicUrl + '/getcoins';
     return new Promise((resolve, reject) => {
-      requst.get({url: url, json: true}, (err, response, body) => {
+      request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
         if (response.statusCode !== 200) reject(new Error('HTTP status code: ' + response.statusCode));
         resolve(body);
@@ -66,7 +116,7 @@ class Shapeshift {
   getPairRate(pair){
     let url = `${basicUrl}/rate/${pair}`;
     return new Promise((resolve, reject) => {
-      requst.get({url: url, json: true}, (err, response, body) => {
+      request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
         if(response.statusCode !== 200) reject(new Error('HTTP status code:' + response.statusCode));
         resolve(body);
@@ -77,7 +127,7 @@ class Shapeshift {
   getPairLimit(pair){
     let url = `${basicUrl}/limit/${pair}`;
     return new Promise((resolve, reject) => {
-      requst.get({url: url, json: true}, (err, response, body) => {
+      request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
         if(response.statusCode !== 200) reject(new Error('HTTP status code:' + response.statusCode));
         resolve(body);
@@ -88,7 +138,7 @@ class Shapeshift {
   getMarketInfo(pair){
     let url = `${basicUrl}/marketinfo/${pair}`;
     return new Promise((resolve, reject) => {
-      requst.get({url: url, json: true}, (err, response, body) => {
+      request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
         if(response.statusCode !== 200) reject(new Error('HTTP status code:' + response.statusCode));
         resolve(body);
@@ -99,7 +149,7 @@ class Shapeshift {
   getRecentTx(max){
     let url = `${basicUrl}/recenttx/${max}`;
     return new Promise((resolve, reject) => {
-      requst.get({url: url, json: true}, (err, response, body) => {
+      request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
         if(response.statusCode !== 200) reject(new Error('HTTP status code:' + response.statusCode));
         resolve(body);
@@ -118,7 +168,7 @@ class Shapeshift {
     let url = `${basicUrl}/sendamount`;
     console.log();
     return new Promise((resolve, reject) => {
-      requst.post({url: url, json: true, body: body}, function (err, resp, data) {
+      request.post({url: url, json: true, body: body}, function (err, resp, data) {
         if (err) return reject(err);
         if (resp.statusCode !== 200) 
         {

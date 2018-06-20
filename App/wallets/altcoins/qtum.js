@@ -1,8 +1,7 @@
-
 const altcoins = require('./altcoins');
 let altcoin = new altcoins();
 
-class Monacoin {
+class Qtum {
 
     constructor() 
     {
@@ -12,7 +11,7 @@ class Monacoin {
     }
 
     generatePrivateKeyandAddress() {
-        let wallet = altcoin.generate_Monacoin();
+        let wallet = altcoin.generate_Qtum();
         this.address = wallet._address;
         this.private_key = wallet._private_Key;
     
@@ -21,7 +20,7 @@ class Monacoin {
 
     send(amount, address, wallet)
     {
-        
+
     }
 
     readStandingFromAddress(wallet)
@@ -31,4 +30,4 @@ class Monacoin {
     
 }
 
-module.exports = Monacoin;
+module.exports = Qtum;

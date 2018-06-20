@@ -23,9 +23,9 @@ class Digi {
         console.log(this.address, this.private_key, wallet);
     }
 
-    getWalletValue(address) {
+    readStandingFromAddress(wallet) {
         return new Promise((resolve, reject) => {
-        Request.get(this.explorerUrl + "/api/addr/" + address, (err, response, body) => {
+        Request.get(this.explorerUrl + "/api/addr/" + wallet.address, (err, response, body) => {
             if(err) reject(Error.ERR_GETTING_WALLET_VALUE);
             
             resolve(JSON.parse(body));
@@ -71,7 +71,7 @@ class Digi {
 
     createAndSendTransaction(sourcePrivateKey, sourceAddress, destinationAddress, satoshis) {
         return new Promise((resolve, reject) => {
-            getUnspentTransactionOutput(sourceAddress).then(utxos => {
+            this.getUnspentTransactionOutput(sourceAddress).then(utxos => {
                 if(utxos.length == 0) {
                     reject({ "message": "The source address has no unspent transactions" });
                 }

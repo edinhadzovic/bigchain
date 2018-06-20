@@ -122,5 +122,66 @@ class Altcoins {
         
         return doge_wallet;
     }
+
+    generate_Zcash(){
+        var zcash = CoinKey.createRandom(coininfo('ZEC'));
+
+        let zcash_wallet = {}
+        zcash_wallet._address = zcash.publicAddress;
+        zcash_wallet._private_Key = zcash.privateKey.toString('hex');
+        
+        return zcash_wallet;
+    }
+
+    generate_Vertcoin(){
+        var Vertcoin = CoinKey.createRandom(coininfo('VTC'));
+
+        let vertcoin_wallet = {}
+        vertcoin_wallet._address = Vertcoin.publicAddress;
+        vertcoin_wallet._private_Key = Vertcoin.privateKey.toString('hex');
+        
+        return vertcoin_wallet;
+    }
+
+    generate_Qtum(){
+        var Qtum = CoinKey.createRandom(coininfo('QTUM'));
+
+        let qtum_wallet = {}
+        qtum_wallet._address = Qtum.publicAddress;
+        qtum_wallet._private_Key = Qtum.privateKey.toString('hex');
+        
+        return qtum_wallet;
+    }
+    
+    generate_ReddCoin(){
+        var ReddCoin = CoinKey.createRandom(coininfo('RDD'));
+
+        let reddCoin_wallet = {}
+        reddCoin_wallet._address = ReddCoin.publicAddress;
+        reddCoin_wallet._private_Key = ReddCoin.privateKey.toString('hex');
+        
+        return reddCoin_wallet;
+    }
+
+    generate_Peercoin(){
+        var Peercoin = CoinKey.createRandom(coininfo('PPC'));
+
+        let peerCoin_wallet = {}
+        peerCoin_wallet._address = Peercoin.publicAddress;
+        peerCoin_wallet._private_Key = Peercoin.privateKey.toString('hex');
+        
+        return peerCoin_wallet;
+    }
+
+    generate_Decred(){
+        var Decred = CoinKey.createRandom(coininfo('DCR'));
+
+        let decred_wallet = {}
+        decred_wallet._address = Decred.publicAddress;
+        decred_wallet._private_Key = Decred.privateKey.toString('hex');
+        
+        return decred_wallet;
+    }
+
 }
 module.exports = Altcoins;

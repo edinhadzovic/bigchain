@@ -21,8 +21,43 @@ let shapeshift = new ShapeShift();
 // Testing related
 
   //var DGB = require('./wallets/altcoins/dgb');
-  //let Altcoins = require('./wallets/altcoins/altcoins');
-  //let altcoin = new Altcoins();
+  let Altcoins = require('./wallets/altcoins/altcoins');
+  let altcoin = new Altcoins();
+
+
+  // let blackcoin = require('./wallets/altcoins/blk');
+  // let blk_x = new blackcoin;
+  // let blk_y = new blackcoin;
+  // blk_x.generatePrivateKeyandAddress();
+  // blk_y.generatePrivateKeyandAddress();
+  // trebalo bi da radi sve
+  // blk_x.createAndSendTransaction(0.03, blk_y.address, blk_x);
+  // let x = blk_x.readStandingFromAddress(blk_x);
+
+   let bitcoingold = require('./wallets/altcoins/btg');
+   let blk_x = new bitcoingold;
+   let blk_y = new bitcoingold;
+   blk_x.generatePrivateKeyandAddress();
+   blk_y.generatePrivateKeyandAddress();
+  // trebalo bi da radi sve
+  console.log(blk_x, blk_y);
+   //blk_x.createAndSendTransaction(0.03, blk_y.address, blk_x);
+   let x = blk_x.readStandingFromAddress(blk_x);
+  
+  /*
+  console.log('generate_Namecoin', altcoin.generate_Namecoin());
+  console.log('generate_Blackcoin', blk_x);
+  console.log('generate_Blackcoin', blk_y);
+  console.log('generate_BitcoinGold', altcoin.generate_BitcoinGold());
+  console.log('generate_Dash', altcoin.generate_Dash());
+  console.log('generate_Doge', altcoin.generate_Doge());
+  console.log('generate_Zcash', altcoin.generate_Zcash());
+  console.log('generate_Vertcoin', altcoin.generate_Vertcoin());
+  console.log('generate_Qtum', altcoin.generate_Qtum());
+  console.log('generate_Peercoin', altcoin.generate_Peercoin());
+  console.log('generate_Decred', altcoin.generate_Decred());
+  */
+
   //altcoin.borrow_Bitcoins();
   //altcoin.borrow_Digibyte();
   //let digi = new DGB();
@@ -337,7 +372,5 @@ ipcMain.on('exchange-market-info', async(event, pair) => {
 });
 
 shapeshift.getCoins().then((coinData) => {
-  console.log(message.main,'\n', coinData);
+  //console.log(message.main,'\n', coinData);
 });
-
-
