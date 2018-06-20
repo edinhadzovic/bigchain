@@ -1,6 +1,9 @@
 const $ = require('jquery');
 const {ipcRenderer} = require('electron');
 
+const UNAVAILABLE = 'unavailable';
+const AVAILABLE = 'available';
+
 var Exchange = function(container, coins) {
   //wrapper
   let body = $(container);
@@ -31,16 +34,35 @@ var Exchange = function(container, coins) {
       if(menu.coins.length === 0) {
         for(let i = 0; i < data.length; i++) {
           let coin = data[i];
-          let content = '<div class="coin-item js-select-coin" coin_type="'+ coin.symbol +'" coin_name="' + coin.name + '">' + 
-            '<div class="coin-image"><img src="' + coin.image + '" heigh="100" width="100"></div>' +
-            '<div class="coin-info">' + 
-            '<h4>' + coin.name + ' ' + coin.symbol + '</h4>' +
-            '<p class="font-medium">Miner Fee: '+ coin.minerFee +'</p>' + 
-            '</div>' +
-            '</div>';
+          let content = null;
+          if(coin.status === UNAVAILABLE) {
+            content = menu.createCoinBox(coin, false);
+          } else {
+            content = menu.createCoinBox(coin, true);
+          }
           menu.showCase.append(content);
         }
       }
+    },
+    createCoinBox: function(coin, available) {
+      if(!available) {
+        return '<div class="coin-item js-select-coin" coin_type="'+ coin.symbol +'" coin_name="' + coin.name + '">' + 
+        '<div class="coin-unavaiable">' + coin.status.toUpperCase() + '</div>' +
+        '<div class="coin-image"><img src="' + coin.image + '" heigh="100" width="100"></div>' +
+        '<div class="coin-info">' + 
+        '<h4>' + coin.name + ' ' + coin.symbol + '</h4>' +
+        '<p class="font-medium">Miner Fee: '+ coin.minerFee +'</p>' + 
+        '</div>' +
+        '</div>';
+      } 
+
+      return '<div class="coin-item js-select-coin" coin_type="'+ coin.symbol +'" coin_name="' + coin.name + '">' + 
+      '<div class="coin-image"><img src="' + coin.image + '" heigh="100" width="100"></div>' +
+      '<div class="coin-info">' + 
+      '<h4>' + coin.name + ' ' + coin.symbol + '</h4>' +
+      '<p class="font-medium">Miner Fee: '+ coin.minerFee +'</p>' + 
+      '</div>' +
+      '</div>';
     }
   };
   
@@ -85,12 +107,21 @@ var Exchange = function(container, coins) {
   });
 
   coin_from.input.keyup(() => {
+    coin_from.active = true;    
     let pair = `${coin_from.input.attr('tradeFrom')}_${coin_to.input.attr('tradeTo')}`;
     ipcRenderer.send('getPair', pair);
   });
 
   ipcRenderer.on('returnPair', (event, data) => {
-    coin_to.input.attr('value', coin_from.input.val() * data.rate);
+    if(coin_from.active) {
+      coin_to.input.val(coin_from.input.val() * data.rate);
+      coin_from.active = false;
+    }
+
+    if(coin_to.active) {
+      coin_from.input.val(coin_to.input.val() / data.rate)
+      coin_to.active = false;
+    }
   });
 
   //coin right side selector
@@ -101,6 +132,13 @@ var Exchange = function(container, coins) {
     image: body.find('.js-coin-select-image-to'),
     active: false
   };
+
+  coin_to.input.keyup(() => {
+    
+    coin_to.active = true;
+    let pair = `${coin_from.input.attr('tradeFrom')}_${coin_to.input.attr('tradeTo')}`;
+    ipcRenderer.send('getPair', pair);
+  });
 
   coin_to.select.on('click', function(){
     menu.show();
@@ -127,9 +165,11 @@ var Exchange = function(container, coins) {
     $body.click(() => {
         data.forEach(coin => {
           if(coin_from.active) {
-            if(coin.symbol === attr) {
+            if(coin.symbol === attr && coin.status === AVAILABLE) {
               coin_from.image.attr('src', coin.image);
               coin_from.input.attr('tradeFrom', coin.symbol.toLowerCase());
+              coin_from.input.val(0);
+              coin_to.input.val(0);
               pair = `${coin_from.input.attr('tradeFrom')}_${coin_to.input.attr('tradeTo')}`;
               ipcRenderer.send('exchange-market-info', pair);  
               coin_from.active = false;
@@ -138,9 +178,11 @@ var Exchange = function(container, coins) {
           }
 
           if(coin_to.active) {
-            if(coin.symbol === attr) {
+            if(coin.symbol === attr && coin.status === AVAILABLE) {
               coin_to.image.attr('src', coin.image);
               coin_to.input.attr('tradeTo', coin.symbol.toLowerCase());
+              coin_from.input.val(0);
+              coin_to.input.val(0);
               pair = `${coin_from.input.attr('tradeFrom')}_${coin_to.input.attr('tradeTo')}`;
               ipcRenderer.send('exchange-market-info', pair);               
               coin_to.active = false;
@@ -161,7 +203,7 @@ var Exchange = function(container, coins) {
 
   ipcRenderer.on('market-info-result', (event, market_info) => {
     exchange_info.depo_max_amount.html(`${market_info.maxLimit} ${coin_from.input.attr('tradeFrom').toUpperCase()}`);
-    exchange_info.depo_min_amount.html(`${market_info.minimum} ${coin_from.input.attr('tradeFrom').toUpperCase()}`);
+    exchange_info.depo_min_amount.html(`${market_info.minimum.toFixed(7)} ${coin_from.input.attr('tradeFrom').toUpperCase()}`);
     exchange_info.miner_fee_amount.html(`${market_info.minerFee} ${coin_to.input.attr('tradeTo').toUpperCase()}`);
   });
 

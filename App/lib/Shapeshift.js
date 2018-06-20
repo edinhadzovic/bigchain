@@ -15,7 +15,7 @@ class Shapeshift {
     return new Promise((resolve, reject) => {
       shapeshift.coins(function(err, coinData) {
         if(err) reject(err);
-
+        console.log(coinData);
         let usableCoins = [];
         for (var elem in coinData) {
           if (coinData[elem].symbol == 'BTC')
