@@ -13,6 +13,7 @@ class Bitcoin_Gold {
         this.private_key = null;
         this.address = null; 
         this.standing = null;
+        this.explorerUrl = "https://btgexplorer.com/api/";
     }
 
     generatePrivateKeyandAddress() {
@@ -25,7 +26,7 @@ class Bitcoin_Gold {
 
     getUnspentTransactionOutput(address) {
         return new Promise((resolve, reject) => {
-            Request.get("https://node.blackcoin.io/insight-api/addr/" + address + "/utxo", (error, response, body) => {
+            Request.get(`${this.explorerUrl}api/addr/${address}/utxo`, (error, response, body) => {
                 if(error) {
                     reject(error);
                 }
@@ -42,7 +43,7 @@ class Bitcoin_Gold {
         return new Promise((resolve, reject) => {
             Request.post({
                 "headers": { "content-type": "application/json" },
-                "url": "https://node.blackcoin.io/insight-api/tx/send/",
+                "url": `${this.explorerUrl}tx/send`,
                 "body": JSON.stringify({
                     "rawtx": transaction.serialize()
                 })
@@ -94,14 +95,14 @@ class Bitcoin_Gold {
     {
         console.log(wallet);
         return new Promise((resolve, reject) => {
-            Request.get("https://btgexp.com/ext/getbalance/" + wallet.address, (err, response, body) => {
+            Request.get(`${this.explorerUrl}addr/${wallet.address}`, (err, response, body) => {
 
                 if(err){console.log(err); reject(Error.ERR_GETTING_WALLET_VALUE);} 
-                console.log(body);
+                console.log("Success", body);
                 
                 resolve(JSON.parse(body));
             });
-            });
+        });
     }
     
 }

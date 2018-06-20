@@ -88,10 +88,7 @@ class Litecoin {
         this.readStandingFromAddress(wallet);
         let amountSatoshi = toSato(amount);
         //console.log(amountSatoshi);
-        console.log(amount, address, wallet);
-
-        let amountSatoshi = sb.toSatoshi(amount);
-        console.log(amountSatoshi);
+        
         this.getUTXOs(wallet.address).then((utxos) => {
             let tx = litecore.Transaction()
                 .from(utxos)
