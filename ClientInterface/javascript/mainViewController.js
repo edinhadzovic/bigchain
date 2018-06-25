@@ -147,6 +147,7 @@ var loginViewController = function (params) {
         ipcRenderer.send('login-submission', temp_data );
         
         ipcRenderer.on("login-success", (event, arg) => {
+            console.log(arg);
             loginViewController.reference.fadeOut(500, function(){
                 $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
                     new homeViewController($('body'), arg);
@@ -682,9 +683,9 @@ var homeViewController = function (params, user) {
     homeViewController.setPage("Wallet");   
 };
 
-ipcRenderer.on('init-main-window', (event, current_user) => {
-    console.log(current_user);
-    new homeViewController($('body'), current_user);
+ipcRenderer.on('init-main-window', (event, data) => {
+    console.log(data);
+    new homeViewController($('body'), data.current_user);
 });
 
 $('document').ready(function(){
@@ -696,6 +697,10 @@ $('document').ready(function(){
 ipcRenderer.send('get-supported-coins');
 ipcRenderer.on('resolve-supported-coins', (event, data) => {
     new exchange('.js-exchange', data);
+});
+
+ipcRenderer.on('init-data-coins', (event, data) => {
+    console.log("Should it work", data);
 });
 
 
@@ -854,3 +859,8 @@ $('.burger-click-region').on('click', function () {
 $('.js-transactions').each((i, el) => {
     new Transaction(el);
 });
+
+$('.js-open-wallet').click((i, el) => {
+    console.log(el);
+    ipcRenderer.send('Open-btc-wallet');
+})

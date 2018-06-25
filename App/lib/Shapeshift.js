@@ -1,9 +1,7 @@
 const shapeshift = require('shapeshift.io');
 const request = require('request');
 const http = require('./http-node');
-
-let basicUrl = 'https://shapeshift.io';
-
+const Const = require('./../const/const');
 
 class Shapeshift {
   constructor(){
@@ -15,7 +13,6 @@ class Shapeshift {
     return new Promise((resolve, reject) => {
       shapeshift.coins(function(err, coinData) {
         if(err) reject(err);
-        console.log(coinData);
         let usableCoins = [];
         for (var elem in coinData) {
           if (coinData[elem].symbol == 'BTC')
@@ -99,7 +96,7 @@ class Shapeshift {
    * return {Object}
    */
   getCoinsManuel(){
-    let url = basicUrl + '/getcoins';
+    let url = Const.ShapeshiftURL + '/getcoins';
     return new Promise((resolve, reject) => {
       request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
@@ -114,7 +111,7 @@ class Shapeshift {
    * @param {String} pair example btc_bch
    */
   getPairRate(pair){
-    let url = `${basicUrl}/rate/${pair}`;
+    let url = `${Const.ShapeshiftURL}/rate/${pair}`;
     return new Promise((resolve, reject) => {
       request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
@@ -125,7 +122,7 @@ class Shapeshift {
   }
 
   getPairLimit(pair){
-    let url = `${basicUrl}/limit/${pair}`;
+    let url = `${Const.ShapeshiftURL}/limit/${pair}`;
     return new Promise((resolve, reject) => {
       request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
@@ -136,7 +133,7 @@ class Shapeshift {
   }
 
   getMarketInfo(pair){
-    let url = `${basicUrl}/marketinfo/${pair}`;
+    let url = `${Const.ShapeshiftURL}/marketinfo/${pair}`;
     return new Promise((resolve, reject) => {
       request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
@@ -147,7 +144,7 @@ class Shapeshift {
   }
 
   getRecentTx(max){
-    let url = `${basicUrl}/recenttx/${max}`;
+    let url = `${Const.ShapeshiftURL}/recenttx/${max}`;
     return new Promise((resolve, reject) => {
       request.get({url: url, json: true}, (err, response, body) => {
         if(err) reject(body);
@@ -165,7 +162,7 @@ class Shapeshift {
     body.pair = data.pair;
     body.depositAmount = data.amount_of;
     console.log(body);
-    let url = `${basicUrl}/sendamount`;
+    let url = `${Const.ShapeshiftURL}/sendamount`;
     console.log();
     return new Promise((resolve, reject) => {
       request.post({url: url, json: true, body: body}, function (err, resp, data) {

@@ -91,8 +91,53 @@
 			<!-- Wallet -->
 			<div class="js-homeView-wallet homeView-start-content hidden">
 				<!-- NAVIGATION -->
-				<div class="js-homeView-wallet-nav row">
-					<div class="js-homeView-wallet-nav-item btc col-xl-4 col-lg-6 col-12">
+				<div class="js-homeView-wallet-nav row js-wallet-container">
+					<div class="col-xs-12">
+						<table>
+							<thead>
+								<tr class="row">
+									<td>
+											#
+									</td>
+									<td>
+										Name
+									</td>
+									<td>
+										Market Cap
+									</td>
+									<td>
+										Price
+									</td>
+									<td>
+										Volume
+									</td>
+									<td>
+										Circulating supply
+									</td>
+									<td>
+										Change
+									</td>
+									<td>
+										Wallet
+									</td>
+								</tr>
+								
+							</thead>
+							<tbody>
+								<tr class="row">
+									<td>1</td>
+									<td>Bitcoin</td>
+									<td>91000000000</td>
+									<td>5.600</td>									
+									<td>€3,644,585,758</td>
+									<td>17,114,600 BTC</td>
+									<td>5.11%</td>
+									<td><button class="go-to-wallet bitcoin js-open-wallet" type="btc">Bitcoin</button></td>								
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="js-homeView-wallet-nav-item btc col-xl-4 col-lg-6 col-12 hidden">
 						<div>
 							<canvas id="myChart"></canvas>
 							<div class="js-homeView-wallet-symbol" request="btc">
@@ -115,7 +160,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="js-homeView-wallet-nav-item eth col-xl-4 col-lg-6 col-12">
+					<div class="js-homeView-wallet-nav-item eth col-xl-4 col-lg-6 col-12 hidden">
 						<div>
 							<div class="js-homeView-wallet-symbol" request="dgb">
 								<span>Digibytes</span>
@@ -130,7 +175,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="js-homeView-wallet-nav-item ltc col-lg-6 col-xl-4 col-12">
+					<div class="js-homeView-wallet-nav-item ltc col-lg-6 col-xl-4 col-12 hidden">
 						<div>
 							<div class="js-homeView-wallet-symbol" request="ltc">
 								<span>Litecoin</span>
@@ -150,7 +195,7 @@
 							<button class="js-transactions-send">Send</button>
 						</div>
 					</div>
-					<div class="js-homeView-wallet-nav-item eth col-xl-4 col-lg-6 col-12">
+					<div class="js-homeView-wallet-nav-item eth col-xl-4 col-lg-6 col-12 hidden">
 						<div>
 							<div class="js-homeView-wallet-symbol" request="eth">
 								<span>Etherium</span>

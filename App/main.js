@@ -18,6 +18,7 @@ var message = require('./lib/Message');
 const ShapeShift = require('./lib/Shapeshift');
 let shapeshift = new ShapeShift();
 
+
 // Testing related
 
   //var DGB = require('./wallets/altcoins/dgb');
@@ -72,7 +73,40 @@ var current_user = new User();
 let loginWindow;
 let mainWindow;
 
-function createMainWindow (user, event) {
+function createWalletWindow (type) {
+  let walletWindow = new BrowserWindow({titleBarStyle: 'hidden',
+  width: 750,
+  height: 600,
+  minWidth: 320,
+  backgroundColor: '#d1d1d1',
+  show: false });
+
+  walletWindow.maximize();
+
+  walletWindow.loadURL(url.format({
+    pathname: path.join(__dirname, '../ClientInterface/views/walletView.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  walletWindow.once('ready-to-show', () => {
+    walletWindow.show();
+});
+
+  // and load the index.html of the app.
+  // Open the DevTools.
+  // loginWindow.webContents.openDevTools()
+
+  // Emitted when the window is closed.
+  walletWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    walletWindow = null;
+  });
+}
+
+function createMainWindow (user, market_info, event) {
   loginWindow.hide();
   mainWindow = new BrowserWindow({titleBarStyle: 'hidden',
   width: 750,
@@ -91,8 +125,7 @@ function createMainWindow (user, event) {
   }));
 
   mainWindow.once('ready-to-show', () => {
-    console.log("send the message");
-    event.sender.send('init-main-window', current_user);
+    
   });
 
   mainWindow.on('closed', function () {
@@ -102,6 +135,13 @@ function createMainWindow (user, event) {
     mainWindow = null;
     app.emit('window-all-closed');
   });
+
+  console.log("1Success");
+    let data = {
+      current_user,
+      market_info
+    };
+    event.sender.send('init-main-window', data);
 }
 
 function createWindow () {
@@ -176,10 +216,12 @@ ipcMain.on("login-submission", async function(event, data) {
   console.log(message.main, 'Request to login of a user');
 
   let result = await current_user.login(data);
-  console.log(message.main,current_user);
+  let market_info = await market_price.getTop100();
+
   if(result === true) {
     console.log(message.main, "User connected successfully!");
-    createMainWindow(current_user, event);
+    console.log(current_user, market_info);
+    createMainWindow(current_user, market_info, event);
   } else {
     console.log(message.main, 'Login failed');
     console.log(' ');
@@ -367,10 +409,15 @@ ipcMain.on('getPair', async (event, pair) => {
 
 ipcMain.on('exchange-market-info', async(event, pair) => {
   let market_info = await shapeshift.getMarketInfo(pair);
-  console.log("Market Info", market_info);
+  // console.log("Market Info", market_info);
   event.sender.send('market-info-result', market_info);
 });
 
-shapeshift.getCoins().then((coinData) => {
+shapeshift.getCoins().then(coinData => {
   //console.log(message.main,'\n', coinData);
 });
+
+
+ipcMain.on('Open-btc-wallet', event => {
+  createWalletWindow('btc');
+})

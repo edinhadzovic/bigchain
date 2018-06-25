@@ -3,6 +3,14 @@ var coinmarketcap = new CoinMarketCap();
 
 
 module.exports = { 
+    getTop100: function(){
+        return new Promise((resolve, reject) => {
+            coinmarketcap.multi(coins => {
+                let data = coins.getTop(100);
+                resolve(data);
+            });
+        });
+    },
     getBtcPrice: function(){
         return new Promise((resolve, reject) => {
             coinmarketcap.get("bitcoin", coin => {
