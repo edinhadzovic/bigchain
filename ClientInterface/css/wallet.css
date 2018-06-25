@@ -19,7 +19,7 @@
   opacity: 1;
   /*display: flex;*/
    height: 100%;
-  /* width: 100%; */
+  width: 100%;
   /*flex-direction: row;*/
   /*flex-wrap: wrap;*/
   -webkit-transition: opacity .4s;
@@ -425,7 +425,7 @@
 .overlay-homeView-wallet-nav.open{
   display: block;
   opacity: 1;
-
+}
 .js-homeView-wallet-btc-send {
   width: 120px;
   height: 30px;

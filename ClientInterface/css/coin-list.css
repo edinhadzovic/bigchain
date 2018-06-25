@@ -1,0 +1,135 @@
+/**
+  CUSTOM STYLES
+*/
+
+.action-button {
+  background-color: white;
+  color: #c4c4c4;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  border: 1px solid #c4c4c4;
+  width: 100px;
+  transition: all 0.5s ease-in;
+}
+
+.action-button:hover {
+  color: #00F0E8;
+  border: 1px solid #00F0E8;
+  cursor: pointer;
+}
+
+.action-button--reverse {
+  background-color: #16aaa5;
+  color: white;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  border: 1px solid #16aaa5;
+  width: 100px;
+  transition: all 0.5s ease-in;
+}
+
+.action-button--reverse:hover {
+  cursor: pointer;
+  background-color: #00F0E8;
+}
+
+.h50 {
+  height: 50px;
+}
+
+.small-padding{
+  padding: 10px;
+}
+
+.light-border-bottom{
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.btc {
+  background-image: url('https://shapeshift.io/images/coins/bitcoin.png');
+}
+
+
+.coin-list-item {
+  display: flex;
+  flex-direction: row;
+  transition: all 0.5s ease-in;
+}
+
+.coin-list-item:hover{
+  background-color: #00F0E8;
+  cursor: pointer;
+}
+
+.coin-list-item .image {
+  width: 35px;
+  height: 35px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: center;
+}
+
+.coin-list-item .stats {
+  margin-left: 10px;
+}
+
+.coin-list-item .stats h4{
+  color: #c4c4c4;
+}
+
+.coin-list {
+  margin-top: 80px;
+  margin-left: 25px;
+  height: 100%;
+  background-color: white;
+  border: 1px solid #c4c4c4;
+  flex-grow: 1;
+}
+
+.coin-features {
+  margin: 80px 0 0 0;
+  background-color: white;
+  border: 1px solid #c4c4c4;
+  border-left: none;
+  height: 100%;
+  flex-grow: 10;
+}
+
+.coin-features-headline{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #c4c4c4;
+  height: 50px;
+}
+
+.coin-features-headline .headline {
+  flex-grow: 12;
+}
+
+.coin-features-actions {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 0;
+}
+
+.coin-features-actions button {
+  margin: 0px 5px;
+  padding: 5px 10px;
+}
+
+
+/**
+  JAVASCRIPT STYLE
+*/
+
+.js-coin-list-search{
+  padding: 5px;
+  border: 1px solid #c4c4c4;
+  width: 100%;
+}
+
+.js-coin-list-search:focus{
+  outline-color: #00F0E8;
+}

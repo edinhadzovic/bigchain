@@ -33,7 +33,7 @@
 <body>
 		<!--<div class="js-homeView-box">-->
 		<div class="js-homeView-navigation push">
-			<div class="burger-click-region">
+			<div class="burger-click-region hidden">
 				<span class="burger-menu-piece"></span>
 				<span class="burger-menu-piece"></span>
 				<span class="burger-menu-piece"></span>
@@ -97,50 +97,31 @@
 			<div class="js-homeView-wallet homeView-start-content hidden">
 				<!-- NAVIGATION -->
 				<div class="js-homeView-wallet-nav row js-wallet-container">
-					<div class="col-xs-12 delete_space">
-						<table>
-							<thead>
-								<tr class="row">
-									<td>
-											#
-									</td>
-									<td>
-										Name
-									</td>
-									<td>
-										Market Cap
-									</td>
-									<td>
-										Price
-									</td>
-									<td>
-										Volume
-									</td>
-									<td>
-										Circulating supply
-									</td>
-									<td>
-										Change
-									</td>
-									<td>
-										Wallet
-									</td>
-								</tr>
-								
-							</thead>
-							<tbody>
-								<tr class="row">
-									<td>1</td>
-									<td>Bitcoin</td>
-									<td>91000000000</td>
-									<td>5.600</td>									
-									<td>€3,644,585,758</td>
-									<td>17,114,600 BTC</td>
-									<td>5.11%</td>
-									<td><button class="go-to-wallet bitcoin js-open-wallet" type="btc">Bitcoin</button></td>								
-								</tr>
-							</tbody>
-						</table>
+					<div class="coin-list">
+						<div class="small-padding light-border-bottom h50">
+							<input type="text" class="js-coin-list-search" placeholder="Search your assets">
+						</div>
+						<div class="coin-list-content">
+							<div class="coin-list-item small-padding light-border-bottom">
+								<div class="image btc"></div>
+								<div class="stats">
+									<h4>BTC <span>Bitcoin</span></h4>
+									<p>0.00000718 <span>$0.04</span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="coin-features">
+						<div class="coin-features-headline small-padding">
+							<div class="headline">
+								<h2>BTC <span>Bitcoin</span></h2>
+							</div>
+							<div class="coin-features-actions">
+									<button class="js-send-assets action-button">Send</button>
+									<button class="js-recover-assets action-button">Recover</button>
+									<button class="js-trade-assets action-button--reverse">Trade</button>
+							</div>
+						</div>
 					</div>
 					<div class="js-homeView-wallet-nav-item btc col-xl-4 col-lg-6 col-12 hidden">
 						<div>

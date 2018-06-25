@@ -7,6 +7,13 @@
 @import 'exchange.css';
 @import 'coin-menu.css';
 @import 'color.css';
+@import 'coin-list.css';
+
+/**
+COLORS: border #c4c4c4
+        aqua #00F0E8
+
+*/
 
 * {
     padding: 0;
