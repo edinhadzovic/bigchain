@@ -1,6 +1,13 @@
 /**
   CUSTOM STYLES
 */
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
 
 .action-button {
   background-color: white;
@@ -49,6 +56,10 @@
 
 .btc {
   background-image: url('https://shapeshift.io/images/coins/bitcoin.png');
+}
+
+.approved {
+  background-image: url('./../images/icons/approved.png');
 }
 
 
@@ -119,6 +130,50 @@
   padding: 5px 10px;
 }
 
+.coin-features-item .image {
+  width: 35px;
+  height: 35px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: center;
+  flex-grow: 1;
+}
+
+.coin-features-item {    
+  display: flex;
+  flex-direction: row;
+  height: 59px;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.coin-features-info {
+  flex-grow: 12;
+}
+
+.coin-features-amount {
+  flex-grow: 0;
+}
+
+.coin-features-info h4 {
+  transition: all 0.5s ease-in;
+}
+
+.coin-features-info h4:hover {
+  cursor: pointer;
+  color: #00F0E8;
+}
+
+.coin-features-info p {
+  color: #c4c4c4;
+  font-size: 14px;
+}
+
+.coin-features-amount {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
 
 /**
   JAVASCRIPT STYLE
