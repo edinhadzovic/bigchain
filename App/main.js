@@ -12,6 +12,7 @@ const ipcMain = electron.ipcMain;
 
 var verification = require( path.resolve( __dirname, "./verification.js" ));
 var User = require('./lib/User');
+var Standing = require('./client/Standing');
 var message = require('./lib/Message');
 
 // Shapeshift related
@@ -25,7 +26,6 @@ let shapeshift = new ShapeShift();
   let Altcoins = require('./wallets/altcoins/altcoins');
   let altcoin = new Altcoins();
 
-
   // let blackcoin = require('./wallets/altcoins/blk');
   // let blk_x = new blackcoin;
   // let blk_y = new blackcoin;
@@ -35,15 +35,15 @@ let shapeshift = new ShapeShift();
   // blk_x.createAndSendTransaction(0.03, blk_y.address, blk_x);
   // let x = blk_x.readStandingFromAddress(blk_x);
 
-   let bitcoingold = require('./wallets/altcoins/btg');
-   let blk_x = new bitcoingold;
-   let blk_y = new bitcoingold;
-   blk_x.generatePrivateKeyandAddress();
-   blk_y.generatePrivateKeyandAddress();
+  // let bitcoingold = require('./wallets/altcoins/btg');
+  // let blk_x = new bitcoingold;
+  // let blk_y = new bitcoingold;
+   //blk_x.generatePrivateKeyandAddress();
+  // blk_y.generatePrivateKeyandAddress();
   // trebalo bi da radi sve
-  console.log(blk_x, blk_y);
+ // console.log(blk_x, blk_y);
    //blk_x.createAndSendTransaction(0.03, blk_y.address, blk_x);
-   let x = blk_x.readStandingFromAddress(blk_x);
+   //let x = blk_x.readStandingFromAddress(blk_x);
   
   /*
   console.log('generate_Namecoin', altcoin.generate_Namecoin());
@@ -67,6 +67,7 @@ let shapeshift = new ShapeShift();
 
 // Global current user
 var current_user = new User();
+var current_standing = new Standing();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -220,6 +221,8 @@ ipcMain.on("login-submission", async function(event, data) {
   if(result === true) {
     console.log(current_user);
     console.log(message.main, "User connected successfully!");
+    await current_standing.generate_Standings(current_user);
+    console.log(current_standing);
     createMainWindow(current_user, market_info, event);
   } else {
     console.log(message.main, 'Login failed');
@@ -389,7 +392,7 @@ ipcMain.on('exchange', async function(event,data){
 ipcMain.on('get-supported-coins', async (event, data) => {
   let coins = await shapeshift.getCoins();
   if(coins.length > 0) {
-    return event.sender.send('resolve-supported-coins', coins);
+    return event.sender.send('resolve-supported-coins', coins, current_standing);
   }
 });
 

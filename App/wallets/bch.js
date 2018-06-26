@@ -80,7 +80,7 @@ Bitcoincash.prototype.send = function(amount, address, wallet){
     });
 };
 
-Bitcoincash.prototype.readBalance = function(wallet) {
+Bitcoincash.prototype.readStandingFromAddress = function(wallet) {
     return new Promise(async (resolve, reject) => {
        let utxos = await this.unspendUTXOS(wallet.address);
     //    if(utxos.length === 0) {

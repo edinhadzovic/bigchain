@@ -75,13 +75,13 @@ class Ethereum {
 
     readStandingFromAddress(wallet){
         let address = `https://api.blockcypher.com/v1/eth/main/addrs/${wallet.address}/balance`; 
-        let ethereum;
+        let ethereum = 0;
         return new Promise((resolve, reject) => {
             request({url: address, json: true},(err, res, body)=> {
                 if(err) reject(err);
                 // BODY RETURNS WHOLE TRANSACTION SECTION AND BALANCE AND OTHER STUFF
                 // console.log(body);   
-                ethereum = body.balance;      
+                ethereum = body.balance;    
                 resolve(ethereum);
             })
         });

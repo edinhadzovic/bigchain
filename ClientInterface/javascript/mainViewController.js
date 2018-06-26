@@ -1,4 +1,3 @@
-const client = require('./../../App/client/User');
 const croppie = require('croppie');
 const fs = require('fs');
 const path = require('path');
@@ -694,10 +693,10 @@ $('document').ready(function(){
 });
 
 ipcRenderer.send('get-supported-coins');
-ipcRenderer.on('resolve-supported-coins', (event, data) => {
-    console.log(data);
+ipcRenderer.on('resolve-supported-coins', (event, data, current_standing) => {
+    console.log('KURCINA', current_standing);
     new exchange('.js-exchange', data);
-    new CoinList('.js-coin-list', data);
+    new CoinList('.js-coin-list', data, current_standing);
 });
 
 ipcRenderer.on('init-data-coins', (event, data) => {
