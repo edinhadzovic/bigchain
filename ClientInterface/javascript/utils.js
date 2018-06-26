@@ -1,3 +1,7 @@
+const { SearchModule } = require('./../../App/client/utils');
+
+SearchModule('.js-coin-list-search', '.js-coin-list-item');
+
 let coinMenu = function(tag) {
   $body = $(tag);
   let input = null;

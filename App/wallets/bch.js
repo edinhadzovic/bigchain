@@ -31,7 +31,7 @@ Bitcoincash.prototype.unspendUTXOS = function(address) {
             if(err) {
                 reject(err);
             }
-            console.log("bitcoincash", body);
+            
             resolve(JSON.parse(body));
         });
     }); 

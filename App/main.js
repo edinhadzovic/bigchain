@@ -409,6 +409,16 @@ shapeshift.getCoins().then(coinData => {
   //console.log(message.main,'\n', coinData);
 });
 
+ipcMain.on('get-user-coin', async (event, coin_info) => {
+  console.log(coin_info);
+  if(coin_info.type === 'bch') {
+    let data = {};
+    data.amount = await current_user._bch_wallet.readBalance(current_user._bch_wallet);
+    data.type = 'bch';
+    event.sender.send('get-user-coins', data);
+  }
+})
+
 
 ipcMain.on('Open-btc-wallet', event => {
   createWalletWindow('btc');
