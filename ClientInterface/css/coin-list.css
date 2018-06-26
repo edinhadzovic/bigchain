@@ -54,8 +54,72 @@
   border-bottom: 1px solid #c4c4c4;
 }
 
+.bch {
+  background-image: url('https://shapeshift.io/images/coins-sm/bitcoincash.png');
+}
+
+.blk {
+  background-image: url("https://shapeshift.io/images/coins-sm/blackcoin.png");
+}
+
 .btc {
   background-image: url('https://shapeshift.io/images/coins/bitcoin.png');
+}
+
+.btg {
+  background-image: url("https://shapeshift.io/images/coins-sm/bitcoingold.png");
+}
+
+.dash {
+  background-image: url("https://shapeshift.io/images/coins-sm/dash.png");
+}
+
+.dcr {
+  background-image: url("https://shapeshift.io/images/coins-sm/decred.png");
+}
+
+.dgb {
+  background-image: url("https://shapeshift.io/images/coins-sm/digibyte.png");
+}
+
+.doge {
+  background-image: url("https://shapeshift.io/images/coins-sm/dogecoin.png");
+}
+
+.eth {
+  background-image: url("https://shapeshift.io/images/coins-sm/ether.png");
+}
+
+.ltc {
+  background-image: url("https://shapeshift.io/images/coins-sm/litecoin.png");
+}
+
+.mona {
+  background-image: url("https://shapeshift.io/images/coins-sm/monacoin.png");
+}
+
+.nmc {
+  background-image: url("https://shapeshift.io/images/coins-sm/namecoin.png");
+}
+
+.ppc {
+  background-image: url("https://shapeshift.io/images/coins-sm/peercoin.png");
+}
+
+.qtum {
+  background-image: url("https://shapeshift.io/images/coins-sm/qtum.png");
+}
+
+.rdd {
+  background-image: url("https://shapeshift.io/images/coins-sm/reddcoin.png");
+}
+
+.vtc {
+  background-image: url("https://shapeshift.io/images/coins-sm/vertcoin.png");
+}
+
+.zec {
+  background-image: url("https://shapeshift.io/images/coins-sm/zcash.png");
 }
 
 .approved {
@@ -97,6 +161,11 @@
   background-color: white;
   border: 1px solid #c4c4c4;
   flex-grow: 1;
+  overflow-x: hidden;
+}
+
+.coin-list-item.active {
+  background-color: #00F0E8;
 }
 
 .coin-features {
@@ -135,8 +204,8 @@
   height: 35px;
   background-repeat: no-repeat;
   background-size: 30px;
-  background-position: center;
-  flex-grow: 1;
+  background-position: left;
+  flex-grow: 0;
 }
 
 .coin-features-item {    
@@ -180,11 +249,13 @@
 */
 
 .js-coin-list-search{
+  color: #6d6d6d;
+  font-size: 18px;
   padding: 5px;
-  border: 1px solid #c4c4c4;
+  border: none;
   width: 100%;
 }
 
 .js-coin-list-search:focus{
-  outline-color: #00F0E8;
+  outline: none;
 }

@@ -13,6 +13,8 @@ class Bitcoin {
     // Change link to bitcoin info and price bitcoin
     constructor() 
     {
+        this.name = "Bitcoin";
+        this.symbol = "btc";
         this.private_key = null;
         this.address = null; 
         this.standing = null;
@@ -36,7 +38,6 @@ class Bitcoin {
         var btc_address = keyPair.getAddress();
         this.address = btc_address;
         this.private_key = btc_privateKey;
-        
     }
 
     send(amount, address, wallet)

@@ -6,7 +6,7 @@ const {shell} = require('electron');
 const {ipcRenderer} = require('electron');
 const exchange = require('./../../App/client/Exchange');
 const Transaction = require('./../../App/client/Transaction');
-
+const CoinList = require('./../../App/client/CoinList');
 
 const directory = path.join(__dirname, '../images/profile');
 
@@ -129,7 +129,7 @@ var loginViewController = function (params) {
         event.preventDefault();
         loginViewController.registerView.body.fadeOut(200, () => {
             $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                new homeViewController($('body',));
+                new homeViewController($('body'));
             });
         });
     });
@@ -398,7 +398,7 @@ $('document').ready(function(){
 });
 
 var homeViewController = function (params, user) {
-    console.log(user);
+    console.log("User", user);
     var $params = $(params);
     var homeViewController = {
         navigaiton: {
@@ -505,8 +505,8 @@ var homeViewController = function (params, user) {
                 body: $(params).find('.js-homeView-settings')
             }
         ],
-        active: async function(user) {
-            await ipcRenderer.send('get-user-data');
+        active: function(user) {
+            ipcRenderer.send('get-user-data');
             ipcRenderer.on('init-user-data', (event, user) => {
                 $('.js-home-profile-image-tag').attr('src', user._profile_image);
                 $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
@@ -549,7 +549,6 @@ var homeViewController = function (params, user) {
             });
         }
     };
-
 
     $(homeViewController.personalInformation.personal_submit).click(function(event){
         event.preventDefault();
@@ -680,7 +679,7 @@ var homeViewController = function (params, user) {
         ipcRenderer.send('send_eth', data);
     });
 
-    homeViewController.setPage("Wallet");   
+    homeViewController.setPage("Wallet");  
 };
 
 ipcRenderer.on('init-main-window', (event, data) => {
@@ -690,13 +689,15 @@ ipcRenderer.on('init-main-window', (event, data) => {
 
 $('document').ready(function(){
     $('body').each(function () {
-        new homeViewController(this);
-    })
+        new homeViewController($('body'));
+    });
 });
 
 ipcRenderer.send('get-supported-coins');
 ipcRenderer.on('resolve-supported-coins', (event, data) => {
+    console.log(data);
     new exchange('.js-exchange', data);
+    new CoinList('.js-coin-list', data);
 });
 
 ipcRenderer.on('init-data-coins', (event, data) => {

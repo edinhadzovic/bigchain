@@ -136,7 +136,6 @@ function createMainWindow (user, market_info, event) {
     app.emit('window-all-closed');
   });
 
-  console.log("1Success");
     let data = {
       current_user,
       market_info
@@ -219,8 +218,8 @@ ipcMain.on("login-submission", async function(event, data) {
   let market_info = await market_price.getTop100();
 
   if(result === true) {
+    console.log(current_user);
     console.log(message.main, "User connected successfully!");
-    console.log(current_user, market_info);
     createMainWindow(current_user, market_info, event);
   } else {
     console.log(message.main, 'Login failed');
@@ -260,13 +259,6 @@ ipcMain.on("personal-info-submission", async function(event, data) {
 });
 
 ipcMain.on("personal-info-change", async function(event, data) {
-  console.log(message.main, 'Personal information changing!');
-  console.log(message.main, 'New user data provided!');
-  console.log(message.main, 'Name: ', data.first_name);
-  console.log(message.main, 'Last name: ', data.last_name);
-  console.log(message.main, 'Birthday: ', data.birthday);
-  console.log(message.main, 'Gender: ', data.gender);
-  console.log(message.main, 'Phone: ', data.phone);
 
   let result = await current_user.personal_info_change(current_user, data);
   if (result === true) {
