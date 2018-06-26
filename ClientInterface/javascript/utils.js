@@ -66,23 +66,18 @@ $('.js-menu-search').on('keyup', () => {
   });
 
   $('.js-select-coin').each((i, coin) => {
-    //console.log('22222');
     let coin_name = coin.getAttribute('coin_name'); 
-    //console.log(find, coin_name, " koji se kurac desava");
     var index = find.indexOf(coin_name);
     if(index === -1 && find.length === 0)
     {
-      console.log(index, coin_name, "SHOWING");
       $(coin).removeClass('hidden'); 
     }
     else if (index === -1)
     {
-      console.log(index, coin_name, "HIDING");
       $(coin).addClass('hidden');
     } 
     else 
     {
-      console.log(index, coin_name, "SHOWING");
       $(coin).removeClass('hidden');
     } 
 

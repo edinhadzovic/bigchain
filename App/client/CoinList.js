@@ -1,4 +1,5 @@
 const {ipcRenderer} = require('electron');
+const CoinListFeature = require('./CoinListFeature');
 
 let CoinList = function(container, coins) {
   let body = $(container);
@@ -7,11 +8,11 @@ let CoinList = function(container, coins) {
     let content = "";
 
     coins.forEach(coin => {
-      content += '<div class="coin-list-item small-padding light-border-bottom">' +
+      content += '<div class="coin-list-item small-padding light-border-bottom js-coin-list-item" coin_name="' + coin.name.toLowerCase() + '" coin_symbol="' + coin.symbol.toLowerCase() + '">' +
       '<div class="image ' + coin.symbol.toLowerCase() + '"></div>' +
       '<div class="stats">' +
         '<h4>'+ coin.symbol+ ' <span>' + coin.name + '</span></h4>' +
-        '<p>0.00000718 <span>$0.04</span></p>' +
+        '<p>0.00000000 <span>$0.00</span></p>' +
       '</div>' +
       '</div>';
     });
@@ -26,6 +27,10 @@ let CoinList = function(container, coins) {
   };
 
   setCoinList();
+  $('.js-coin-list-item').each((i, el) => {
+    new CoinListFeature(el);
+  });
+  
 };
 
 

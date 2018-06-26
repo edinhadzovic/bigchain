@@ -244,6 +244,14 @@
   text-align: center;
 }
 
+.coin-features-display {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
 /**
   JAVASCRIPT STYLE
 */
