@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
+	<script>window.$ = window.jQuery = require('jquery');</script>
+
+	<!-- <script>
+		window.nodeRequire = require;
+		delete window.require;
+		delete window.exports;
+		delete window.module;
+	</script> -->
+	
+	<script src="../javascript/lib/jquery-3.3.1.min.js"></script>
+	<script src="../javascript/lib/croppie.min.js"></script>
+	<script src="../javascript/lib/chart.js"></script>
+	<link rel="stylesheet" href="../css/button.min.css">
+    <link rel="stylesheet" href="../css/input.min.css">
+    <link rel="stylesheet" href="../css/menu.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/croppie.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Send</title>
+    <style>
+      html {
+        min-width: inherit;
+      }
+      .js-send-coin {
+        background-color: white;
+        width: 300px;
+        margin: 0 auto;
+        min-width: 300px;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .js-send-coin .headline {
+        display: flex;
+        justify-content: center;
+      }
+
+      .js-send-coin .balance {
+        text-align: center;
+        font-size: 24px;
+      }
+
+      .js-satoshi-balance {
+        font-size: 14px;
+        color: #cfcfcf;
+      }
+
+      .headline .image {
+        width: 50px;
+        height: 50px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 40px; 
+      }
+
+      .center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;        
+      }
+
+      .js-send-coin-form input {
+        width: 100%;
+        padding: 10px 5px;
+        background-color: white;
+        border: 1px solid #cfcfcf;
+        margin: 10px 0;
+      }
+      
+      .js-send-coin-form input:focus {
+        outline: 1px solid aqua;
+      }
+
+      .js-send-coin-form button {
+        width: 100%;
+        padding: 10px;
+        background-color: white;
+        border: 1px solid #cfcfcf;
+        margin: 10px 0;
+        transition: all 0.5s ease;
+      }
+
+      .js-send-coin-form button:hover {
+        cursor: pointer;
+        border-color: aqua;
+        color: aqua;
+      }
+
+      .js-send-coin-form button:focus {
+        cursor: pointer;
+        outline: none;
+      }
+
+      .js-send-coin-form p {
+        font-size: 12px;
+        text-align: right;
+      }
+      .light-gray {
+        color: #cfcfcf;
+      }
+
+      input.wrong{
+  border: 1px solid tomato;
+}
+    </style>
+</head>
+<body class="js-send-coin">
+  <div class="headline small-padding">
+    <div class="image js-send-image"></div>
+    <h3 class="js-send-coin-name center light-gray"></h3>
+  </div>
+  <div class="balance">
+    <p class="js-balance"><span class="js-balance-fiat">$1000</span> <span class="js-satoshi-balance">0.0123 BTC</span></p>
+  </div>
+  <div class="js-send-coin-form">
+    <input type="text" class="js-address" placeholder="Address">
+    <input type="text" class="js-amount" placeholder="Amount in dollar">
+    <p>Miner Fee <span class="js-miner-fee">0.00123</span> ($3.12)</p>
+    <button class="js-send">Send</button>
+  </div>
+</body>
+<script src="../javascript/sendController.js"></script>
+</html>

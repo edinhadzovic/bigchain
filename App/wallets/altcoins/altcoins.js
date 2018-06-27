@@ -1,7 +1,7 @@
 var CoinKey = require('coinkey');
 var coininfo = require('coininfo');
 const Request = require('request');
-const Error = require('./../../error/error');
+const err = require('./../../error/error');
 
 const btc = require ('./../btc');
 

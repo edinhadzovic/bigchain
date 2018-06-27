@@ -5,22 +5,32 @@ var sb = require('satoshi-bitcoin');
 const request = require('request');
 const bs58 = require('bs58');
 const {toSato} = require('./../lib/utils');
+const market_price = require('./market_price');
 
 let Bitcoincash = function(){
+    this.name = "Bitcoin Cash";
+    this.symbol = "bch";
     this.private_key = null;
     this.address = null;
-    this.standing = null;
+    this.balance = null;
+    this.market_price = null;
 };
 
 
 Bitcoincash.prototype.generateAddress_and_PrivateKey = async function(user){
-    const buffer = new Buffer(JSON.stringify(user) + "bitcoincash", 'hex');
-    const hash = bch.crypto.Hash.sha256(buffer);
-    const bn = bch.crypto.BN.fromBuffer(hash);
-    var testnet = bch.Networks.testnet;
-    var private_key = new bch.PrivateKey(bn, 'livenet');
-    this.private_key = private_key.toWIF();
-    this.address = private_key.toAddress('livenet').toString();
+    return new Promise(async (resolve, reject) => {
+        const buffer = new Buffer(JSON.stringify(user) + "bitcoincash", 'hex');
+        const hash = bch.crypto.Hash.sha256(buffer);
+        const bn = bch.crypto.BN.fromBuffer(hash);
+        var testnet = bch.Networks.testnet;
+        // var private_key = new bch.PrivateKey(bn, 'livenet');
+        var private_key = new bch.PrivateKey(bn, 'testnet');
+        this.private_key = private_key.toWIF();
+        this.address = private_key.toAddress('testnet').toString();
+        this.balance = await this.readStandingFromAddress(this);
+        this.market_price = await market_price.getBchPrice();
+        resolve(true);
+    });
 };
 
 Bitcoincash.prototype.unspendUTXOS = function(address) {
@@ -64,7 +74,7 @@ Bitcoincash.prototype.send = function(amount, address, wallet){
         
         const transaction = new bch.Transaction()
           .from(new_utxos)
-          .to(toAddress, 5000000)
+          .to(toAddress, satoshis)
           .change(change)
           .sign(key)
           .serialize();

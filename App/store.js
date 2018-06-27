@@ -41,7 +41,9 @@ module.exports = {
 			profile_image: user._profile_image,
 			_btc_wallet: {
 				address: user._btc_wallet.address,
-				private_key: user._btc_wallet.private_key
+				private_key: user._btc_wallet.private_key,
+				balance: user._btc_wallet.balance,
+				market_price: user._btc_wallet.market_price
 			},
 			_ltc_wallet: {
 				address: user._ltc_wallet.address,
@@ -49,7 +51,11 @@ module.exports = {
 			},
 			_bch_wallet: {
 				address: user._bch_wallet.address,
-				private_key: user._bch_wallet.private_key
+				private_key: user._bch_wallet.private_key,
+				name: user._bch_wallet.name,
+				symbol: user._bch_wallet.symbol,
+				balance: user._bch_wallet.balance	,
+				market_price: user._bch_wallet.market_price
 			},
 			_eth_wallet: {
 				address: user._eth_wallet.address,

@@ -4,7 +4,6 @@ const CoinListFeature = require('./CoinListFeature');
 let CoinList = function(container, coins, current_standing) {
   let body = $(container);
 
-  console.log('dvadeset kurcina',current_standing);
   let generateCoinList = function(coins) {
     let content = "";
 

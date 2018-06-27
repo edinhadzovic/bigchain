@@ -8,6 +8,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const ipcMain = electron.ipcMain;
+ipcMain.setMaxListeners(22);
 
 
 var verification = require( path.resolve( __dirname, "./verification.js" ));
@@ -36,23 +37,25 @@ var current_standing = new Standing();
 let loginWindow;
 let mainWindow;
 
-function createWalletWindow (type) {
+function createWalletWindow (data) {
   let walletWindow = new BrowserWindow({titleBarStyle: 'hidden',
-  width: 750,
+  width: 300,
   height: 600,
   minWidth: 320,
   backgroundColor: '#d1d1d1',
   show: false });
 
-  walletWindow.maximize();
-
   walletWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../ClientInterface/views/walletView.html'),
+    pathname: path.join(__dirname, `../ClientInterface/views/${data.open}View.html`),
     protocol: 'file:',
     slashes: true
   }))
+  let test = current_user[`_${data.coin}_wallet`];
+  console.log(test);
+  
 
   walletWindow.once('ready-to-show', () => {
+    walletWindow.webContents.send('setWindow', test);
     walletWindow.show();
 });
 
@@ -169,6 +172,10 @@ app.on('activate', function () {
   }
 });
 
+ipcMain.on('send', (event, transaction) => {
+  console.log(transaction);
+});
+
 ipcMain.on('get-user-data', (event) => {
   event.sender.send("init-user-data", current_user);
 });
@@ -275,10 +282,15 @@ ipcMain.on('form-submission-image', async function(event, data){
   }
 });
 
-ipcMain.on('get-supported-coins', async (event, data) => {
+// ipcMain.on('get-supported-coins', async (event, data) => {
   
-});
+// });
 
+ipcMain.on('Window', (event, data) => {
+  if(data.open === "send") {
+    createWalletWindow(data);
+  }
+});
 
 ipcMain.on('send_btc', async function(event, data) { 
   current_user._btc_wallet.send(data.amount, data.address, current_user._btc_wallet);
@@ -384,9 +396,15 @@ ipcMain.on('get-user-coin', async (event, coin_info) => {
     data.type = 'bch';
     event.sender.send('get-user-coins', data);
   }
+  if(coin_info.type === 'btc') {
+    let data = {};
+    data.amount = await current_user._btc_wallet.readStandingFromAddress(current_user._btc_wallet);
+    data.type = 'btc';
+    event.sender.send('get-user-coins', data)
+  }
 })
 
 
-ipcMain.on('Open-btc-wallet', event => {
-  createWalletWindow('btc');
-})
+// ipcMain.on('Open-btc-wallet', event => {
+//   createWalletWindow('btc');
+// })

@@ -1,6 +1,19 @@
 /**
   CUSTOM STYLES
 */
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;        
+}
+
+.h80p {
+  height: 80%;
+}
+
 .green {
   color: green;
 }
@@ -63,7 +76,7 @@
 }
 
 .btc {
-  background-image: url('https://shapeshift.io/images/coins/bitcoin.png');
+  background-image: url('https://shapeshift.io/images/coins-sm/bitcoin.png');
 }
 
 .btg {
@@ -122,6 +135,74 @@
   background-image: url("https://shapeshift.io/images/coins-sm/zcash.png");
 }
 
+.bch-bg {
+  background-image: url('https://shapeshift.io/images/coins/bitcoincash.png');
+}
+
+.blk-bg {
+  background-image: url("https://shapeshift.io/images/coins/blackcoin.png");
+}
+
+.btc-bg {
+  background-image: url('https://shapeshift.io/images/coins/bitcoin.png');
+}
+
+.btg-bg {
+  background-image: url("https://shapeshift.io/images/coins/bitcoingold.png");
+}
+
+.dash-bg {
+  background-image: url("https://shapeshift.io/images/coins/dash.png");
+}
+
+.dcr-bg {
+  background-image: url("https://shapeshift.io/images/coins/decred.png");
+}
+
+.dgb-bg {
+  background-image: url("https://shapeshift.io/images/coins/digibyte.png");
+}
+
+.doge-bg {
+  background-image: url("https://shapeshift.io/images/coins/dogecoin.png");
+}
+
+.eth-bg {
+  background-image: url("https://shapeshift.io/images/coins/ether.png");
+}
+
+.ltc-bg {
+  background-image: url("https://shapeshift.io/images/coins/litecoin.png");
+}
+
+.mona-bg {
+  background-image: url("https://shapeshift.io/images/coins/monacoin.png");
+}
+
+.nmc-bg {
+  background-image: url("https://shapeshift.io/images/coins/namecoin.png");
+}
+
+.ppc-bg {
+  background-image: url("https://shapeshift.io/images/coins/peercoin.png");
+}
+
+.qtum-bg {
+  background-image: url("https://shapeshift.io/images/coins/qtum.png");
+}
+
+.rdd-bg {
+  background-image: url("https://shapeshift.io/images/coins/reddcoin.png");
+}
+
+.vtc-bg {
+  background-image: url("https://shapeshift.io/images/coins/vertcoin.png");
+}
+
+.zec-bg {
+  background-image: url("https://shapeshift.io/images/coins/zcash.png");
+}
+
 .approved {
   background-image: url('./../images/icons/approved.png');
 }
@@ -162,6 +243,7 @@
   border: 1px solid #c4c4c4;
   flex-grow: 1;
   overflow-x: hidden;
+  max-width: 310px;
 }
 
 .coin-list-item.active {

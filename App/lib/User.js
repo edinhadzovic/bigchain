@@ -270,9 +270,10 @@ User.prototype.setImage = function(data) {
 
 
 User.prototype.setBtc = async function(data) {
-
   this._btc_wallet.address = data._btc_wallet.address;
   this._btc_wallet.private_key = data._btc_wallet.private_key;
+  this._btc_wallet.balance = data._btc_wallet.balance;
+  this._btc_wallet.market_price = data._btc_wallet.market_price;
 };
 
 User.prototype.setLtc = async function(data) {
@@ -283,8 +284,12 @@ User.prototype.setLtc = async function(data) {
 
 User.prototype.setBch = async function(data) {
 
+  this._bch_wallet.name = data._bch_wallet.name;
+  this._bch_wallet.symbol = data._bch_wallet.symbol;
   this._bch_wallet.address = data._bch_wallet.address;
   this._bch_wallet.private_key = data._bch_wallet.private_key;
+  this._bch_wallet.balance = data._bch_wallet.balance;
+  this._bch_wallet.market_price = data._bch_wallet.market_price;
 }
 
 User.prototype.setEth = async function(data) {
@@ -299,7 +304,7 @@ User.prototype.generate_wallets = async function() {
       //generate address
       await this._btc_wallet.generateAddress_and_PrivateKey(this);
       this._ltc_wallet.generateAddress_and_PrivateKey(this);
-      this._bch_wallet.generateAddress_and_PrivateKey(this);
+      await this._bch_wallet.generateAddress_and_PrivateKey(this);
       this.setBch(this);
       this._eth_wallet.generateAddress_and_PrivateKey(this);
       this.setBtc(this);

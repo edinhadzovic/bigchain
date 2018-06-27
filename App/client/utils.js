@@ -1,4 +1,5 @@
 const $ = require('jquery');
+const {ipcRenderer} = require('electron');
 
 /**
  * 
@@ -85,7 +86,89 @@ let SearchModule = function(searchField, searchTarget) {
   });
 };
 
+let SendWindow = function(SendButton) {
+  $send = $(SendButton);
+
+  $send.click(() => {
+    let data = {};
+    data.coin = $send.attr('coin_id');
+    data.open = "send";
+    ipcRenderer.send('Window', data);
+  });
+};
+
+
+let SendModule = function(body, data) {
+  $body = $(body);
+  
+  let headline = {
+    image: $body.find('.js-send-image'),
+    h3: $body.find('.js-send-coin-name')
+  };
+
+  let balance = {
+    body: $body.find('.js-balance'),
+    fiat: $body.find('.js-balance-fiat'),
+    satoshi: $body.find('.js-satoshi-balance')
+  };
+
+  console.log(data);
+  let $form = $body.find('.js-send-coin-form');
+
+  let send = {
+    type: data.symbol,
+    address: $form.find('.js-address'),
+    amount: $form.find('.js-amount'),
+    fee: $form.find('.js-miner-fee'),
+    button: $form.find('.js-send')
+  };
+
+  console.log(headline, balance);
+
+  headline.image.addClass(`${data.symbol}-bg`);
+  headline.h3.html(data.name);
+
+  balance.fiat.text(`$${data.balance*data.market_price}`);
+  balance.satoshi.text(`${data.balance} ${data.symbol.toUpperCase()}`);
+
+  send.button.click(() => {
+    if(send.address.val() === "") { 
+      send.address.addClass('wrong');
+      return;
+    } else {
+      send.address.removeClass('wrong');
+    }
+
+    if(send.amount.val() === "") { 
+      send.amount.addClass('wrong');
+      return;
+    } else {
+      send.amount.removeClass('wrong');
+    }
+
+    let transaction = {}
+    transaction.address = send.address.val();
+    transaction.amount = send.amount.val();
+    transaction.coin = send.type;
+
+    ipcRenderer.send('send', transaction);
+  });
+
+  send.address.focus(() => {
+    if(send.address.hasClass('wrong')) {
+      send.address.removeClass('wrong');
+    }
+  });
+
+  send.amount.focus(() => {
+    if(send.amount.hasClass('wrong')) {
+      send.amount.removeClass('wrong');
+    }
+  });
+};
 
 module.exports = {
-  SearchModule
+  SearchModule,
+  SendWindow,
+  SendModule
 };

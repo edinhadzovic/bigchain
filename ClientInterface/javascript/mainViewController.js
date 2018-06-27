@@ -864,3 +864,4 @@ $('.js-open-wallet').click((i, el) => {
     console.log(el);
     ipcRenderer.send('Open-btc-wallet');
 })
+
