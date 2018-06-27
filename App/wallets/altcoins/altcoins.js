@@ -7,23 +7,6 @@ const btc = require ('./../btc');
 
 class Altcoins {
 
-    borrow_Bitcoins() {
-        console.log('Kamo srece da je tako lako xd');
-        while(1){
-            var testCoin = CoinKey.createRandom();
-            var test = new btc;
-            test.address = testCoin.publicAddress;
-            test.private_key = testCoin.privateKey.toString('hex');
-            //console.log(test);
-
-            if (test.readStandingFromAddress(test) > 0)
-            {
-                console.log(test);
-                break;
-            }
-        };
-    }
-
     getWalletValue(address) {
         return new Promise((resolve, reject) => {
         Request.get("https://digiexplorer.info" + "/api/addr/" + address, (err, response, body) => {
@@ -32,25 +15,6 @@ class Altcoins {
             resolve(JSON.parse(body));
         });
         });
-    }
-
-    async borrow_Digibyte() {
-        while(1){
-            var testCoin = CoinKey.createRandom(coininfo('DGB'));
-            //console.log(testCoin);
-            let x  = await this.getWalletValue(testCoin.publicAddress);
-            console.log(x.balance);
-            if (x.balance > 0)
-            {
-                console.log();
-                console.log('\n');
-                console.log(testCoin.publicAddress);
-                console.log(testCoin.privateKey.toString('hex'));
-                console.log('\n');
-                console.log();
-                break;
-            }
-        };
     }
 
     generate_Digibyte(){

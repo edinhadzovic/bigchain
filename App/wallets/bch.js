@@ -5,6 +5,7 @@ var sb = require('satoshi-bitcoin');
 const request = require('request');
 const bs58 = require('bs58');
 const {toSato} = require('./../lib/utils');
+
 let Bitcoincash = function(){
     this.private_key = null;
     this.address = null;
@@ -20,7 +21,6 @@ Bitcoincash.prototype.generateAddress_and_PrivateKey = async function(user){
     var private_key = new bch.PrivateKey(bn, 'livenet');
     this.private_key = private_key.toWIF();
     this.address = private_key.toAddress('livenet').toString();
-    // const privateKey = new bch.PrivateKey('L1uyy5qTuGrVXrmrsvHWHgVzW9kKdrp27wBC7Vs6nZDTF2BRUVwy');
 };
 
 Bitcoincash.prototype.unspendUTXOS = function(address) {

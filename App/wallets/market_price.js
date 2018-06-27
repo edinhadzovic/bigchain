@@ -15,6 +15,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             coinmarketcap.get("bitcoin", coin => {
                 let price = this.roundToTwo(coin.price_usd);
+                console.log(price);
                 resolve (price);
             });
         });

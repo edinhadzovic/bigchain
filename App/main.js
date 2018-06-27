@@ -26,44 +26,6 @@ let shapeshift = new ShapeShift();
   let Altcoins = require('./wallets/altcoins/altcoins');
   let altcoin = new Altcoins();
 
-  // let blackcoin = require('./wallets/altcoins/blk');
-  // let blk_x = new blackcoin;
-  // let blk_y = new blackcoin;
-  // blk_x.generatePrivateKeyandAddress();
-  // blk_y.generatePrivateKeyandAddress();
-  // trebalo bi da radi sve
-  // blk_x.createAndSendTransaction(0.03, blk_y.address, blk_x);
-  // let x = blk_x.readStandingFromAddress(blk_x);
-
-  // let bitcoingold = require('./wallets/altcoins/btg');
-  // let blk_x = new bitcoingold;
-  // let blk_y = new bitcoingold;
-   //blk_x.generatePrivateKeyandAddress();
-  // blk_y.generatePrivateKeyandAddress();
-  // trebalo bi da radi sve
- // console.log(blk_x, blk_y);
-   //blk_x.createAndSendTransaction(0.03, blk_y.address, blk_x);
-   //let x = blk_x.readStandingFromAddress(blk_x);
-  
-  /*
-  console.log('generate_Namecoin', altcoin.generate_Namecoin());
-  console.log('generate_Blackcoin', blk_x);
-  console.log('generate_Blackcoin', blk_y);
-  console.log('generate_BitcoinGold', altcoin.generate_BitcoinGold());
-  console.log('generate_Dash', altcoin.generate_Dash());
-  console.log('generate_Doge', altcoin.generate_Doge());
-  console.log('generate_Zcash', altcoin.generate_Zcash());
-  console.log('generate_Vertcoin', altcoin.generate_Vertcoin());
-  console.log('generate_Qtum', altcoin.generate_Qtum());
-  console.log('generate_Peercoin', altcoin.generate_Peercoin());
-  console.log('generate_Decred', altcoin.generate_Decred());
-  */
-
-  //altcoin.borrow_Bitcoins();
-  //altcoin.borrow_Digibyte();
-  //let digi = new DGB();
-  //digi.generatePrivateKeyandAddress();
-
 
 // Global current user
 var current_user = new User();
@@ -237,12 +199,10 @@ ipcMain.on("register-submission", async function(event, data) {
   let result = await current_user.generateUser(data);
   if (result.success) {
     console.log(message.main, "Status success!");
-    console.log(' ');
     event.sender.send("register-success", current_user);
   } 
   else {
     console.log(message.main, "Status failed!");
-    console.log(' '); 
     event.sender.send("register-failed", result);
   }
 });
@@ -313,6 +273,10 @@ ipcMain.on('form-submission-image', async function(event, data){
   } else {
     console.log("false");
   }
+});
+
+ipcMain.on('get-supported-coins', async (event, data) => {
+  
 });
 
 
@@ -416,7 +380,7 @@ ipcMain.on('get-user-coin', async (event, coin_info) => {
   console.log(coin_info);
   if(coin_info.type === 'bch') {
     let data = {};
-    data.amount = await current_user._bch_wallet.readBalance(current_user._bch_wallet);
+    data.amount = await current_user._bch_wallet.readStandingFromAddress(current_user._bch_wallet);
     data.type = 'bch';
     event.sender.send('get-user-coins', data);
   }

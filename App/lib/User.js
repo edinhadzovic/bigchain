@@ -294,10 +294,10 @@ User.prototype.setEth = async function(data) {
 };
 
 User.prototype.generate_wallets = async function() {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     if(this._btc_wallet.private_key === null) {
       //generate address
-      this._btc_wallet.generateAddress_and_PrivateKey(this);
+      await this._btc_wallet.generateAddress_and_PrivateKey(this);
       this._ltc_wallet.generateAddress_and_PrivateKey(this);
       this._bch_wallet.generateAddress_and_PrivateKey(this);
       this.setBch(this);
