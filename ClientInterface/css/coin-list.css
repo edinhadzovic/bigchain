@@ -1,0 +1,351 @@
+/**
+  CUSTOM STYLES
+*/
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;        
+}
+
+.h80p {
+  height: 80%;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.action-button {
+  background-color: white;
+  color: #c4c4c4;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  border: 1px solid #c4c4c4;
+  width: 100px;
+  transition: all 0.5s ease-in;
+}
+
+.action-button:hover {
+  color: #00F0E8;
+  border: 1px solid #00F0E8;
+  cursor: pointer;
+}
+
+.action-button--reverse {
+  background-color: #16aaa5;
+  color: white;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  border: 1px solid #16aaa5;
+  width: 100px;
+  transition: all 0.5s ease-in;
+}
+
+.action-button--reverse:hover {
+  cursor: pointer;
+  background-color: #00F0E8;
+}
+
+.h50 {
+  height: 50px;
+}
+
+.small-padding{
+  padding: 10px;
+}
+
+.light-border-bottom{
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.bch {
+  background-image: url('https://shapeshift.io/images/coins-sm/bitcoincash.png');
+}
+
+.blk {
+  background-image: url("https://shapeshift.io/images/coins-sm/blackcoin.png");
+}
+
+.btc {
+  background-image: url('https://shapeshift.io/images/coins-sm/bitcoin.png');
+}
+
+.btg {
+  background-image: url("https://shapeshift.io/images/coins-sm/bitcoingold.png");
+}
+
+.dash {
+  background-image: url("https://shapeshift.io/images/coins-sm/dash.png");
+}
+
+.dcr {
+  background-image: url("https://shapeshift.io/images/coins-sm/decred.png");
+}
+
+.dgb {
+  background-image: url("https://shapeshift.io/images/coins-sm/digibyte.png");
+}
+
+.doge {
+  background-image: url("https://shapeshift.io/images/coins-sm/dogecoin.png");
+}
+
+.eth {
+  background-image: url("https://shapeshift.io/images/coins-sm/ether.png");
+}
+
+.ltc {
+  background-image: url("https://shapeshift.io/images/coins-sm/litecoin.png");
+}
+
+.mona {
+  background-image: url("https://shapeshift.io/images/coins-sm/monacoin.png");
+}
+
+.nmc {
+  background-image: url("https://shapeshift.io/images/coins-sm/namecoin.png");
+}
+
+.ppc {
+  background-image: url("https://shapeshift.io/images/coins-sm/peercoin.png");
+}
+
+.qtum {
+  background-image: url("https://shapeshift.io/images/coins-sm/qtum.png");
+}
+
+.rdd {
+  background-image: url("https://shapeshift.io/images/coins-sm/reddcoin.png");
+}
+
+.vtc {
+  background-image: url("https://shapeshift.io/images/coins-sm/vertcoin.png");
+}
+
+.zec {
+  background-image: url("https://shapeshift.io/images/coins-sm/zcash.png");
+}
+
+.bch-bg {
+  background-image: url('https://shapeshift.io/images/coins/bitcoincash.png');
+}
+
+.blk-bg {
+  background-image: url("https://shapeshift.io/images/coins/blackcoin.png");
+}
+
+.btc-bg {
+  background-image: url('https://shapeshift.io/images/coins/bitcoin.png');
+}
+
+.btg-bg {
+  background-image: url("https://shapeshift.io/images/coins/bitcoingold.png");
+}
+
+.dash-bg {
+  background-image: url("https://shapeshift.io/images/coins/dash.png");
+}
+
+.dcr-bg {
+  background-image: url("https://shapeshift.io/images/coins/decred.png");
+}
+
+.dgb-bg {
+  background-image: url("https://shapeshift.io/images/coins/digibyte.png");
+}
+
+.doge-bg {
+  background-image: url("https://shapeshift.io/images/coins/dogecoin.png");
+}
+
+.eth-bg {
+  background-image: url("https://shapeshift.io/images/coins/ether.png");
+}
+
+.ltc-bg {
+  background-image: url("https://shapeshift.io/images/coins/litecoin.png");
+}
+
+.mona-bg {
+  background-image: url("https://shapeshift.io/images/coins/monacoin.png");
+}
+
+.nmc-bg {
+  background-image: url("https://shapeshift.io/images/coins/namecoin.png");
+}
+
+.ppc-bg {
+  background-image: url("https://shapeshift.io/images/coins/peercoin.png");
+}
+
+.qtum-bg {
+  background-image: url("https://shapeshift.io/images/coins/qtum.png");
+}
+
+.rdd-bg {
+  background-image: url("https://shapeshift.io/images/coins/reddcoin.png");
+}
+
+.vtc-bg {
+  background-image: url("https://shapeshift.io/images/coins/vertcoin.png");
+}
+
+.zec-bg {
+  background-image: url("https://shapeshift.io/images/coins/zcash.png");
+}
+
+.approved {
+  background-image: url('./../images/icons/approved.png');
+}
+
+
+.coin-list-item {
+  display: flex;
+  flex-direction: row;
+  transition: all 0.5s ease-in;
+}
+
+.coin-list-item:hover{
+  background-color: #00F0E8;
+  cursor: pointer;
+}
+
+.coin-list-item .image {
+  width: 35px;
+  height: 35px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: center;
+}
+
+.coin-list-item .stats {
+  margin-left: 10px;
+}
+
+.coin-list-item .stats h4{
+  color: #c4c4c4;
+}
+
+.coin-list {
+  margin-top: 80px;
+  margin-left: 25px;
+  height: 100%;
+  background-color: white;
+  border: 1px solid #c4c4c4;
+  flex-grow: 1;
+  overflow-x: hidden;
+  max-width: 310px;
+}
+
+.coin-list-item.active {
+  background-color: #00F0E8;
+}
+
+.coin-features {
+  margin: 80px 0 0 0;
+  background-color: white;
+  border: 1px solid #c4c4c4;
+  border-left: none;
+  height: 100%;
+  flex-grow: 10;
+}
+
+.coin-features-headline{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #c4c4c4;
+  height: 50px;
+}
+
+.coin-features-headline .headline {
+  flex-grow: 12;
+}
+
+.coin-features-actions {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 0;
+}
+
+.coin-features-actions button {
+  margin: 0px 5px;
+  padding: 5px 10px;
+}
+
+.coin-features-item .image {
+  width: 35px;
+  height: 35px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: left;
+  flex-grow: 0;
+}
+
+.coin-features-item {    
+  display: flex;
+  flex-direction: row;
+  height: 59px;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.coin-features-info {
+  flex-grow: 12;
+}
+
+.coin-features-amount {
+  flex-grow: 0;
+}
+
+.coin-features-info h4 {
+  transition: all 0.5s ease-in;
+}
+
+.coin-features-info h4:hover {
+  cursor: pointer;
+  color: #00F0E8;
+}
+
+.coin-features-info p {
+  color: #c4c4c4;
+  font-size: 14px;
+}
+
+.coin-features-amount {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.coin-features-display {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+/**
+  JAVASCRIPT STYLE
+*/
+
+.js-coin-list-search{
+  color: #6d6d6d;
+  font-size: 18px;
+  padding: 5px;
+  border: none;
+  width: 100%;
+}
+
+.js-coin-list-search:focus{
+  outline: none;
+}

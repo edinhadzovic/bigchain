@@ -1,61 +1,67 @@
 const bitcoin = require('bitcoinjs-lib');
-const bitcore = require('bitcore-explorers/node_modules/bitcore-lib');
+const bitcore = require('bitcore-lib');
 
 const bigi = require('bigi');
-
+const {toSato} = require('./../lib/utils');
 var sb = require('satoshi-bitcoin');
+const market_price = require('./market_price');
 
 var bitcore_exp = require('bitcore-explorers').Insight;
-var insight = new bitcore_exp('testnet');
-
-// balance
-var balance = require('crypto-balances');
+var insight = new bitcore_exp('mainnet');
 
 class Bitcoin {
 
     // Change link to bitcoin info and price bitcoin
     constructor() 
     {
-        this._btc_privateKey = null;
-        this._btc_address = null; 
-        this._btc_standing = null;
+        this.name = "Bitcoin";
+        this.symbol = "btc";
+        this.private_key = null;
+        this.address = null; 
+        this.balance = null;
+        this.market_price = 0;
     }
 
     generateAddress_and_PrivateKey(user) 
     {
-        // More and less create a buffer from data, big big buffer
-
-        var buffer = new Buffer(JSON.stringify(user) + 'walletplus.io' + 'bitcoinstring');
-        var hash = bitcoin.crypto.sha256(buffer);
-        var bigNum = bigi.fromBuffer(hash);
-
-        // Testnet addressa 
-        // Normal address var keyPair = new bitcoin.ECPair(bigNum);
-        var testnet = bitcoin.networks.testnet;
-        // We are doing the same thing just we are using testnet network instead of real one
-        var keyPair = new bitcoin.ECPair(bigNum, null, {network: testnet});
-        // WIF is a representation of private key !!!!!!!!!!!!!!!!
-        var btc_privateKey = keyPair.toWIF();
-        var btc_address = keyPair.getAddress();
-        this._btc_address = btc_address;
-        this._btc_privateKey = btc_privateKey;
-        
+        return new Promise(async (resolve, reject) => {
+            var buffer = new Buffer(JSON.stringify(user) + 'walletplus.io' + 'bitcoinstring');
+            var hash = bitcoin.crypto.sha256(buffer);
+            var bigNum = bigi.fromBuffer(hash);
+    
+            // Testnet addressa 
+            // Normal address var keyPair = new bitcoin.ECPair(bigNum);
+            var testnet = bitcoin.networks.testnet;
+            // We are doing the same thing just we are using testnet network instead of real one
+            var keyPair = new bitcoin.ECPair(bigNum, null, {network: bitcoin.networks.mainnet});
+            // WIF is a representation of private key !!!!!!!!!!!!!!!!
+            var btc_privateKey = keyPair.toWIF();
+            var btc_address = keyPair.getAddress();
+            this.address = btc_address;
+            this.private_key = btc_privateKey;
+            this.market_price = await market_price.getBtcPrice();
+            this.balance = await this.readStandingFromAddress(this);
+            resolve(true);
+        });
     }
 
     send(amount, address, wallet)
     {
-        insight.getUnspentUtxos(wallet._btc_address, (err, utxos) => {
+        if(amount < 0){
+            console.log("Error, amount smaller than 0");
+            return 0;
+        }
+        insight.getUnspentUtxos(wallet.address, (err, utxos) => {
             if (err) {
                 // Handle errors
             } else {
-    
-                var amountSatoshi = sb.toSatoshi(amount);
+                var amountSatoshi = toSato(amount);
                 var tx = bitcore.Transaction();
                 tx.from(utxos);
                 tx.to(address, amountSatoshi); // .0001 BTC
-                tx.change(wallet._btc_address);
+                tx.change(wallet.address);
                 tx.fee(10000);
-                tx.sign(wallet._btc_privateKey);
+                tx.sign(wallet.private_key);
                 
                 tx.serialize();
                 console.log(tx.toObject());
@@ -64,7 +70,7 @@ class Bitcoin {
                     if (err) {
                         // Handle err
                     } else {
-                        console.log('succesfully  sent bla bla ' + returnTxt);                    
+                        console.log('succesfully Transaction Id ' + returnTxt);                    
                     }
                 });
             }
@@ -73,7 +79,7 @@ class Bitcoin {
 
     readStandingFromAddress(wallet){
         return new Promise((resolve, reject) => {
-            insight.getUnspentUtxos(wallet._btc_address, function(err, utxos) {
+            insight.getUnspentUtxos(wallet.address, function(err, utxos) {
                 let satoshis = 0;
                 // Complete object
                 // console.log("btc", utxos);

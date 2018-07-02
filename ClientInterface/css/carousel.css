@@ -1,0 +1,15 @@
+.js-coin-carousel {
+  width: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: white; 
+}
+
+.js-coin-carousel-item {
+  margin: 0px 10px;
+}

@@ -1,4 +1,3 @@
-const client = require('./../../App/client/User');
 const croppie = require('croppie');
 const fs = require('fs');
 const path = require('path');
@@ -8,6 +7,7 @@ const blockstack = require('blockstack');
 let user = null;
 
 $('.js-blockstack').click((e)=>{
+    console.log("test");
     e.preventDefault();
     const transitPrivateKey = blockstack.generateAndStoreTransitKey();
     const redirectURI = 'http://localhost:9876/callback';
@@ -24,6 +24,9 @@ ipcRenderer.on('test', function(event, profile) {
     console.log(user);
     ipcRenderer.send('start-main-window', user);    
 });
+const exchange = require('./../../App/client/Exchange');
+const Transaction = require('./../../App/client/Transaction');
+const CoinList = require('./../../App/client/CoinList');
 
 const directory = path.join(__dirname, '../images/profile');
 
@@ -59,7 +62,7 @@ var loginViewController = function (params) {
                 if($(view).hasClass('js-loginView-register--fadeOut')) $(view).removeClass('js-loginView-register--fadeOut');
                 $(view).addClass(' js-loginView-register--fadeIn');
             }
-        },  
+        },
         personalInfoView: {
             body: $params.find('.js-loginView-personal-information'),
             first_name: $params.find('.js-loginView-personal-information-first_name'),
@@ -111,7 +114,7 @@ var loginViewController = function (params) {
                 if($(view).hasClass('js-loginView-image--fadeOut')) $(view).removeClass('js-loginView-image--fadeOut');
                 $(view).addClass(' js-loginView-image--fadeIn');
             }
-        }  
+        }
     };
 
     $(loginViewController.loginView.toRegister).click(function (event) {
@@ -120,7 +123,7 @@ var loginViewController = function (params) {
             loginViewController.registerView.body.fadeIn(200);
         });
     });
-    
+
     $(loginViewController.registerView.toLogin).click(function(event) {
         event.preventDefault();
         loginViewController.registerView.body.fadeOut(200, () => {
@@ -145,8 +148,8 @@ var loginViewController = function (params) {
     $(loginViewController.imageView.toSkip).click(function(event){
         event.preventDefault();
         loginViewController.registerView.body.fadeOut(200, () => {
-            $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                new homeViewController($('.js-homeView-box',)); 
+            $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                new homeViewController($('body'));
             });
         });
     });
@@ -164,9 +167,10 @@ var loginViewController = function (params) {
         ipcRenderer.send('login-submission', temp_data );
         
         ipcRenderer.on("login-success", (event, arg) => {
+            console.log(arg);
             loginViewController.reference.fadeOut(500, function(){
-                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    new homeViewController($('.js-homeView-box'), arg); 
+                $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                    new homeViewController($('body'), arg);
                 });
             });
         });
@@ -179,7 +183,7 @@ var loginViewController = function (params) {
 
             if(arg.type === 'ERR_NOT_VALID_EMAIL') {
 				document.getElementById('password').style.border = "2px solid #d1d1d1";
-                document.getElementById('username').style.border = "2px solid red";  
+                document.getElementById('username').style.border = "2px solid red";
             }
         });
     });
@@ -207,7 +211,7 @@ var loginViewController = function (params) {
 
         ipcRenderer.on('register-failed', (event, err) => {
 
-            if(err.type === 'ERR_PASSWORD_WRONG' || err.type === 'ERR_PASSWORD_FIELD_EMPTY' || 
+            if(err.type === 'ERR_PASSWORD_WRONG' || err.type === 'ERR_PASSWORD_FIELD_EMPTY' ||
                 err.type === 'ERR_PASSWORD_TO_SHORT' || err.type === 'ERR_PASSWORD_TO_SIMPLE') {
                 document.getElementById('email').style.border = "2px solid #d1d1d1";
                 document.getElementById('password_rep').style.border = "2px solid #d1d1d1";
@@ -218,12 +222,12 @@ var loginViewController = function (params) {
                 err.type === 'ERR_EMAIL_TAKEN') {
                 document.getElementById('reg_password').style.border = '2px solid #d1d1d1';
                 document.getElementById('password_rep').style.border = '2px solid #d1d1d1';
-                document.getElementById('email').style.border = '2px solid red';  
+                document.getElementById('email').style.border = '2px solid red';
             }
             if(err.type === 'ERR_PASSWORD_REP_FIELD_EMPTY' || err.type === 'ERR_PASSWORD_DO_NOT_MATCH') {
                 document.getElementById('reg_password').style.border = '2px solid #d1d1d1';
                 document.getElementById('password_rep').style.border = '2px solid red';
-                document.getElementById('email').style.border = '2px solid #d1d1d1';  
+                document.getElementById('email').style.border = '2px solid #d1d1d1';
             }
         });
     });
@@ -287,7 +291,7 @@ var loginViewController = function (params) {
         data.state = $(loginViewController.addressView.state).val();
         data.postal_code = $(loginViewController.addressView.postal_code).val();
         data.country = $(loginViewController.addressView.country).val();
-        
+
         ipcRenderer.send('address-info-submission', data);
 
         ipcRenderer.on('store-address-info-failed', (event, err) => {
@@ -346,7 +350,7 @@ var loginViewController = function (params) {
             if(file_names === undefined) return;
 
             image = file_names[0];
-            
+
             let data = {};
             data.image = image;
             loginViewController.imageView.crop.removeClass('hidden').fadeIn(500, () => {
@@ -380,23 +384,23 @@ var loginViewController = function (params) {
 
                     });
                     reader.readAsBinaryString(resp);
-                    
-                
+
+
                 });
             });
             //
         });
-    
-        
+
+
         ipcRenderer.on('image-submission-success', (event, current_user) => {
             loginViewController.reference.fadeOut(500, function(){
-                $('.js-homeView-box').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
-                    new homeViewController($('.js-homeView-box'), current_user); 
+                $('body').removeClass('hidden').addClass('js-homeView-box--fadeIn').fadeIn(500, function(){
+                    new homeViewController($('body'), current_user);
                 });
             });
         });
         ipcRenderer.on('image-submission-fail', (event, current_user) => {
-            
+
         });
         //let data = {};
         //data.image = reader.readAsDataURL($(loginViewController.imageView.image).val());
@@ -414,7 +418,7 @@ $('document').ready(function(){
 });
 
 var homeViewController = function (params, user) {
-    console.log(user);
+    console.log("User", user);
     var $params = $(params);
     var homeViewController = {
         navigaiton: {
@@ -422,8 +426,8 @@ var homeViewController = function (params, user) {
             wallet: $params.find('.js-homeView-navigation-item[type="request_wallet_plus"]'),
             settings: $params.find('.js-homeView-navigation-item[type="request_settings"]'),
             startup_plus: $params.find('.js-homeView-navigation-item[type="request_startup_plus"]'),
-            manager_plus: $params.find('.js-homeView-navigation-item[type="request_manager_plus"]'),
-            file_plus: $params.find('.js-homeView-navigation-item[type="request_file_plus"]'),
+            manager_plus: $params.find('.js-homeView-navigation-item[type="request_manager_plus"]')
+            // file_plus: $params.find('.js-homeView-navigation-item[type="request_file_plus"]'),
         },
         personalInformation: {
             body: $params.find('.js-homeView-setting-row'),
@@ -432,14 +436,14 @@ var homeViewController = function (params, user) {
             gender: $params.find('.js-homeView-setting-input[input-type="gender"]'),
             birthday: $params.find('.js-homeView-setting-input[input-type="birthday"]'),
             phone: $params.find('.js-homeView-setting-input[input-type="phone"]'),
-            personal_submit: $params.find('.js-homeView-settings-input-pi-save'),
+            personal_submit: $params.find('.js-homeView-settings-input-pi-save')
         },
         wallet_navigation: {
             body: $params.find('.js-homeView-wallet-nav'),
             btc: $params.find('.js-homeView-wallet-symbol[request="btc"]'),
             dgb: $params.find('.js-homeView-wallet-symbol[request="dgb"]'),
             ltc: $params.find('.js-homeView-wallet-symbol[request="ltc"]'),
-            eth: $params.find('.js-homeView-wallet-symbol[request="eth"]'),
+            eth: $params.find('.js-homeView-wallet-symbol[request="eth"]')
         },
         btc_wallet: {
             body: $params.find('.js-homeView-wallet-content[display="btc"]'),
@@ -461,34 +465,21 @@ var homeViewController = function (params, user) {
             body: $params.find('.js-homeView-wallet-content[display="dgb"]'),
             generateAddress: $params.find('.js-homeView-wallet-generate-address[for="dgb"]')
         },
-
-        // 
-        exchange: {
-            body: $params.find('.js-homeView-exchange-form'),
-            what_from: $params.find('.js-homeView-exchange-what-from'),
-            what_to: $params.find('.js-homeView-exchange-what-to'),
-            address_from: $params.find('.js-homeView-exchange-address-from'),
-            exchange_amount_from: $params.find('.js-homeView-exchange-amount-from'),
-            address_to: $params.find('.js-homeView-exchange-address-to'),
-            receive_amount_to:  $params.find('.js-homeView-exchange-amount-to'),
-            fee: $params.find('.js-homeView-exchange-fee'),
-            exchange_button: $params.find('.js-homeView-exchange-button'),
-        },
         wallets: [
             {
                 type: "btc",
                 body: $(params).find('.js-homeView-wallet-content[display="btc"]'),
-                class: 'btc-select'
+                class: 'open'
             },
             {
                 type: "dgb",
                 body: $(params).find('.js-homeView-wallet-content[display="dgb"]'),
-                class: 'dgb-select'
+                class: 'open'
             },
             {
                 type: "ltc",
                 body: $(params).find('.js-homeView-wallet-content[display="ltc"]'),
-                class: 'ltc-select'
+                class: 'open'
             },
             {
                 type: "eth",
@@ -499,27 +490,27 @@ var homeViewController = function (params, user) {
         views: [
             {
                 type: "Wallet",
-                body: $(params).find('.js-homeView-wallet')
+                body: $(params).find('.js-homeView-wallet.homeView-start-content')
             },
             {
                 type: "Startup",
-                body: $(params).find('.js-homeView-startup')
+                body: $(params).find('.js-homeView-startup.homeView-start-content')
             },
+            // {
+            //     type: 'File',
+            //     body: $(params).find('.js-homeView-file.homeView-start-content')
+            // },
             {
-                type: 'File',
-                body: $(params).find('.js-homeView-file')
-            },
-            {
-                type: 'Manager',
-                body: $(params).find('.js-homeView-manager')            
+                type: 'Exchange',
+                body: $(params).find('.js-homeView-manager.homeView-start-content')
             },
             {
                 type: 'Settings',
                 body: $(params).find('.js-homeView-settings')
             }
         ],
-        active: async function(user) {
-            await ipcRenderer.send('get-user-data');
+        active: function(user) {
+            ipcRenderer.send('get-user-data');
             ipcRenderer.on('init-user-data', (event, user) => {
                 $('.js-home-profile-image-tag').attr('src', user._profile_image);
                 $('.js-homeView-profile-name').text(user._personal_information.first_name + " " + user._personal_information.last_name);
@@ -529,9 +520,13 @@ var homeViewController = function (params, user) {
             homeViewController.views.forEach(page => {
                 if(page.type === page_type) {
                     page.body.removeClass('hidden');
+                    setTimeout(function(){
+                    page.body.addClass('open');
+                    }, 200);
                 } else {
                     if(!page.body.hasClass('hidden')) {
                         page.body.addClass('hidden');
+                        page.body.removeClass('open');
                     }
                 }
             });
@@ -540,17 +535,24 @@ var homeViewController = function (params, user) {
             homeViewController.wallets.forEach(wallet => {
                 if(wallet.type === wallet_type) {
                     wallet.body.removeClass('hidden');
-                    $('.js-homeView-box').addClass(wallet.class);
+                    $('.overlay-homeView-wallet-nav').addClass('open');
+                    $('.js-homeView-wallet-nav-side').addClass('open');
+                    $('.js-homeView-wallet-nav').addClass('close');
+                        setTimeout(function() {
+                            $(wallet.body).addClass(wallet.class);
+                        }, 200);
+                        setTimeout(function() {
+                            $('.js-homeView-wallet-nav').hide();
+                        }, 400);
                 } else {
                     if(!wallet.body.hasClass('hidden')) {
-                        $('.js-homeView-box').removeClass(wallet.class);                        
+                        $(wallet.body).removeClass(wallet.class);
                         wallet.body.addClass('hidden');
                     }
                 }
             });
         }
     };
-
 
     $(homeViewController.personalInformation.personal_submit).click(function(event){
         event.preventDefault();
@@ -560,9 +562,9 @@ var homeViewController = function (params, user) {
         data.gender = $(homeViewController.personalInformation.gender).val();
         data.birthday = $(homeViewController.personalInformation.birthday).val();
         data.phone = $(homeViewController.personalInformation.phone).val();
-        
+
         console.log(data);
-    
+
         ipcRenderer.send('personal-info-change', data);
 
         ipcRenderer.on('store-failed', (event, err) => {
@@ -591,11 +593,11 @@ var homeViewController = function (params, user) {
     $(homeViewController.navigaiton.startup_plus).click(function(){
         homeViewController.setPage("Startup");
     });
-    $(homeViewController.navigaiton.file_plus).click(function(){
-        homeViewController.setPage("File");
-    });
+    // $(homeViewController.navigaiton.file_plus).click(function(){
+    //     homeViewController.setPage("File");
+    // });
     $(homeViewController.navigaiton.manager_plus).click(function(){
-        homeViewController.setPage("Manager");
+        homeViewController.setPage("Exchange");
     });
 
     $(homeViewController.wallet_navigation.btc).click(function() {
@@ -626,17 +628,6 @@ var homeViewController = function (params, user) {
         homeViewController.setWallet('eth');
     });
 
-    $(homeViewController.dgb_wallet.generateAddress).click(function(event) {
-        console.log("test");
-
-        event.preventDefault();
-        ipcRenderer.send('generate-dgb-address');
-
-        ipcRenderer.on('generate-dgb-address-success', (event, private_key) => {
-            console.log(private_key);
-        });
-    });
-
     $(homeViewController.btc_wallet.send_button).click(function(event){
         event.preventDefault();
    
@@ -657,32 +648,211 @@ var homeViewController = function (params, user) {
         console.log('test' +  data.ltc_amount);
         ipcRenderer.send('send_ltc', data);
     });
+    homeViewController.bch_wallet.send_button.click(function(evt) {
+        evt.preventDefault();
 
-    $(homeViewController.exchange.exchange_button).click(function(event){
-        event.preventDefault();
-        console.log("am i here?");
         let data = {};
-        data.what_from = $(homeViewController.exchange.what_from).val();
-        data.what_to = $(homeViewController.exchange.what_to).val();
-        data.address_from = $(homeViewController.exchange.address_from).val();
-        data.amount_of =  $(homeViewController.exchange.exchange_amount_from).val();
-        data.address_to = $(homeViewController.exchange.address_to).val();
-        console.log(data);
-        ipcRenderer.send('exchange', data);
-        ipcRenderer.on('fee-exchange', (event)=> {
-            $('.js-homeView-exchange-amount-to').text('Recieved amount is 20 BTC');
-            $('.js-homeView-exchange-fee').text('fee for transaction is 2000d$');
-        });
+        data.bch_address = homeViewController.bch_wallet.address.val();
+        data.bch_amount = homeViewController.bch_wallet.amount.val();
+        console.log("test", data);
+        ipcRenderer.send('send_bch', data);
     });
 
+
+    $(homeViewController.eth_wallet.send_button).click(function(event){
+        event.preventDefault();
+   
+        let data = {};
+        data.eth_address = $(homeViewController.eth_wallet.address).val();
+        data.eth_amount = $(homeViewController.eth_wallet.amount).val();
+        console.log('test' +  data.eth_amount);
+        ipcRenderer.send('send_eth', data);
+    });
+
+    homeViewController.setPage("Wallet");  
 };
 
-ipcRenderer.on('init-main-window', (event, current_user) => {
-    new homeViewController($('.js-homeView-box'), current_user);     
+ipcRenderer.on('init-main-window', (event, data) => {
+    console.log(data);
+    new homeViewController($('body'), data.current_user);
 });
 
 $('document').ready(function(){
-    $('.js-homeView-box').each(function () {
-        new homeViewController(this);
-    })
+    $('body').each(function () {
+        new homeViewController($('body'));
+    });
 });
+
+ipcRenderer.send('get-supported-coins');
+ipcRenderer.on('resolve-supported-coins', (event, data, current_standing) => {
+    console.log('KURCINA', current_standing);
+    new exchange('.js-exchange', data);
+    new CoinList('.js-coin-list', data, current_standing);
+});
+
+ipcRenderer.on('init-data-coins', (event, data) => {
+    console.log("Should it work", data);
+});
+
+
+// $('.js-coin-select').on('click', (event) => {
+//     console.log("hallo");
+//     $('.js-coin-menu').addClass('active');
+//     setTimeout(()=>{
+//         $('.js-coin-menu-content').removeClass('hidden');
+//     }, 500);
+    
+// })
+
+// $('.js-coin-menu-close').on('click', (event) => {
+//     $('.js-coin-menu').removeClass('active');
+//     $('.js-coin-menu-content').addClass('hidden');
+// });
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ["May", "June", "July",'august','september'],
+        datasets: [{
+            // label: "My First dataset",
+            backgroundColor: 'rgba(255, 99, 132,0)',
+            borderColor: 'rgba(0, 0, 0,.2)',
+            data: [25, 2, 30,35,25]
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        layout: {
+            padding: {
+                left: 50,
+                right: 50,
+                top: 50,
+                bottom: 50
+            }
+        },
+        legend: {
+            display: false
+        },
+        title: {
+            display: false
+        },
+        scaleLabel: {
+            display: false
+        },
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display:false
+                },
+                ticks: {
+                    display: false
+                },
+                display: false
+            }],
+            yAxes: [{
+                display: false,
+                gridLines: {
+                    display:false
+                },
+                ticks: {
+                    display: false
+                },
+            }]
+        }
+    }
+});
+
+/*
+   * Replace all SVG images with inline SVG
+   */
+jQuery('img.svg').each(function(){
+    var $img = jQuery(this);
+    var imgID = $img.attr('id');
+    var imgClass = $img.attr('class');
+    var imgURL = $img.attr('src');
+
+    jQuery.get(imgURL, function(data) {
+        // Get the SVG tag, ignore the rest
+        var $svg = jQuery(data).find('svg');
+
+        // Add replaced image's ID to the new SVG
+        if(typeof imgID !== 'undefined') {
+            $svg = $svg.attr('id', imgID);
+        }
+        // Add replaced image's classes to the new SVG
+        if(typeof imgClass !== 'undefined') {
+            $svg = $svg.attr('class', imgClass+' replaced-svg');
+        }
+
+        // Remove any invalid XML tags as per http://validator.w3.org
+        $svg = $svg.removeAttr('xmlns:a');
+
+        // Replace image with new SVG
+        $img.replaceWith($svg);
+
+    }, 'xml');
+
+});
+
+$('.mainContent-topNav .search').on('click',function(e) {
+    if (!$(this).hasClass('active')) {
+        $(this).toggleClass('active');
+        $('.mainContent-topNav .topNav-menu').fadeOut();
+        $('.mainContent-topNav .search .ui.input').removeClass('d-none');
+        setTimeout(function (a) {
+            $('.mainContent-topNav .search .ui.input').addClass('active');
+        }, 300)
+    } else {
+        $(this).toggleClass('active');
+        $('.mainContent-topNav .search .ui.input').addClass('d-none');
+        setTimeout(function (a) {
+            $('.mainContent-topNav .topNav-menu').fadeIn();
+            $('.mainContent-topNav .search .ui.input').removeClass('active');
+        }, 300)
+    }
+});
+$('.close-dropdown').on('click', function(){
+    if ($('.dropdown').hasClass('d-none')){
+    $('.dropdown').removeClass('d-none');
+    setTimeout(function () {
+        $('.dropdown').addClass('drop');
+    }, 200);
+    } else {
+        $('.dropdown').removeClass('drop');
+        setTimeout(function () {
+            $('.dropdown').addClass('d-none');
+        }, 200);
+    }
+});
+
+
+$('.burger-click-region').on('click', function () {
+
+    let sideNav = $('.js-homeView-navigation');
+
+    if (!sideNav.hasClass('close')) {
+        sideNav.children().not('.burger-click-region').fadeOut();
+        setTimeout(function () {
+            sideNav.addClass('close');
+        }, 300);
+    } else {
+        sideNav.removeClass('close');
+        setTimeout(function () {
+            sideNav.children().not('.burger-click-region').fadeIn();
+        }, 300);
+    }
+});
+
+$('.js-transactions').each((i, el) => {
+    new Transaction(el);
+});
+
+$('.js-open-wallet').click((i, el) => {
+    console.log(el);
+    ipcRenderer.send('Open-btc-wallet');
+})
+
