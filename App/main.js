@@ -384,15 +384,12 @@ ipcMain.on('exchange-market-info', async(event, pair) => {
   event.sender.send('market-info-result', market_info);
 });
 
-shapeshift.getCoins().then(coinData => {
-  //console.log(message.main,'\n', coinData);
-});
-
 ipcMain.on('get-user-coin', async (event, coin_info) => {
   console.log(coin_info);
   if(coin_info.type === 'bch') {
     let data = {};
     data.amount = await current_user._bch_wallet.readStandingFromAddress(current_user._bch_wallet);
+    data.market_price = await market_price.getBchPrice();
     data.type = 'bch';
     event.sender.send('get-user-coins', data);
   }
@@ -403,6 +400,13 @@ ipcMain.on('get-user-coin', async (event, coin_info) => {
     event.sender.send('get-user-coins', data)
   }
 })
+
+ipcMain.on('getMarketCap', async (event) => {
+  let market = await market_price.getTop100();
+  if(market.length !== 0) {
+    event.sender.send('sendMarketCap', market);
+  }
+});
 
 
 // ipcMain.on('Open-btc-wallet', event => {

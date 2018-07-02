@@ -97,7 +97,6 @@ let SendWindow = function(SendButton) {
   });
 };
 
-
 let SendModule = function(body, data) {
   $body = $(body);
   
@@ -167,8 +166,26 @@ let SendModule = function(body, data) {
   });
 };
 
+let MarketCapCarousel = function(container) {
+  $container = $(container);
+  ipcRenderer.send('getMarketCap');
+
+  let createDiv = function(coin) {
+    return `<div class="js-coin-carousel-item hidden" rank="${coin.rank}">${coin.rank}. $${coin.price_usd} ${coin.symbol} (${coin.percent_change_1h})</div>`;
+  };
+
+  ipcRenderer.on('sendMarketCap', (event, market) => {
+    $container.html("");
+    market.forEach(coin => {
+      let string = createDiv(coin);
+      $container.append(string);
+    });
+  });
+};
+
 module.exports = {
   SearchModule,
   SendWindow,
-  SendModule
+  SendModule,
+  MarketCapCarousel
 };

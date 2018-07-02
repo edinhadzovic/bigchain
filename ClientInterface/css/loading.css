@@ -8,6 +8,15 @@
   width: 64px;
   height: 64px;
 }
+
+.lds-grid--small {
+  margin: 0 auto;
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+
 .lds-grid div {
   position: absolute;
   width: 13px;

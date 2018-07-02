@@ -16,6 +16,10 @@ let Bitcoincash = function(){
     this.market_price = null;
 };
 
+Bitcoincash.prototype.updateBalance = async function() {
+    this.balance = this.readStandingFromAddress(this);
+    this.market_price = market_price.getBchPrice();
+}
 
 Bitcoincash.prototype.generateAddress_and_PrivateKey = async function(user){
     return new Promise(async (resolve, reject) => {
